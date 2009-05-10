@@ -1,0 +1,97 @@
+comment "//" ;
+comment "/*" "*/" ;
+
+entrypoints Program ;
+
+Main. 			Program 		::= [Block] ;
+BFunc.			Block			::= [Function] ;
+BStmt.			Block			::= [Statement] ;
+DTFunc.			Function 		::= Ident "(" [Parameter] ")" "{" [Statement] "}" ;
+DTParam. 		Parameter 		::= Ident ;
+
+terminator Block "" ;
+terminator nonempty Function "" ;
+terminator nonempty Statement "" ;
+separator nonempty Parameter "," ;
+
+SExp. 			Statement 		::= Expression ";" ;
+SScope. 		Statement 		::= "{" [Statement] "}" ;
+SRet. 			Statement 		::= "return" Expression ";" ;
+SIf.			Statement		::= "if" "(" Expression ")" Statement ;
+SIfElse.		Statement		::= "if" "(" Expression ")" Statement "else" Statement ;
+SWhile.			Statement		::= "while" "(" Expression ")" Statement ;
+SUntil.			Statement		::= "until" "(" Expression ")" Statement ;
+SFor.			Statement		::= "for" "(" Expression ";" Expression ";" Expression ")" Statement ;
+SBreak.			Statement		::= "break" ";" ;
+SContinue.		Statement		::= "continue" ";" ;
+
+ECDbl.			Expression12	::= Double ;
+ECInt.			Expression12	::= Integer ;
+EVar.			Expression12	::= Ident ;
+EPi.			Expression12	::= "pi" ;
+
+ECall.			Expression11	::= Ident "(" [Expression] ")" ;
+EPostInc.		Expression11	::= Ident "++" ;
+EPostDec.		Expression11	::= Ident "--" ;
+EPow.			Expression11	::= "pow" "(" Expression "," Expression ")";
+ESqrt.			Expression11	::= "sqrt" "(" Expression ")";
+EExp.			Expression11	::= "exp" "(" Expression ")";
+ELog.			Expression11	::= "log" "(" Expression ")";
+ELogD.			Expression11	::= "log10" "(" Expression ")";
+ESin.			Expression11	::= "sin" "(" Expression ")";
+ECos.			Expression11	::= "cos" "(" Expression ")";
+ETan.			Expression11	::= "tan" "(" Expression ")";
+EAtan.			Expression11	::= "atan" "(" Expression ")";
+EAtanT.			Expression11	::= "atan2" "(" Expression "," Expression ")";
+EAsin.			Expression11	::= "asin" "(" Expression ")";
+EAcos.			Expression11	::= "acos" "(" Expression ")";
+
+ELnot.			Expression10	::= "!" Expression ;
+EPreInc.		Expression10	::= "++" Ident ;
+EPreDec.		Expression10	::= "--" Ident ;
+ENeg.			Expression10	::= "-" Expression ;
+EBnot.			Expression10	::= "~" Expression ;
+EPos.			Expression10	::= "+" Expression ;
+
+EMul.			Expression9		::= Expression "*" Expression ;
+EDiv.			Expression9		::= Expression "/" Expression ;
+EMod.			Expression9		::= Expression "%" Expression ;
+
+EAdd.			Expression8		::= Expression "+" Expression ;
+ESub.			Expression8		::= Expression "-" Expression ;
+
+ELSh.			Expression7		::= Expression "<<" Expression ;
+ERSh.			Expression7		::= Expression ">>" Expression ;
+
+ELT.			Expression6		::= Expression "<" Expression ;
+EGT.			Expression6		::= Expression ">" Expression ;
+ELE.			Expression6		::= Expression "<=" Expression ;
+EGE.			Expression6		::= Expression ">=" Expression ;
+
+EE.				Expression5		::= Expression "==" Expression ;
+ENE.			Expression5		::= Expression "!=" Expression ;
+
+EBand.			Expression4		::= Expression "&" Expression ;
+EBor.			Expression4		::= Expression "|" Expression ;
+EBxor.			Expression4		::= Expression "^" Expression ;
+
+ELand.			Expression3		::= Expression "&&" Expression ;
+ELor.			Expression3		::= Expression "||" Expression ;
+ELxor.			Expression3		::= Expression "^^" Expression ;
+
+ECon.  			Expression2  	::= Expression "?" Expression ":" Expression ;
+
+EAss. 			Expression1		::= Ident "=" Expression ;
+EAddAss.		Expression1		::= Ident "+=" Expression ;
+ESubAss.		Expression1		::= Ident "-=" Expression ;
+EMulAss.		Expression1		::= Ident "*=" Expression ;
+EDivAss.		Expression1		::= Ident "/=" Expression ;
+EModAss.		Expression1		::= Ident "%=" Expression ;
+EAndAss.		Expression1		::= Ident "&=" Expression ;
+EOrAss.			Expression1		::= Ident "|=" Expression ;
+EXorAss.		Expression1		::= Ident "^=" Expression ;
+ELShAss.		Expression1		::= Ident "<<=" Expression ;
+ERShAss.		Expression1		::= Ident ">>=" Expression ;
+
+coercions Expression 12 ;
+separator Expression "," ;
