@@ -608,6 +608,7 @@ void FSParseTree::visitEPostDec(EPostDec* epostdec)
 ///////////////////////////////////////////////
 // EPow : Power function
 // This is quite expensive and messy
+// Relies on pow(x,y) = 2^(y*lg(x))
 ///////////////////////////////////////////////
 
 void FSParseTree::visitEPow(EPow* epow)
