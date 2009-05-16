@@ -18,11 +18,18 @@
 #ifndef __FSParseTree_h
 #define __FSParseTree_h
 
+#include "FSFunctionParseTree.h"
 #include "FSVisitor.h"
 #include "FSVariablePicker.h"
 #include "SimpleStructures.h"
 
 class FSContext;
+
+#define INVALID_VARIABLE_OFFSET 0xFFFFFFFF
+
+///////////////////////////////////////////////
+// FSParseTree : Emits assembler from code
+///////////////////////////////////////////////
 
 class FSParseTree : public FSVisitor
 {
@@ -30,27 +37,23 @@ private:
     Simple::ANSIString assembler;
     FSContext* context;
 
-    FSVariablePicker varPicker;
+    FSVariablePicker    varPicker;
+    FSFunctionParseTree fnTree;
 
     void pushDouble();
     void popDouble();
     Simple::ANSIString GetRandomLabel();
 public:
-    FSParseTree(FSContext* c) : context(c), varPicker(c) {}
+    FSParseTree(FSContext* c) : context(c), varPicker(c), fnTree(c) {}
     ~FSParseTree() {}
 
     Simple::Stack<FSVariable*>* GetVariableStackPointer() { return varPicker.GetVariableStackPtr(); }
     unsigned int GetVariableOffset(const char* const& name);
 
     void visitMain(Main* main);
-    void visitBFunc(BFunc* bfunc);
     void visitBStmt(BStmt* bstmt);
-    void visitDTFunc(DTFunc* dtfunc);
-    void visitDTParam(DTParam* dtparam);
     void visitListBlock(ListBlock* listblock);
-    void visitListFunction(ListFunction* listfunction);
     void visitListStatement(ListStatement* liststatement);
-    void visitListParameter(ListParameter* listparameter);
     void visitSExp(SExp* sexp);
     void visitSScope(SScope* sscope);
     void visitSRet(SRet* sret);

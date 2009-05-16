@@ -31,8 +31,9 @@ private:
     unsigned int    length;
 
     Simple::Stack<FSVariable*> vars;
+    Simple::Stack<double> consts;
 public:
-    FSCompiledCode(const unsigned char* const& source, const unsigned int& size) : vars()
+    FSCompiledCode(const unsigned char* const& source, const unsigned int& size) : vars(), consts()
     {
         bytes = static_cast<unsigned char*>(VirtualAlloc(0, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE));
         for(unsigned int i = 0; i < size; ++i) bytes[i] = source[i];
@@ -47,7 +48,9 @@ public:
     void operator ()();
 
     Simple::Stack<FSVariable*>* GetVariables() { return &vars; }
+    Simple::Stack<double>* GetConstants() { return &consts; }
     void SetupVariableStack(Simple::Stack<FSVariable*>* v);
+    void SetupConstantStack(Simple::Stack<double>* v);
 };
 
 #endif

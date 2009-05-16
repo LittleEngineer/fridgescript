@@ -24,13 +24,23 @@
 */
 
 #include "FSParseTree.h"
-#include "FSVariable.h"
 
 #include "Absyn.h"
 #include "FSContext.h"
+#include "FSFunctionParseTree.h"
+#include "FSVariable.h"
 
 #include <string.h>
 #include <time.h>
+
+///////////////////////////////////////////////
+// H E L P E R    F U N C T I O N S
+///////////////////////////////////////////////
+
+///////////////////////////////////////////////
+// Appends some assembler code to push a double
+// precision float onto the stack from st(0)
+///////////////////////////////////////////////
 
 void FSParseTree::pushDouble()
 {
@@ -38,11 +48,20 @@ void FSParseTree::pushDouble()
     assembler += "push eax\r\npush eax\r\nfstp [esp]\r\n";
 }
 
+///////////////////////////////////////////////
+// Appends some assembler code to pop a double
+// precision float off of the stack into st(0)
+///////////////////////////////////////////////
+
 void FSParseTree::popDouble()
 {
     // add esp, 8 would be MUCH better than two pops
     assembler += "fld [esp]\r\npop eax\r\npop eax\r\n";
 }
+
+///////////////////////////////////////////////
+// Generate a random label for jmp, call etc.
+///////////////////////////////////////////////
 
 Simple::ANSIString FSParseTree::GetRandomLabel()
 {
@@ -65,6 +84,10 @@ Simple::ANSIString FSParseTree::GetRandomLabel()
     return ret;
 }
 
+///////////////////////////////////////////////
+// Get the offset of a local variable from ebp
+///////////////////////////////////////////////
+
 unsigned int FSParseTree::GetVariableOffset(const char* const& name)
 {
     for(unsigned int i = 0; i < GetVariableStackPointer()->GetCount(); ++i)
@@ -74,40 +97,50 @@ unsigned int FSParseTree::GetVariableOffset(const char* const& name)
             return 8*(GetVariableStackPointer()->GetCount() - i - 1);
         }
     }
-
-    return 0xFFFFFFFF;
+    
+    return INVALID_VARIABLE_OFFSET;
 }
+
+///////////////////////////////////////////////
+// C O M P I L E R
+///////////////////////////////////////////////
+
+///////////////////////////////////////////////
+// Main : The whole program
+///////////////////////////////////////////////
 
 void FSParseTree::visitMain(Main* main)
 {
+    // first parse the variables
+    // this must be done first so that the variable references can be resolved in a single pass
     main->accept(&varPicker);
+
+    // parse the functions, this is important:
+    // * function calls can be done in one pass
+    // * some optimisations can be done in one pass
+    main->accept(&fnTree);
+
+    // now we should have the complete tree of functions and references for every variable
+    // this allows for single pass generation of code (ignoring any optimisations we may decide to add later)
     main->listblock_->accept(this);
+
+    // all of the assembler code has been emitted, just one thing left to do...
     assembler += "ret\r\n";
 }
 
-void FSParseTree::visitBFunc(BFunc* bfunc)
-{
-    bfunc->listfunction_->accept(this);
-}
+///////////////////////////////////////////////
+// BStmt : A list of statements
+///////////////////////////////////////////////
 
 void FSParseTree::visitBStmt(BStmt* bstmt)
 {
     bstmt->liststatement_->accept(this);
 }
 
-void FSParseTree::visitDTFunc(DTFunc* dtfunc)
-{
-    // default type function
-    // create a new parse tree for the function
-    FSParseTree* fp = new FSParseTree(context);
-    dtfunc->liststatement_->accept(fp);
-    
-    delete fp;
-}
-
-void FSParseTree::visitDTParam(DTParam* dtparam)
-{
-}
+///////////////////////////////////////////////
+// ListBlock : A list of blocks of code
+// e.g. statement lists, function defines, etc.
+///////////////////////////////////////////////
 
 void FSParseTree::visitListBlock(ListBlock* listblock)
 {
@@ -118,14 +151,10 @@ void FSParseTree::visitListBlock(ListBlock* listblock)
     }
 }
 
-void FSParseTree::visitListFunction(ListFunction* listfunction)
-{
-    while(listfunction)
-    {
-        listfunction->function_->accept(this);
-        listfunction = listfunction->listfunction_;
-    }
-}
+///////////////////////////////////////////////
+// ListBlock : A list of statements
+// e.g. if, for, expressions, etc.
+///////////////////////////////////////////////
 
 void FSParseTree::visitListStatement(ListStatement* liststatement)
 {
@@ -136,96 +165,142 @@ void FSParseTree::visitListStatement(ListStatement* liststatement)
     }
 }
 
-void FSParseTree::visitListParameter(ListParameter* listparameter)
-{
-    while(listparameter)
-    {
-        listparameter->parameter_->accept(this);
-        listparameter = listparameter->listparameter_;
-    }
-}
+///////////////////////////////////////////////
+// SExp : An expression statement
+// e.g. a = b + c;
+///////////////////////////////////////////////
 
 void FSParseTree::visitSExp(SExp* sexp)
 {
     assembler += "-- expression statement\r\n";
+
     sexp->expression_->accept(this);
+
     // clean the expression result off of the fpu stack
     assembler += "-- end of expression\r\nffree st(0)\r\n";
 }
+
+///////////////////////////////////////////////
+// SScope : Just a bit of code wrapped in { }
+// doesn't create a variable scope like C++
+///////////////////////////////////////////////
 
 void FSParseTree::visitSScope(SScope* sscope)
 {
     sscope->liststatement_->accept(this);
 }
 
+///////////////////////////////////////////////
+// SRet : The return statement
+// leaves a result in st(0)
+///////////////////////////////////////////////
+
 void FSParseTree::visitSRet(SRet* sret)
 {
     assembler += "-- return statement\r\n";
+
     sret->expression_->accept(this);
     assembler += "ret\r\n";
+
+    assembler += "-- end of return statement\r\n";
 }
+
+///////////////////////////////////////////////
+// SIf : The if statement
+// runs code depending on a test
+///////////////////////////////////////////////
 
 void FSParseTree::visitSIf(SIf* sif)
 {
     // evaluate expression
     assembler += "-- if statement expresion\r\n";
+
     sif->expression_->accept(this);
+
     // compare st0 with zero
     assembler += "-- compare result with zero for if statement\r\n";
     assembler += "fldz\r\n";
     assembler += "fcomi\r\n";
+
     // clean stack
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(0)\r\n";
     assembler += "ffree st(1)\r\n";
+
     // jump if zero ...
     assembler += "jz ";
     Simple::ANSIString lbl = GetRandomLabel();
     assembler += lbl;
     assembler += "\r\n";
+
     // ... otherwise do what the if contains
     assembler += "-- if statement contents\r\n";
     sif->statement_->accept(this);
-    assembler += "-- end of if statement\r\n";
+    
+    // end label
     assembler += lbl;
     assembler += ":\r\n";
+    
+    assembler += "-- end of if statement\r\n";
 }
+
+///////////////////////////////////////////////
+// SIfElse : The if-else statement
+// runs code depending on a test
+///////////////////////////////////////////////
 
 void FSParseTree::visitSIfElse(SIfElse* sifelse)
 {
     // evaluate expression
     assembler += "-- if statement expresion\r\n";
+    
     sifelse->expression_->accept(this);
+    
     // compare st0 with zero
     assembler += "-- compare result with zero for if statement\r\n";
     assembler += "fldz\r\n";
     assembler += "fcomi\r\n";
+    
     // clean stack
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(0)\r\n";
     assembler += "ffree st(1)\r\n";
+    
     // jump if zero to the else block ...
     assembler += "jz ";
     Simple::ANSIString lblElse = GetRandomLabel();
     assembler += lblElse;
     assembler += "\r\n";
+    
     // ... otherwise run the contents of the if block then jump to the end
     assembler += "-- if statement contents\r\n";
+    
     sifelse->statement_1->accept(this);
+    
     assembler += "jmp ";
     Simple::ANSIString lblEnd = GetRandomLabel();
     assembler += lblEnd;
     assembler += "\r\n";
+    
     // now put the else block and its label
     assembler += "-- else contents\r\n";
     assembler += lblElse;
     assembler += ":\r\n";
+    
     sifelse->statement_2->accept(this);
-    assembler += "-- end of if statement\r\n";
+
     // then the end label for the if block
     assembler += lblEnd;
     assembler += ":\r\n";
+
+    assembler += "-- end of if statement\r\n";
 }
+
+///////////////////////////////////////////////
+// SWhile : The while statement
+// does a test then runs code and repeats until
+// the test fails
+///////////////////////////////////////////////
 
 void FSParseTree::visitSWhile(SWhile* swhile)
 {
@@ -260,6 +335,12 @@ void FSParseTree::visitSWhile(SWhile* swhile)
     assembler += ":\r\n";
 }
 
+///////////////////////////////////////////////
+// SUntil : The until statement
+// runs code then does a test and repeats until
+// the test succeeds
+///////////////////////////////////////////////
+
 void FSParseTree::visitSUntil(SUntil* suntil)
 {
     assembler += "-- until statement\r\n";
@@ -283,6 +364,13 @@ void FSParseTree::visitSUntil(SUntil* suntil)
     assembler += "\r\n";
     // ... otherwise continue
 }
+
+///////////////////////////////////////////////
+// SFor : The for statement
+// for ( a; b; c )
+// runs a then runs code depending on test b
+// then runs c and repeats
+///////////////////////////////////////////////
 
 void FSParseTree::visitSFor(SFor* sfor)
 {
@@ -324,13 +412,31 @@ void FSParseTree::visitSFor(SFor* sfor)
     assembler += ":\r\n";
 }
 
+///////////////////////////////////////////////
+// SBreak : The break statement
+// for breaking out of loops or ifs
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
+
 void FSParseTree::visitSBreak(SBreak* sbreak)
 {
 }
 
+///////////////////////////////////////////////
+// SContinue : The continue statement
+// for skipping to the next loop
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
+
 void FSParseTree::visitSContinue(SContinue* scontinue)
 {
 }
+
+///////////////////////////////////////////////
+// ECDbl : Double constant for expressions
+///////////////////////////////////////////////
 
 void FSParseTree::visitECDbl(ECDbl* ecdbl)
 {
@@ -356,6 +462,10 @@ void FSParseTree::visitECDbl(ECDbl* ecdbl)
         assembler += "]\r\n";
     }
 }
+
+///////////////////////////////////////////////
+// ECInt : Integer constant for expressions
+///////////////////////////////////////////////
 
 void FSParseTree::visitECInt(ECInt* ecint)
 {
@@ -384,6 +494,10 @@ void FSParseTree::visitECInt(ECInt* ecint)
     }
 }
 
+///////////////////////////////////////////////
+// EVar : Variable for expressions
+///////////////////////////////////////////////
+
 void FSParseTree::visitEVar(EVar *evar)
 {
     // load the variable
@@ -397,6 +511,10 @@ void FSParseTree::visitEVar(EVar *evar)
 
 }
 
+///////////////////////////////////////////////
+// EPi : Pi constant for expressions
+///////////////////////////////////////////////
+
 void FSParseTree::visitEPi(EPi *epi)
 {
     // fldpi
@@ -404,10 +522,12 @@ void FSParseTree::visitEPi(EPi *epi)
     assembler += "fldpi\r\n";
 }
 
-/*
-    the default function call method is to return one double in st(0)
-    the parameters are passed in on the stack proper
-*/
+///////////////////////////////////////////////
+// ECall : Function call
+// the function result is to return in st(0)
+// the parameters are handled as locals and
+// are setup in the function parse tree
+///////////////////////////////////////////////
 
 void FSParseTree::visitECall(ECall* ecall)
 {
@@ -419,6 +539,10 @@ void FSParseTree::visitECall(ECall* ecall)
     }
     // call function (function cleans stack)
 }
+
+///////////////////////////////////////////////
+// EPostInc : Post-increment
+///////////////////////////////////////////////
 
 void FSParseTree::visitEPostInc(EPostInc* epostinc)
 {
@@ -445,11 +569,14 @@ void FSParseTree::visitEPostInc(EPostInc* epostinc)
     // store result
     assembler += "fst [ebp+";
     assembler.AppendInt(GetVariableOffset(epostinc->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(epostinc->ident_, 0)));
     assembler += "]\r\n";
     // clean stack so old value is on top
     assembler += "fstp st(0)\r\n";
 }
+
+///////////////////////////////////////////////
+// EPostDec : Post-decrement
+///////////////////////////////////////////////
 
 void FSParseTree::visitEPostDec(EPostDec* epostdec)
 {
@@ -464,7 +591,6 @@ void FSParseTree::visitEPostDec(EPostDec* epostdec)
     assembler += "\r\n";
     assembler += "fld [ebp+";
     assembler.AppendInt(GetVariableOffset(epostdec->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(epostdec->ident_, 0)));
     assembler += "]\r\n";
     // dupe
     assembler += "fld st(0)\r\n";
@@ -474,11 +600,15 @@ void FSParseTree::visitEPostDec(EPostDec* epostdec)
     // store result
     assembler += "fst [ebp+";
     assembler.AppendInt(GetVariableOffset(epostdec->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(epostdec->ident_, 0)));
     assembler += "]\r\n";
     // clean stack so old value is on top
     assembler += "fstp st(0)\r\n";
 }
+
+///////////////////////////////////////////////
+// EPow : Power function
+// This is quite expensive and messy
+///////////////////////////////////////////////
 
 void FSParseTree::visitEPow(EPow* epow)
 {
@@ -493,10 +623,12 @@ void FSParseTree::visitEPow(EPow* epow)
         f2xm1 does st(0) = 2^(st(0) - 1.0
     */
 
+    assembler += "-- power function\r\n";
+
     /*
         evaluate second expression and push
     */
-    assembler += "-- power function\r\n";
+
     assembler += "-- expression 1\r\n";
     epow->expression_1->accept(this);
     assembler += "-- end expression 1\r\n";
@@ -515,13 +647,17 @@ void FSParseTree::visitEPow(EPow* epow)
     assembler += "-- do the powering\r\n";
     assembler += "fyl2x\r\n";
     // st(0) = y*lg(x)
+
+    // split the result into integer and fraction
     assembler += "fld st(0)\r\n";
     assembler += "frndint\r\n";
     // st(1) = y*lg(x)
     // st(0) = round(y*lg(x))
+    
     assembler += "fsub\r\n";
     // st(1) = remainder(y*lg(x))
     // st(0) = round(y*lg(x))
+    
     // work out power of integer and fractional part
     assembler += "fld1\r\n";
     assembler += "fscale\r\n";
@@ -531,25 +667,43 @@ void FSParseTree::visitEPow(EPow* epow)
     assembler += "f2xm1\r\n";
     // st(1) = pow(x,round(y))
     // st(0) = pow(x,remainder(y)) - 1
+    
     // add one to finish integral power then multiply by fractional part
     assembler += "fld1\r\n";
     assembler += "faddp\r\n";
     assembler += "fmulp\r\n";
+
     assembler += "-- end of power function\r\n";
 }
 
+///////////////////////////////////////////////
+// ESqrt : Square-root function
+// This can be optimised:
+// * SSE sqrt function
+// * magic number hack
+///////////////////////////////////////////////
+
 void FSParseTree::visitESqrt(ESqrt* esqrt)
 {
+    assembler += "-- expression for sqrt\r\n";
+
     /*
         evaluate the expression
         sqrt the result and leave it in st(0) for the rest of the expression
     */
-    assembler += "-- expression for sqrt\r\n";
+
     esqrt->expression_->accept(this);
+
     assembler += "-- sqrt\r\n";
     assembler += "fsqrt\r\n";
+
     assembler += "-- end sqrt\r\n";
 }
+
+///////////////////////////////////////////////
+// EExp : Exponential function
+// This is messy like EPow
+///////////////////////////////////////////////
 
 void FSParseTree::visitEExp(EExp* eexp)
 {
@@ -565,11 +719,14 @@ void FSParseTree::visitEExp(EExp* eexp)
         f2xm1 does st(0) = 2^(st(0) - 1.0
     */
 
+    assembler += "-- exponential function expression\r\n";
+
     /*
         evaluate expression
     */
-    assembler += "-- exponential function expression\r\n";
     eexp->expression_->accept(this);
+    // st(0) = y
+
     // push e
     assembler += "-- load e\r\n";
     assembler += "fld [";
@@ -578,16 +735,20 @@ void FSParseTree::visitEExp(EExp* eexp)
     // from pow(x,y)...
     // st(1) = y
     // st(0) = x
+    
     assembler += "-- do power function\r\n";
     assembler += "fyl2x\r\n";
     // st(0) = y*lg(x)
+    
     assembler += "fld st(0)\r\n";
     assembler += "frndint\r\n";
     // st(1) = y*lg(x)
     // st(0) = round(y*lg(x))
+    
     assembler += "fsub\r\n";
     // st(1) = remainder(y*lg(x))
     // st(0) = round(y*lg(x))
+    
     // work out power of integer and fractional part
     assembler += "fld1\r\n";
     assembler += "fscale\r\n";
@@ -597,12 +758,18 @@ void FSParseTree::visitEExp(EExp* eexp)
     assembler += "f2xm1\r\n";
     // st(1) = pow(x,round(y))
     // st(0) = pow(x,remainder(y)) - 1
+    
     // add one to finish integral power then multiply by fractional part
     assembler += "fld1\r\n";
     assembler += "faddp\r\n";
     assembler += "fmulp\r\n";
+    
     assembler += "-- end exponential function\r\n";
 }
+
+///////////////////////////////////////////////
+// ELog : Natural logarithm
+///////////////////////////////////////////////
 
 void FSParseTree::visitELog(ELog* elog)
 {
@@ -610,29 +777,42 @@ void FSParseTree::visitELog(ELog* elog)
         log 2^(lg x) = log x = lg x * log 2
     */
     assembler += "-- expression for natural logarithm\r\n";
+
     elog->expression_->accept(this);
+
     assembler += "-- natural logarithm\r\n";
     assembler += "fldln2\r\n";
     assembler += "fxch\r\n";
     assembler += "fyl2x\r\n";
+    
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(1)\r\n";
+    
     assembler += "-- end natural logarithm\r\n";
 }
+
+///////////////////////////////////////////////
+// ELogD : Base 10 logarithm
+///////////////////////////////////////////////
 
 void FSParseTree::visitELogD(ELogD* elogd)
 {
     /*
         log10 2^(lg x) = log10 x = lg x * log10 2
     */
+    
     assembler += "-- expression for log 10\r\n";
+    
     elogd->expression_->accept(this);
+    
     assembler += "-- log 10\r\n";
     assembler += "fldlg2\r\n";
     assembler += "fxch\r\n";
     assembler += "fyl2x\r\n";
+    
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(1)\r\n";
+    
     assembler += "-- end log 10\r\n";
 }
 
@@ -866,6 +1046,12 @@ void FSParseTree::visitENeg(ENeg* eneg)
     eneg->expression_->accept(this);
     assembler += "fchs\r\n";
 }
+
+///////////////////////////////////////////////
+// EBnot : Bitwise not operator
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
 
 void FSParseTree::visitEBnot(EBnot* ebnot)
 {
@@ -1173,17 +1359,41 @@ void FSParseTree::visitENE(ENE* ene)
     assembler += "ffree st(3)\r\n";
 }
 
+///////////////////////////////////////////////
+// ELand : Bitwise and operator
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
+
 void FSParseTree::visitEBand(EBand* eband)
 {
 }
+
+///////////////////////////////////////////////
+// EBor : Bitwise inclusive or operator
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
 
 void FSParseTree::visitEBor(EBor* ebor)
 {
 }
 
+///////////////////////////////////////////////
+// EBxor : Bitwise inclusive or operator
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
+
 void FSParseTree::visitEBxor(EBxor* ebxor)
 {
 }
+
+///////////////////////////////////////////////
+// ELand : Logical and operator
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
 
 void FSParseTree::visitELand(ELand* eland)
 {
@@ -1208,6 +1418,12 @@ void FSParseTree::visitELand(ELand* eland)
     assembler += lblEnd;
     assembler += ":\r\n";
 }
+
+///////////////////////////////////////////////
+// ELor : Logical inclusive or operator
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
 
 void FSParseTree::visitELor(ELor* elor)
 {
@@ -1235,13 +1451,29 @@ void FSParseTree::visitELor(ELor* elor)
     assembler += ":\r\n";
 }
 
+///////////////////////////////////////////////
+// ELxor : Logical exclusive or operator
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
+
 void FSParseTree::visitELxor(ELxor* elxor)
 {
 }
 
+///////////////////////////////////////////////
+// ECon : Ternary conditional operator
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
+
 void FSParseTree::visitECon(ECon* econ)
 {
 }
+
+///////////////////////////////////////////////
+// EAss : Assignment to a variable
+///////////////////////////////////////////////
 
 void FSParseTree::visitEAss(EAss* eass)
 {
@@ -1346,21 +1578,51 @@ void FSParseTree::visitEModAss(EModAss* emodass)
     assembler += "]\r\n";
 }
 
+///////////////////////////////////////////////
+// EAndAss : Bitwise and and assign
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
+
 void FSParseTree::visitEAndAss(EAndAss* eandass)
 {
 }
+
+///////////////////////////////////////////////
+// EOrAss : Bitwise inclusive or and assign
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
 
 void FSParseTree::visitEOrAss(EOrAss* eorass)
 {
 }
 
+///////////////////////////////////////////////
+// EXorAss : Bitwise exclusive or and assign
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
+
 void FSParseTree::visitEXorAss(EXorAss* exorass)
 {
 }
 
+///////////////////////////////////////////////
+// ELShAss : Left shift bits and assign
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
+
 void FSParseTree::visitELShAss(ELShAss* elshass)
 {
 }
+
+///////////////////////////////////////////////
+// ERShAss : Right shift bits and assign
+///////////////////////////////////////////////
+// N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
 
 void FSParseTree::visitERShAss(ERShAss* ershass)
 {
