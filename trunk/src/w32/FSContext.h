@@ -37,6 +37,8 @@ public:
     unsigned int CompileCode(const char* const& source);
     void ExecuteCode(const unsigned int& id);
 
+    // this needs to go!
+    // its buggy if more than one piece of code is compiled against a context
     double* GetConstant(const double& value);
 };
 
