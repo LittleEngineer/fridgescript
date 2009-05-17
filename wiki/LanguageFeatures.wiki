@@ -28,7 +28,7 @@ The [Grammar grammar] is documented on the wiki, but the exact LBNF (labelled Ba
   * [Expression Expression evaluation]
   * [if Branching]
   * [Loops]
-  * [Function Functions]
-  * [LazyEvaluation Lazy evaluation]
-  * [ConstantExpressions Constant expression] evaluation at compile-time
-  * Symbolic optimisation and out-of-order execution
+  * [Function Functions] (not fully implemented)
+  * [LazyEvaluation Lazy evaluation] (not fully implemented)
+  * [ConstantExpressions Constant expression] evaluation at compile-time (not fully implemented)
+  * Symbolic optimisation and out-of-order execution (not fully implemented)
