@@ -1,0 +1,13 @@
+#summary Language features of FridgeScript
+
+= Introduction =
+
+This page describes the FridgeScript language itself, rather than the details of the compiler implementation provided.
+
+
+= Details =
+
+There are several aspects to the language of FridgeScript that probably should be documented here:
+  * Grammar (i.e. the LBNF used)
+  * Functionality (e.g. what statements do, what operators do)
+  * Concepts (e.g. functions, conditionals, lazy evaluation, out-of-order execution)
