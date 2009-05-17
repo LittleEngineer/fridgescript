@@ -1,4 +1,5 @@
 #summary Background and information on FridgeScript.
+#labels Featured,Phase-Implementation
 
 = Introduction =
 
