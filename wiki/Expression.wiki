@@ -8,7 +8,7 @@ Expressions are the primary means of programming in FridgeScript.
 
 = Details =
 
-An expression contains variables, operators and function calls in a similar manner to languages like C++ and Java. An exact combinations which are permitted can be found in the [Grammar grammar] for FridgeScript. Although some simple examples are often enough to get started with.
+An expression contains variables, operators and function calls in a similar manner to languages like C++ and Java. An exact combinations which are permitted can be found in the [Grammar grammar] for FridgeScript. Although some simple examples are often enough to get started.
 
 = Examples =
 {{{
