@@ -22,7 +22,7 @@ extern "C" unsigned int __declspec(dllimport) __stdcall FSExecute(unsigned int c
 = Language Features =
 
 v0.1.0b supports:
-  * all of the mathematical operators
-  * all of the logical operators except xor
-  * all branches and loops
-  * all of the assignment operators except the bitwise ones and the binary shifts
+  * all of the [MathOperators mathematical operators]
+  * all of the [LogicalOperators logical operators] except xor
+  * all [if branches] and [Loop loops]
+  * all of the [AssignmentOperators assignment operators] except the bitwise ones and the binary shifts
