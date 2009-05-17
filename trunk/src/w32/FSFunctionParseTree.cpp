@@ -62,11 +62,8 @@ void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
     FSParseTree* fp = new FSParseTree(context);
     //dtfunc->liststatement_->accept(fp);
     
-    // create a seperate parse tree for the function quickly on the stack
-    // this might be nice to wrap into a function, but for now it only happens here
-    BStmt fnBlock(dtfunc->liststatement_);
-    ListBlock fnListBlock(&fnBlock);
-    Main fnMain(&fnListBlock);
+    // create a seperate parse tree for the function
+    Main fnMain(dtfunc->listblock_);
 
     // parse the function code block
     fnMain.accept(fp);

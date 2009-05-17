@@ -21,6 +21,10 @@
 #include "FSAssemblerVisitor.h"
 #include "SimpleStructures.h"
 
+///////////////////////////////////////////////
+// FSOperandVisitor : Assembles operands
+///////////////////////////////////////////////
+
 class FSOperandVisitor : public FSAssemblerVisitor
 {
 private:

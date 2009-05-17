@@ -69,10 +69,10 @@ BStmt *BStmt::clone() const {
 }
 
 /********************   DTFunc    ********************/
-DTFunc::DTFunc(Ident p1, ListParameter *p2, ListStatement *p3) { ident_ = p1; listparameter_ = p2; liststatement_ = p3; }
+DTFunc::DTFunc(Ident p1, ListParameter *p2, ListBlock *p3) { ident_ = p1; listparameter_ = p2; listblock_ = p3; }
 DTFunc::DTFunc(const DTFunc & other) {   ident_ = other.ident_;
   listparameter_ = other.listparameter_->clone();
-  liststatement_ = other.liststatement_->clone();
+  listblock_ = other.listblock_->clone();
 
 }
 DTFunc &DTFunc::operator=(const DTFunc & other) {
@@ -83,11 +83,11 @@ DTFunc &DTFunc::operator=(const DTFunc & other) {
 void DTFunc::swap(DTFunc & other) {
   std::swap(ident_, other.ident_);
   std::swap(listparameter_, other.listparameter_);
-  std::swap(liststatement_, other.liststatement_);
+  std::swap(listblock_, other.listblock_);
 
 }
 
-DTFunc::~DTFunc() { delete(listparameter_); delete(liststatement_); }
+DTFunc::~DTFunc() { delete(listparameter_); delete(listblock_); }
 
 void DTFunc::accept(Visitor *v) { v->visitDTFunc(this); }
 DTFunc *DTFunc::clone() const {

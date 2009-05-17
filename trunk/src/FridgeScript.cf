@@ -23,7 +23,7 @@ entrypoints Program ;
 Main. 			Program 		::= [Block] ;
 BFunc.			Block			::= [Function] ;
 BStmt.			Block			::= [Statement] ;
-DTFunc.			Function 		::= Ident "(" [Parameter] ")" "{" [Statement] "}" ;
+DTFunc.			Function 		::= Ident "(" [Parameter] ")" "{" [Block] "}" ;
 DTParam. 		Parameter 		::= Ident ;
 
 terminator Block "" ;
@@ -34,11 +34,11 @@ separator nonempty Parameter "," ;
 SExp. 			Statement 		::= Expression ";" ;
 SScope. 		Statement 		::= "{" [Statement] "}" ;
 SRet. 			Statement 		::= "return" Expression ";" ;
-SIf.			Statement		::= "if" "(" Expression ")" Statement ;
-SIfElse.		Statement		::= "if" "(" Expression ")" Statement "else" Statement ;
-SWhile.			Statement		::= "while" "(" Expression ")" Statement ;
-SUntil.			Statement		::= "until" "(" Expression ")" Statement ;
-SFor.			Statement		::= "for" "(" Expression ";" Expression ";" Expression ")" Statement ;
+SIf.			Statement		::= "if" "(" Expression ")" "{" Statement "}" ;
+SIfElse.		Statement		::= "if" "(" Expression ")" "{" Statement "else" "{" Statement "}" ;
+SWhile.			Statement		::= "while" "(" Expression ")" "{" Statement "}" ;
+SUntil.			Statement		::= "until" "(" Expression ")" "{" Statement "}" ;
+SFor.			Statement		::= "for" "(" Expression ";" Expression ";" Expression ")" "{" Statement "}" ;
 SBreak.			Statement		::= "break" ";" ;
 SContinue.		Statement		::= "continue" ";" ;
 

@@ -21,6 +21,10 @@
 #include "Absyn.h"
 #include "SimpleStructures.h"
 
+///////////////////////////////////////////////
+// FSAssemblerVisitor : Base class visitor
+///////////////////////////////////////////////
+
 class FSAssemblerVisitor : public Visitor
 {
 protected:

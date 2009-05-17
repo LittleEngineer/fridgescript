@@ -19,6 +19,14 @@
 
 #include <string.h>
 
+///////////////////////////////////////////////
+// H E L P E R    F U N C T I O N S
+///////////////////////////////////////////////
+
+///////////////////////////////////////////////
+// Converts a hexadecimal string to an integer
+///////////////////////////////////////////////
+
 unsigned int ConvertHex(const char* const& str)
 {
     unsigned int i = 0;
@@ -42,6 +50,10 @@ unsigned int ConvertHex(const char* const& str)
 
     return ret;
 }
+
+///////////////////////////////////////////////
+// R E G I S T E R S
+///////////////////////////////////////////////
 
 void FSOperandVisitor::visitREax(REax* reax)
 {
@@ -82,7 +94,15 @@ void FSOperandVisitor::visitREdi(REdi* redi)
 {
     lastRegister = EDI;
 }
- 
+
+///////////////////////////////////////////////
+// O P E R A N D    A S S E M B L E R
+///////////////////////////////////////////////
+
+///////////////////////////////////////////////
+// OReg : Register
+///////////////////////////////////////////////
+
 void FSOperandVisitor::visitOReg(OReg* oreg)
 {
     oreg->register_->accept(this);
@@ -100,6 +120,10 @@ void FSOperandVisitor::visitOReg(OReg* oreg)
         break;
     }
 }
+
+///////////////////////////////////////////////
+// OHex : Hexadecimal constant
+///////////////////////////////////////////////
 
 void FSOperandVisitor::visitOHex(OHex* ohex)
 {
@@ -121,6 +145,10 @@ void FSOperandVisitor::visitOHex(OHex* ohex)
     }
 }
 
+///////////////////////////////////////////////
+// OLab : Label
+///////////////////////////////////////////////
+
 void FSOperandVisitor::visitOLab(OLab* olab)
 {
     // add a 32-bit zero to the output
@@ -128,6 +156,10 @@ void FSOperandVisitor::visitOLab(OLab* olab)
     // take note of the label reference that needs to be added here
     lastLabel = olab->ident_;
 }
+
+///////////////////////////////////////////////
+// OLit : Literal address (hexadecimal)
+///////////////////////////////////////////////
 
 void FSOperandVisitor::visitOLitAdd(OLitAdd* olitadd)
 {
@@ -156,6 +188,10 @@ void FSOperandVisitor::visitOLitAdd(OLitAdd* olitadd)
     c >>= 8;
     out.Push(c & 0xFF);
 }
+
+///////////////////////////////////////////////
+// ORegAdd : Register address
+///////////////////////////////////////////////
 
 void FSOperandVisitor::visitORegAdd(ORegAdd* oregadd)
 {
@@ -192,6 +228,11 @@ void FSOperandVisitor::visitORegAdd(ORegAdd* oregadd)
     }
 }
 
+///////////////////////////////////////////////
+// ORelAddP : Relative address from register
+// The offset is added to the address
+///////////////////////////////////////////////
+
 void FSOperandVisitor::visitORelAddP(ORelAddP* oreladdp)
 {
     // parse the register
@@ -227,6 +268,11 @@ void FSOperandVisitor::visitORelAddP(ORelAddP* oreladdp)
         // error
     }
 }
+
+///////////////////////////////////////////////
+// ORelAddS : Relative address from register
+// The offset is subtracted from the address
+///////////////////////////////////////////////
 
 void FSOperandVisitor::visitORelAddS(ORelAddS* oreladds)
 {
