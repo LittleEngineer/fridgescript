@@ -16,18 +16,19 @@ The [Grammar grammar] is documented on the wiki, but the exact LBNF (labelled Ba
 
 == Functionality ==
   * [MathOperators Mathematical operators]
-  * Logical operators
-  * Bitwise operators (not fully implemented)
+  * [AssignmentOperators Assignment operators]
+  * [LogicalOperators Logical operators]
+  * [BitwiseOperators Bitwise operators] (not fully implemented)
   * [MathFunctions Built-in mathematical functions]
-  * Branching with [if] statements
-  * Loops with [while], [until] and [for].
-  * User-defined functions and function calls from within expressions (not fully implemented)
+  * [if If statements]
+  * [while While], [until] and [for] loops
+  * [Function User-defined functions] and function calls from within expressions (not fully implemented)
 
 == Concepts ==
   * [Expression Expression evaluation]
   * [if Branching]
-  * Loops
-  * Functions
-  * Lazy evaluation
-  * Constant expression evaluation
+  * [Loops]
+  * [Function Functions]
+  * [LazyEvaluation Lazy evaluation]
+  * [ConstantExpressions Constant expression] evaluation at compile-time
   * Symbolic optimisation and out-of-order execution
