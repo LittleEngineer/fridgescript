@@ -55,21 +55,21 @@ Multiple-line comments are enclosed with /* and */.
 
 Non-terminals are enclosed between < and >. The symbols -> (production), | (union) and eps (empty rule) belong to the BNF notation. All other symbols are terminals. 
 
-|| Program || -> || [Block] ||
-|| Block || -> || [Function] ||
-|| || | || [Statement] ||
-|| Function || -> || Ident ( [Parameter] ) { [Statement] } ||
+|| Program || -> || `[`Block`]` ||
+|| Block || -> || `[`Function`]` ||
+|| || | || `[`Statement`]` ||
+|| Function || -> || Ident ( `[`Parameter`]` ) { `[`Statement`]` } ||
 || Parameter || -> || Ident ||
 || [Block] || -> || eps ||
-|| || | || Block [Block] ||
+|| || | || Block `[`Block`]` ||
 || [Function] || -> || Function ||
-|| || | || Function [Function] ||
+|| || | || Function `[`Function`]` ||
 || [Statement] || -> || Statement ||
-|| || | || Statement [Statement] ||
+|| || | || Statement `[`Statement`]` ||
 || [Parameter] || -> || Parameter ||
-|| || | || Parameter , [Parameter] ||
+|| || | || Parameter , `[`Parameter`]` ||
 || Statement || -> || Expression ; ||
-|| || | || { [Statement] } ||
+|| || | || { `[`Statement`]` } ||
 || || | || return Expression ; ||
 || || | || if ( Expression ) Statement ||
 || || | || if ( Expression ) Statement else Statement ||
