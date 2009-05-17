@@ -12,7 +12,7 @@ FridgeScript provides the following assignment operators, similar to C++:
   * = assignment
   * += addition and assignment
   * -= subtraction and assignment
-  * *= multiplication and assignment
+  * `*`= multiplication and assignment
   * /= division and assignment
   * %= division remainder and assignment
   * ^= bitwise xor and assignment (not fully implemented)
