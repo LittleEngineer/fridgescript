@@ -115,8 +115,8 @@ IDENT [a-zA-Z0-9'_]
 <COMMENT>.      	 /* BNFC multi-line comment */;
 <COMMENT>[\n]   ++yy_mylinenumber ; 	 /* BNFC multi-line comment */;
 
-<YYINITIAL>"{--"      	 BEGIN COMMENT;
-<COMMENT>"--}"      	 BEGIN YYINITIAL;
+<YYINITIAL>"{-"      	 BEGIN COMMENT;
+<COMMENT>"-}"      	 BEGIN YYINITIAL;
 <COMMENT>.      	 /* BNFC multi-line comment */;
 <COMMENT>[\n]   ++yy_mylinenumber ; 	 /* BNFC multi-line comment */;
 

@@ -21,24 +21,30 @@ namespace FridgeScript
         [DllImport("FridgeScript", EntryPoint = "FSExecute", CallingConvention = CallingConvention.StdCall)]
         public extern static UInt32 FSExecute(UInt32 Context, UInt32 CodeHandle);
 
+        [DllImport("FridgeScript", EntryPoint = "FSGetVariableHandle", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
+        public extern static UInt32 FSGetVariableHandle(UInt32 Context, UInt32 CodeHandle, String Name);
+
         [DllImport("FridgeScript", EntryPoint = "FSGetVariableValue", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public extern static Double FSGetVariableValue(UInt32 Context, UInt32 CodeHandle, String Name);
+        public extern static Double FSGetVariableValue(UInt32 VariableHandle);
 
         [DllImport("FridgeScript", EntryPoint = "FSSetVariableValue", CharSet = CharSet.Ansi, CallingConvention = CallingConvention.StdCall)]
-        public extern static Double FSSetVariableValue(UInt32 Context, UInt32 CodeHandle, String Name, Double value);
+        public extern static Double FSSetVariableValue(UInt32 VariableHandle, Double value);
     }
 
     class Variable
     {
         Context Context;
         Code Code;
+        
         public Variable(Context context, Code code, String name)
         {
             Context = context; Code = code; Name = name;
+            Handle = API.FSGetVariableHandle(Context.Handle, Code.Handle, Name);
         }
 
+        public UInt32 Handle { get; private set; }
         public String Name { get; private set; }
-        public Double Value { get { return API.FSGetVariableValue(Context.Handle, Code.Handle, Name); } set { API.FSSetVariableValue(Context.Handle, Code.Handle, Name, value); } }
+        public Double Value { get { return API.FSGetVariableValue(Handle); } set { API.FSSetVariableValue(Handle, value); } }
     }
 
     class Context
