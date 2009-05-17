@@ -15,10 +15,20 @@
     along with FridgeScript or FSAssembler.  If not, see <http://www.gnu.org/licenses/>
 */
 
+///////////////////////////////////////////////
+// C R A P P Y    H E A D E R    F I L E
+///////////////////////////////////////////////
+// This header inherits C++ template crappyness
+// Personally I dislike the .i/.h method and
+// prefer it all to be in a .h, but if anyone
+// wants feel free to clean this up into some
+// "better" C++
+///////////////////////////////////////////////
+
 #ifndef __SimpleStructures_h
 #define __SimpleStructures_h
 
-#define _START_ALLOC 8
+#define SIMPLE_DATASTRUCTURE_START_ALLOC 16
 
 #include <malloc.h>
 
@@ -51,6 +61,7 @@ namespace Simple
 		
 		void CheckAlloc(const unsigned int& count)
 		{
+            if(count < SIMPLE_DATASTRUCTURE_START_ALLOC) return; // do nothing if we are smaller than the initial alloc
 			// if count goes over size allocate another size entries
 			if(count > size)
 			{
@@ -62,7 +73,7 @@ namespace Simple
 			{
 				while(count < (size >> 1))
 				{
-					if(size == _START_ALLOC) break;
+					if(size == SIMPLE_DATASTRUCTURE_START_ALLOC) break;
 					size >>= 1;
 				}
 				data = static_cast<T*>(realloc(data, sizeof(T)*size));
@@ -72,7 +83,7 @@ namespace Simple
 		SimpleDataStructure<T>() : DataStructure<T>()
 		{
 			// set up initial memory usage
-			size = _START_ALLOC;
+			size = SIMPLE_DATASTRUCTURE_START_ALLOC;
 			data = static_cast<T*>(malloc(sizeof(T)*size));
 		}
 

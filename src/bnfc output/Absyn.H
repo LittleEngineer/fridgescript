@@ -268,11 +268,11 @@ class DTFunc : public Function
  public:
   Ident ident_;
   ListParameter *listparameter_;
-  ListStatement *liststatement_;
+  ListBlock *listblock_;
 
   DTFunc(const DTFunc &);
   DTFunc &operator=(const DTFunc &);
-  DTFunc(Ident p1, ListParameter *p2, ListStatement *p3);
+  DTFunc(Ident p1, ListParameter *p2, ListBlock *p3);
   ~DTFunc();
   virtual void accept(Visitor *v);
   virtual  DTFunc  *clone() const;

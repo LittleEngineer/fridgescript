@@ -21,6 +21,10 @@
 #include "FSAssemblerVisitor.h"
 #include "SimpleStructures.h"
 
+///////////////////////////////////////////////
+// FSALabel : Labels for jmp, call, etc.
+///////////////////////////////////////////////
+
 class FSALabel
 {
 public:
@@ -50,6 +54,10 @@ public:
         return *this;
     }
 };
+
+///////////////////////////////////////////////
+// FSAssembler : Assembles parse tree to bytes
+///////////////////////////////////////////////
 
 class FSAssembler : public FSAssemblerVisitor
 {

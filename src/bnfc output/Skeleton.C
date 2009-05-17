@@ -39,7 +39,7 @@ void Skeleton::visitDTFunc(DTFunc* dtfunc)
 
   visitIdent(dtfunc->ident_);
   if (dtfunc->listparameter_) {dtfunc->listparameter_->accept(this);}
-  if (dtfunc->liststatement_) {dtfunc->liststatement_->accept(this);}
+  if (dtfunc->listblock_) {dtfunc->listblock_->accept(this);}
 }
 
 void Skeleton::visitParameter(Parameter* parameter) {} //abstract class

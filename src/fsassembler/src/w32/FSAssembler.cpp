@@ -26,18 +26,30 @@
 #define _export extern "C" unsigned int __declspec(dllexport) __stdcall
 #define _exportbptr extern "C" unsigned char __declspec(dllexport)* __stdcall
 
+///////////////////////////////////////////////
+// E X P O R T E D    F U N C T I O N S
+///////////////////////////////////////////////
+
+///////////////////////////////////////////////
+// FSAssemble : Generates bytes from assembler
+///////////////////////////////////////////////
+
 _exportbptr FSAssemble(const char* const& source, unsigned int& length)
 {
+    // write to a temporary file
+    // this can probably be cleaned up
     FILE* pTmpFile = tmpfile();
 
     fwrite(source, 1, strlen(source), pTmpFile);
 
     rewind(pTmpFile);
 
+    // parse
     Code* code = pCode(pTmpFile);
     bool error = false;
     FSAssembler parseTree = FSAssembler();
 
+    // assemble
     if(code)
     {    
         code->accept(&parseTree);
@@ -49,18 +61,22 @@ _exportbptr FSAssemble(const char* const& source, unsigned int& length)
         length = 0;
     }
 
+    // cleanup file
     fclose(pTmpFile);
     
     if(error) return 0;
 
     // create the output string
     length = parseTree.GetBytes().GetCount();
-    // TODO:: work out why it sometimes throws an exception here... heap corruption??? wtf! must exceed bounds somewhere
-    // it doesn't actually seem to break any of the generated code, its something to do with my flakey data structures...
+
     unsigned char* ret = new unsigned char[length];
     for(unsigned int i = 0; i < length; ++i) ret[i] = parseTree.GetBytes()[i];
     return ret;
 }
+
+///////////////////////////////////////////////
+// FSAFree : To free the result of FSAssemble
+///////////////////////////////////////////////
 
 _export FSAFree(unsigned char* ptr)
 {
@@ -68,6 +84,10 @@ _export FSAFree(unsigned char* ptr)
 
     return 0;
 }
+
+///////////////////////////////////////////////
+// H E L P E R    F U N C T I O N S
+///////////////////////////////////////////////
 
 void FSAssembler::AddLabel(const char* const& name, unsigned int position)
 {
@@ -121,6 +141,14 @@ void FSAssembler::ResolveLabels()
         }
     }
 }
+
+///////////////////////////////////////////////
+// A S S E M B L E R
+///////////////////////////////////////////////
+
+///////////////////////////////////////////////
+// Main : The whole program
+///////////////////////////////////////////////
 
 void FSAssembler::visitMain(Main* main)
 {
