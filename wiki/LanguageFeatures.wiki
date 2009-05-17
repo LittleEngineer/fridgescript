@@ -1,5 +1,5 @@
 #summary Language features of FridgeScript
-#labels Phase-Requirements,Phase-Design,Phase-Implementation,Featured
+#labels Phase-Requirements,Phase-Design,Phase-Implementation,Featured,Language-Documentation
 
 = Introduction =
 
