@@ -23,6 +23,11 @@
 // F U N C T I O N    V I S I T O R
 ///////////////////////////////////////////////
 
+FSFunctionParseTree::~FSFunctionParseTree()
+{
+    for(unsigned int i = 0; i < fnList.GetCount(); ++i) delete fnList[i];
+}
+
 ///////////////////////////////////////////////
 // Main : The whole program
 ///////////////////////////////////////////////
@@ -32,17 +37,43 @@ void FSFunctionParseTree::visitMain(Main* main)
     main->listblock_->accept(this);
 }
 
+///////////////////////////////////////////////
+// BFunc : A block containing a list of
+//         function definitions
+///////////////////////////////////////////////
+
 void FSFunctionParseTree::visitBFunc(BFunc* bfunc)
 {
     bfunc->listfunction_->accept(this);
 }
+
+///////////////////////////////////////////////
+// DTFunc : Default type function definition
+///////////////////////////////////////////////
+// N E E D S    F I N I S H I N G
+///////////////////////////////////////////////
+// doesn't deal with parameters completely yet
+///////////////////////////////////////////////
 
 void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
 {
     // default type function
     // create a new parse tree for the function
     FSParseTree* fp = new FSParseTree(context);
-    dtfunc->liststatement_->accept(fp);
+    //dtfunc->liststatement_->accept(fp);
+    
+    // create a seperate parse tree for the function quickly on the stack
+    // this might be nice to wrap into a function, but for now it only happens here
+    BStmt fnBlock(dtfunc->liststatement_);
+    ListBlock fnListBlock(&fnBlock);
+    Main fnMain(&fnListBlock);
+
+    // parse the function code block
+    fnMain.accept(fp);
+
+    // create an object to represent the function
+    // for the moment the label used in assembler can be the function name, it would be nice to prefix it with something though
+    FSFunction* fnStructure = new FSFunction(dtfunc->ident_, dtfunc->ident_);
 
     // check which parameters are actually used in the function
     // this is both optimisation and simplification
@@ -55,6 +86,7 @@ void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
         if( uOffset != INVALID_VARIABLE_OFFSET )
         {
             // this parameter goes into [ebp+uOffset]
+            // TODO: Keep track of this in the function structure
         }
 
         // otherwise throw this parameter away
@@ -63,6 +95,10 @@ void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
     
     delete fp;
 }
+
+///////////////////////////////////////////////
+// DTParam : Default type function parameter
+///////////////////////////////////////////////
 
 void FSFunctionParseTree::visitDTParam(DTParam* dtparam)
 {
@@ -83,6 +119,10 @@ void FSFunctionParseTree::visitListBlock(ListBlock* listblock)
     }
 }
 
+///////////////////////////////////////////////
+// ListFunction : A list of function defines
+///////////////////////////////////////////////
+
 void FSFunctionParseTree::visitListFunction(ListFunction* listfunction)
 {
     while(listfunction)
@@ -92,11 +132,18 @@ void FSFunctionParseTree::visitListFunction(ListFunction* listfunction)
     }
 }
 
+///////////////////////////////////////////////
+// ListFunction : A list of function parameters
+///////////////////////////////////////////////
+
 void FSFunctionParseTree::visitListParameter(ListParameter* listparameter)
 {
+    // this gets handled in the function definition proper e.g. visitDTFunc(DTFunc*)
+    /*
     while(listparameter)
     {
         listparameter->parameter_->accept(this);
         listparameter = listparameter->listparameter_;
     }
+    */
 }

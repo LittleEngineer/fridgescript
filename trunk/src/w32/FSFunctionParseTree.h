@@ -21,6 +21,23 @@
 #include "FSContext.h"
 #include "FSVisitor.h"
 
+#include "SimpleStructures.h"
+
+///////////////////////////////////////////////
+// FSFunction : Holds data for a function
+///////////////////////////////////////////////
+
+class FSFunction
+{
+private:
+    Simple::ANSIString  name;
+    Simple::ANSIString  assembler;
+    Simple::ANSIString  label;
+public:
+    FSFunction(const char* const identifier, const char* const asmLabel) : name(identifier), label(asmLabel), assembler() {}
+    ~FSFunction() {}
+};
+
 ///////////////////////////////////////////////
 // FSFunctionParseTree : Parses functions
 // Emits assembler and stores information for
@@ -31,9 +48,10 @@ class FSFunctionParseTree : public FSVisitor
 {
 private:
     FSContext* context;
+    Simple::Stack<FSFunction*> fnList;
 public:
-    FSFunctionParseTree(FSContext* c) : context(c) {}
-    ~FSFunctionParseTree() {}
+    FSFunctionParseTree(FSContext* c) : context(c), fnList() {}
+    ~FSFunctionParseTree();
 
     void visitMain(Main* main);
     void visitBFunc(BFunc* bfunc);
