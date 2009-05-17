@@ -1,5 +1,5 @@
 #summary Describes the grammar of FridgeScript.
-#labels Phase-Design,Phase-Implementation
+#labels Phase-Design,Phase-Implementation,Phase-Requirements
 
 = Introduction =
 
@@ -52,6 +52,8 @@ Single-line comments begin with //.
 Multiple-line comments are enclosed with /* and */. 
 
 = The syntactic structure of FridgeScript =
+
+Note: This part is not wholly accurate. Please refer to DocFridgeScript.html in the repository instead.
 
 Non-terminals are enclosed between < and >. The symbols -> (production), | (union) and eps (empty rule) belong to the BNF notation. All other symbols are terminals. 
 
