@@ -1,0 +1,14 @@
+#summary List of features in FridgeScript v0.1.0b.
+#labels Featured
+
+= Introduction =
+This should provide a list of all features found in the 0.1.0b version of FridgeScript, corresponding to revision 37 of the source in the repository. 
+
+
+= Details =
+
+v0.1.0b supports:
+  * all of the mathematical operators
+  * all of the logical operators except xor
+  * all branches and loops
+  * all of the assignment operators except the bitwise ones and the binary shifts
