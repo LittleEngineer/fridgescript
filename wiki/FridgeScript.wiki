@@ -6,7 +6,7 @@ FridgeScript is the name of a scripting language as well as a compiler library w
 
 
 = Language =
-_See [LanguageFeatures]_
+_see [LanguageFeatures]_
 
 The FridgeScript language is loosely based on evallib, the scripting language and library used for Winamp AVS and SPS. It has a C-style syntax and supports C-like conditional statements, loops and function calls.
 
