@@ -79,7 +79,7 @@ The symbols used in FSAssembler are the following: \\
 \end{tabular}\\
 
 \subsection*{Comments}
-Single-line comments begin with {\symb{\#}}, {\symb{'}}, {\symb{//}}, {\symb{{$-$}{$-$}}}. \\Multiple-line comments are  enclosed with {\symb{/*}} and {\symb{*/}}, {\symb{\{{$-$}{$-$}}} and {\symb{{$-$}{$-$}\}}}.
+Single-line comments begin with {\symb{\#}}, {\symb{'}}, {\symb{//}}, {\symb{{$-$}{$-$}}}. \\Multiple-line comments are  enclosed with {\symb{/*}} and {\symb{*/}}, {\symb{\{{$-$}}} and {\symb{{$-$}\}}}.
 
 \section*{The syntactic structure of FSAssembler}
 Non-terminals are enclosed between $\langle$ and $\rangle$. 
