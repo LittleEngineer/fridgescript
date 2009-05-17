@@ -1,0 +1,7 @@
+There is a Visual C++ 2008 project and solution included in the src\w32\FridgeScript folder which can be used with Visual C++ Express 2008.
+
+Many of the files included are output from bnfc, flex and bison. Rather than put you through the inconvenience of building these yourself they are included in the source, although the relevant source files are also included in case you want to do want to build them yourself.
+
+Also included is an unspecified version of FSAssembler, this has been included in the Visual Studio solution file as a dependency.
+
+Futher to this there are also C# examples provided in the src\C# examples folder which can be used with Visual C# Express 2008.
