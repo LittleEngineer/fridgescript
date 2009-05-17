@@ -1,0 +1,17 @@
+#summary Background and information on FridgeScript.
+
+= Introduction =
+
+FridgeScript is the name of a scripting language as well as a compiler library which currently generates byte-code for Intel x86 compatible CPUs running under Windows.
+
+
+= Language =
+
+The FridgeScript language is loosely based on evallib, the scripting language and library used for Winamp AVS and SPS. It has a C-style syntax and supports C-like conditional statements, loops and function calls.
+
+Add more... with links to other pages.
+
+
+= Compiler =
+
+The FridgeScript compiler is an LGPL library for handling the compiling and execution of FridgeScript source code provided as a null-terminated ANSI string.
