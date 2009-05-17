@@ -15,14 +15,30 @@
     along with FridgeScript.  If not, see <http://www.gnu.org/licenses/>
 */
 
+///////////////////////////////////////////////
+// C R A P P Y    H E A D E R    F I L E
+///////////////////////////////////////////////
+// This needs cleaning up, its littered with
+// implementation and includes windows.h
+// that needs to be wrapped in #ifdefs ready
+// for platform independence
+// The other includes here could be tidied down
+// to some forward declares
+///////////////////////////////////////////////
+
 #ifndef __FSCompiledCode_h
 #define __FSCompiledCode_h
 
 #include <windows.h>
 
+#include "FSVariable.h"
 #include "SimpleStructures.h"
 
-class FSVariable;
+///////////////////////////////////////////////
+// FSCompiledCode : Container for compiled code
+// stores variables and constants for the code
+// as well as the bytes to be executed
+///////////////////////////////////////////////
 
 class FSCompiledCode
 {
@@ -43,6 +59,9 @@ public:
     ~FSCompiledCode()
     {
         VirtualFree(bytes, length, MEM_RELEASE);
+        // clean up the variable pointers here
+        // this is probably very bad C++ as they are new-ed millions of years ago by the parse tree...
+        for(unsigned int i = 0; i < vars.GetCount(); ++i) delete vars[i];
     }
 
     void operator ()();

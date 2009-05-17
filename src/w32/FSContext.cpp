@@ -32,7 +32,6 @@
 #include "FSVariablePicker.h"
 #include "SimpleStructures.h"
 
-
 FSContext::~FSContext()
 {
     for(unsigned int i = 0; i < numCode; ++i)

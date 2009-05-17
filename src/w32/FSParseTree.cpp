@@ -1380,7 +1380,7 @@ void FSParseTree::visitEBor(EBor* ebor)
 }
 
 ///////////////////////////////////////////////
-// EBxor : Bitwise inclusive or operator
+// EBxor : Bitwise exclusive or operator
 ///////////////////////////////////////////////
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
@@ -1391,8 +1391,6 @@ void FSParseTree::visitEBxor(EBxor* ebxor)
 
 ///////////////////////////////////////////////
 // ELand : Logical and operator
-///////////////////////////////////////////////
-// N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
 void FSParseTree::visitELand(ELand* eland)
@@ -1421,8 +1419,6 @@ void FSParseTree::visitELand(ELand* eland)
 
 ///////////////////////////////////////////////
 // ELor : Logical inclusive or operator
-///////////////////////////////////////////////
-// N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
 void FSParseTree::visitELor(ELor* elor)
@@ -1472,7 +1468,7 @@ void FSParseTree::visitECon(ECon* econ)
 }
 
 ///////////////////////////////////////////////
-// EAss : Assignment to a variable
+// EAss : Assignment
 ///////////////////////////////////////////////
 
 void FSParseTree::visitEAss(EAss* eass)
@@ -1487,6 +1483,10 @@ void FSParseTree::visitEAss(EAss* eass)
     //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(eass->ident_, 0)));
     assembler += "]\r\n";
 }
+
+///////////////////////////////////////////////
+// EAddAss : Addition and assignment
+///////////////////////////////////////////////
 
 void FSParseTree::visitEAddAss(EAddAss* eaddass)
 {
@@ -1506,6 +1506,10 @@ void FSParseTree::visitEAddAss(EAddAss* eaddass)
     assembler += "]\r\n";
 }
 
+///////////////////////////////////////////////
+// ESubAss : Subtraction and assignment
+///////////////////////////////////////////////
+
 void FSParseTree::visitESubAss(ESubAss* esubass)
 {
     /*
@@ -1523,6 +1527,10 @@ void FSParseTree::visitESubAss(ESubAss* esubass)
     //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(esubass->ident_, 0)));
     assembler += "]\r\n";
 }
+
+///////////////////////////////////////////////
+// EMulAss : Multiplication and assignment
+///////////////////////////////////////////////
 
 void FSParseTree::visitEMulAss(EMulAss* emulass)
 {
@@ -1542,6 +1550,10 @@ void FSParseTree::visitEMulAss(EMulAss* emulass)
     assembler += "]\r\n";
 }
 
+///////////////////////////////////////////////
+// EDivAss : Division and assignment
+///////////////////////////////////////////////
+
 void FSParseTree::visitEDivAss(EDivAss* edivass)
 {
     /*
@@ -1559,6 +1571,10 @@ void FSParseTree::visitEDivAss(EDivAss* edivass)
     //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(edivass->ident_, 0)));
     assembler += "]\r\n";
 }
+
+///////////////////////////////////////////////
+// EModAss : Division remainder and assignment
+///////////////////////////////////////////////
 
 void FSParseTree::visitEModAss(EModAss* emodass)
 {
@@ -1627,6 +1643,14 @@ void FSParseTree::visitELShAss(ELShAss* elshass)
 void FSParseTree::visitERShAss(ERShAss* ershass)
 {
 }
+
+///////////////////////////////////////////////
+// ListExpression : List of expressions
+// does nothing at the moment as function calls
+// should traverse these themsevles, might need
+// inclusion for for statements like:
+// for(i = 0, j = 0;...;...)
+///////////////////////////////////////////////
 
 void FSParseTree::visitListExpression(ListExpression* listexpression)
 {
