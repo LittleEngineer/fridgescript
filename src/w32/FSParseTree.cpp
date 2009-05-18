@@ -927,13 +927,27 @@ void FSParseTree::visitEAsin(EAsin* easin)
     assembler += "faddp\r\n";   
 }
 
+///////////////////////////////////////////////
+// EAcos : Inverse cosine function
+// this is a naive implementation since it can
+// divide by zero and relies on this identity:
+// acos( x ) =
+// 2 * atan( sqrt ( 1 - x * x ) / ( 1 + x ) )
+///////////////////////////////////////////////
+
 void FSParseTree::visitEAcos(EAcos* eacos)
 {
     /*
         acos(x) = 2*atan(sqrt(1 - x*x)/(1 + x))
     */
+
+    assembler += "-- expression for acos\r\n";
+
     // load x
     eacos->expression_->accept(this);
+    
+    assembler += "-- acos\r\n";
+
     // we want st(1) = sqrt(1 - x*x) and st(0) = (1 + x)
     assembler += "fld1\r\n";
     assembler += "fld st(1)\r\n";
@@ -942,31 +956,41 @@ void FSParseTree::visitEAcos(EAcos* eacos)
     // st(2) = 1
     // st(1) = x
     // st(0) = x
+    
     assembler += "fmulp\r\n";
     // st(2) = x
     // st(1) = 1
     // st(0) = x*x
+    
     assembler += "fsubp\r\n";
     // st(1) = x
     // st(0) = 1-x*x
+    
     assembler += "fsqrt\r\n";
     // st(1) = x
     // st(0) = sqrt(1-x*x)
+    
     assembler += "fxch\r\n";
     // st(1) = sqrt(1-x*x)
     // st(0) = x
+    
     assembler += "fld1\r\n";
     // st(2) = sqrt(1-x*x)
     // st(1) = x
     // st(0) = 1
+    
     assembler += "faddp\r\n";
     // st(1) = sqrt(1-x*x)
     // st(0) = 1+x
+    
     assembler += "fpatan\r\n";
-    // st(0) = atan((1+x)/sqrt(1-x*x))
+    // st(0) = atan(sqrt(1-x*x)/(1+x))
     // multiply by 2 by adding to itself
+    
     assembler += "fld st(0)\r\n";
     assembler += "faddp\r\n";
+
+    assembler += "-- end of acos\r\n";
 }
 
 void FSParseTree::visitELnot(ELnot* elnot)
