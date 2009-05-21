@@ -1,0 +1,42 @@
+#summary For loops in FridgeScript.
+#labels Phase-Implementation,Phase-Design
+
+= Introduction =
+
+A for loop uses 3 little pieces of code together to iterate.
+
+
+= Details =
+
+As of revision 60 (i.e. versions later than 0.1.0b) the first and last pieces of code can be lists of expressions separated by commas, in previous versions only single expressions are permitted. Unlike C++ all three expressions must be provided... a null expression is insufficient and will generate a compiler error.
+
+e.g.
+
+{{{
+// ok
+for( i = 0; i < limit; ++i )
+{
+    // ...
+}
+
+
+// not ok
+for( ; i < limit; ++i )
+{
+    // ...
+}
+
+
+// ok
+for( i = 0, j = 1; i < limit; ++i, j *= 2 )
+{
+    // ...
+}
+
+
+// not ok
+for( i = 0, j = 1; i < limit, j < otherLimit; ++i, j *= 2 )
+{
+    // ...
+}
+}}}
