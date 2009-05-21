@@ -3,7 +3,7 @@
 
 = Introduction =
 
-A while [Loop loop] runs until a test fails. 
+A while [Loops loop] runs until a test fails. 
 
 
 = Details =
