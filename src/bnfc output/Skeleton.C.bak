@@ -151,9 +151,9 @@ void Skeleton::visitSFor(SFor* sfor)
 {
   /* Code For SFor Goes Here */
 
-  sfor->expression_1->accept(this);
-  sfor->expression_2->accept(this);
-  sfor->expression_3->accept(this);
+  if (sfor->listexpression_1) {sfor->listexpression_1->accept(this);}
+  sfor->expression_->accept(this);
+  if (sfor->listexpression_2) {sfor->listexpression_2->accept(this);}
   sfor->statement_->accept(this);
 }
 
@@ -218,6 +218,13 @@ void Skeleton::visitEPostDec(EPostDec* epostdec)
   /* Code For EPostDec Goes Here */
 
   visitIdent(epostdec->ident_);
+}
+
+void Skeleton::visitEAbs(EAbs* eabs)
+{
+  /* Code For EAbs Goes Here */
+
+  eabs->expression_->accept(this);
 }
 
 void Skeleton::visitEPow(EPow* epow)

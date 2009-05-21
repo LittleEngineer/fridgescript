@@ -28,6 +28,9 @@ namespace FSCS
             Context.Programs[0].Execute();
             label1.Text = "a = " + Context.Programs[0].GetVariable("a").Value.ToString()
                             + ",b = " + Context.Programs[0].GetVariable("b").Value.ToString();
+
+            Double a = Context.Programs[0].GetVariable("a").Value;
+            Double b = Context.Programs[0].GetVariable("b").Value;
         }
 
         private void Form1_Load(object sender, EventArgs e)

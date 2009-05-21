@@ -71,6 +71,7 @@ public:
     void visitECall(ECall* ecall);
     void visitEPostInc(EPostInc* epostinc);
     void visitEPostDec(EPostDec* epostdec);
+    void visitEAbs(EAbs* eabs);
     void visitEPow(EPow* epow);
     void visitESqrt(ESqrt* esqrt);
     void visitEExp(EExp* eexp);

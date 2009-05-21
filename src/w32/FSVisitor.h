@@ -58,6 +58,7 @@ public:
     virtual void visitECall(ECall* ecall) {}
     virtual void visitEPostInc(EPostInc* epostinc) {}
     virtual void visitEPostDec(EPostDec* epostdec) {}
+    virtual void visitEAbs(EAbs* eabs) {}
     virtual void visitEPow(EPow* epow) {}
     virtual void visitESqrt(ESqrt* esqrt) {}
     virtual void visitEExp(EExp* eexp) {}

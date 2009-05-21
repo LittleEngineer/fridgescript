@@ -93,9 +93,10 @@
      _SYMB_60 = 319,
      _SYMB_61 = 320,
      _SYMB_62 = 321,
-     _INTEGER_ = 322,
-     _DOUBLE_ = 323,
-     _IDENT_ = 324
+     _SYMB_63 = 322,
+     _INTEGER_ = 323,
+     _DOUBLE_ = 324,
+     _IDENT_ = 325
    };
 #endif
 /* Tokens.  */
@@ -163,9 +164,10 @@
 #define _SYMB_60 319
 #define _SYMB_61 320
 #define _SYMB_62 321
-#define _INTEGER_ 322
-#define _DOUBLE_ 323
-#define _IDENT_ 324
+#define _SYMB_63 322
+#define _INTEGER_ 323
+#define _DOUBLE_ 324
+#define _IDENT_ 325
 
 
 
@@ -191,7 +193,7 @@ typedef union YYSTYPE {
 
 } YYSTYPE;
 /* Line 1447 of yacc.c.  */
-#line 195 "parse.hpp"
+#line 197 "parse.hpp"
 # define yystype YYSTYPE /* obsolescent; will be withdrawn */
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1

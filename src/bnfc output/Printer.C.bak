@@ -363,12 +363,10 @@ void PrintAbsyn::visitSFor(SFor* p)
 
   render("for");
   render('(');
-  _i_ = 0; p->expression_1->accept(this);
+  if(p->listexpression_1) {_i_ = 0; p->listexpression_1->accept(this);}  render(';');
+  _i_ = 0; p->expression_->accept(this);
   render(';');
-  _i_ = 0; p->expression_2->accept(this);
-  render(';');
-  _i_ = 0; p->expression_3->accept(this);
-  render(')');
+  if(p->listexpression_2) {_i_ = 0; p->listexpression_2->accept(this);}  render(')');
   render('{');
   _i_ = 0; p->statement_->accept(this);
   render('}');
@@ -488,6 +486,21 @@ void PrintAbsyn::visitEPostDec(EPostDec* p)
 
   visitIdent(p->ident_);
   render("--");
+
+  if (oldi > 11) render(_R_PAREN);
+
+  _i_ = oldi;
+}
+
+void PrintAbsyn::visitEAbs(EAbs* p)
+{
+  int oldi = _i_;
+  if (oldi > 11) render(_L_PAREN);
+
+  render("abs");
+  render('(');
+  _i_ = 0; p->expression_->accept(this);
+  render(')');
 
   if (oldi > 11) render(_R_PAREN);
 
@@ -1491,11 +1504,13 @@ void ShowAbsyn::visitSFor(SFor* p)
   bufAppend('(');
   bufAppend("SFor");
   bufAppend(' ');
-  p->expression_1->accept(this);
+  p->listexpression_1->accept(this);
   bufAppend(' ');
-  p->expression_2->accept(this);
+  bufAppend('[');
+  if (p->expression_)  p->expression_->accept(this);
+  bufAppend(']');
   bufAppend(' ');
-  p->expression_3->accept(this);
+  p->listexpression_2->accept(this);
   bufAppend(' ');
   bufAppend('[');
   if (p->statement_)  p->statement_->accept(this);
@@ -1569,6 +1584,17 @@ void ShowAbsyn::visitEPostDec(EPostDec* p)
   bufAppend("EPostDec");
   bufAppend(' ');
   visitIdent(p->ident_);
+  bufAppend(' ');
+  bufAppend(')');
+}
+void ShowAbsyn::visitEAbs(EAbs* p)
+{
+  bufAppend('(');
+  bufAppend("EAbs");
+  bufAppend(' ');
+  bufAppend('[');
+  if (p->expression_)  p->expression_->accept(this);
+  bufAppend(']');
   bufAppend(' ');
   bufAppend(')');
 }
