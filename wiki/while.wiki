@@ -1,4 +1,4 @@
-#summary For loops in FridgeScript.
+#summary While loops in FridgeScript.
 #labels Phase-Implementation,Phase-Design,Language-Documentation
 
 = Introduction =
