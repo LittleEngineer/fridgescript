@@ -1,0 +1,24 @@
+#summary For loops in FridgeScript.
+#labels Phase-Implementation,Phase-Design,Language-Documentation
+
+= Introduction =
+
+A while loop runs until a test fails. 
+
+
+= Details =
+
+While loops run until their condition fail. Although they enclose code with what looks like a C++ style scope it simply acts to contain code and doesn't clean up variables at its end. 
+
+= Example =
+
+{{{
+i = 0;
+
+while( i < 10 )
+{
+    ++i;
+}
+
+// i == 10;
+}}}
