@@ -60,6 +60,9 @@ The original list of features is..
 || `asin` || `acos` || `atan` ||
 || `atan2` ||
 
+=== Other functions ===
+|| `abs` ||
+
 == Flow control ==
 
 === Branching ===
