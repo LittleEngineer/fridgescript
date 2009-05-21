@@ -8,7 +8,7 @@ A while [Loops loop] runs until a test fails.
 
 = Details =
 
-While loops run until their condition, defined by an expression, evaluates to zero. Although they enclose code with what looks like a C++ style scope it simply acts to contain code and doesn't clean up variables at its end. 
+While loops run until their condition, defined by an [Expression expression], evaluates to zero. Although they enclose code with what looks like a C++ style scope it simply acts to contain code and doesn't clean up variables at its end. 
 
 = Example =
 
