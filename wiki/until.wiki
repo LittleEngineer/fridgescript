@@ -8,7 +8,7 @@ An until [Loops loop] runs until a test succeeds.
 
 = Details =
 
-Until loops run until their condition, defined by an [Expression expression], evaluates to a non-zero value. Although they enclose code with what looks like a C++ style scope it simply acts to contain code and doesn't clean up variables at its end. 
+Until loops run until their condition, defined by an [Expression expression], evaluates to a non-zero value. Although they enclose code with what looks like a C++ style scope, this simply acts to contain code and doesn't clean up variables at its end. 
 
 = Example =
 
