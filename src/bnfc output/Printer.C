@@ -452,6 +452,20 @@ void PrintAbsyn::visitEPi(EPi* p)
   _i_ = oldi;
 }
 
+void PrintAbsyn::visitESimpleCall(ESimpleCall* p)
+{
+  int oldi = _i_;
+  if (oldi > 11) render(_L_PAREN);
+
+  visitIdent(p->ident_);
+  render('(');
+  render(')');
+
+  if (oldi > 11) render(_R_PAREN);
+
+  _i_ = oldi;
+}
+
 void PrintAbsyn::visitECall(ECall* p)
 {
   int oldi = _i_;
@@ -1555,6 +1569,15 @@ void ShowAbsyn::visitEVar(EVar* p)
 void ShowAbsyn::visitEPi(EPi* p)
 {
   bufAppend("EPi");
+}
+void ShowAbsyn::visitESimpleCall(ESimpleCall* p)
+{
+  bufAppend('(');
+  bufAppend("ESimpleCall");
+  bufAppend(' ');
+  visitIdent(p->ident_);
+  bufAppend(' ');
+  bufAppend(')');
 }
 void ShowAbsyn::visitECall(ECall* p)
 {

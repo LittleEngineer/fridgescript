@@ -396,7 +396,8 @@ Expression12 : _DOUBLE_ { $$ = new ECDbl($1);  }
   | _SYMB_56 { $$ = new EPi();  }
   | _SYMB_0 Expression _SYMB_1 { $$ = $2;  }
 ;
-Expression11 : _IDENT_ _SYMB_0 ListExpression _SYMB_1 { $$ = new ECall($1, $3);  } 
+Expression11 : _IDENT_ _SYMB_0 _SYMB_1 { $$ = new ESimpleCall($1);  } 
+  | _IDENT_ _SYMB_0 ListExpression _SYMB_1 { $$ = new ECall($1, $3);  }
   | _IDENT_ _SYMB_6 { $$ = new EPostInc($1);  }
   | _IDENT_ _SYMB_7 { $$ = new EPostDec($1);  }
   | _SYMB_42 _SYMB_0 Expression _SYMB_1 { $$ = new EAbs($3);  }

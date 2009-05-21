@@ -389,6 +389,26 @@ OPop *OPop::clone() const {
   return new OPop(*this);
 }
 
+/********************   OFabs    ********************/
+OFabs::OFabs() { }
+OFabs::OFabs(const OFabs & other) { 
+}
+OFabs &OFabs::operator=(const OFabs & other) {
+  OFabs tmp(other);
+  swap(tmp);
+  return *this;
+}
+void OFabs::swap(OFabs & other) {
+
+}
+
+OFabs::~OFabs() { }
+
+void OFabs::accept(Visitor *v) { v->visitOFabs(this); }
+OFabs *OFabs::clone() const {
+  return new OFabs(*this);
+}
+
 /********************   OFadd    ********************/
 OFadd::OFadd() { }
 OFadd::OFadd(const OFadd & other) { 

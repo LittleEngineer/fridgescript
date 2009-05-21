@@ -125,8 +125,9 @@
      _SYMB_78 = 337,
      _SYMB_79 = 338,
      _SYMB_80 = 339,
-     _INTEGER_ = 340,
-     _IDENT_ = 341
+     _SYMB_81 = 340,
+     _INTEGER_ = 341,
+     _IDENT_ = 342
    };
 #endif
 /* Tokens.  */
@@ -212,8 +213,9 @@
 #define _SYMB_78 337
 #define _SYMB_79 338
 #define _SYMB_80 339
-#define _INTEGER_ 340
-#define _IDENT_ 341
+#define _SYMB_81 340
+#define _INTEGER_ 341
+#define _IDENT_ 342
 
 
 
@@ -361,7 +363,7 @@ typedef union YYSTYPE {
 
 } YYSTYPE;
 /* Line 186 of glr.c.  */
-#line 365 "parse.cpp"
+#line 367 "parse.cpp"
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1
 #endif
@@ -388,7 +390,7 @@ static YYSTYPE yyval_default;
 
 
 /* Line 217 of glr.c.  */
-#line 392 "parse.cpp"
+#line 394 "parse.cpp"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -460,16 +462,16 @@ static YYSTYPE yyval_default;
 /* YYFINAL -- State number of the termination state. */
 #define YYFINAL  3
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   240
+#define YYLAST   243
 
 /* YYNTOKENS -- Number of terminals. */
-#define YYNTOKENS  87
+#define YYNTOKENS  88
 /* YYNNTS -- Number of nonterminals. */
 #define YYNNTS  6
 /* YYNRULES -- Number of rules. */
-#define YYNRULES  88
+#define YYNRULES  89
 /* YYNRULES -- Number of states. */
-#define YYNSTATES  120
+#define YYNSTATES  121
 /* YYMAXRHS -- Maximum number of symbols on right-hand side of rule. */
 #define YYMAXRHS 5
 /* YYMAXLEFT -- Maximum number of symbols to the left of a handle
@@ -478,7 +480,7 @@ static YYSTYPE yyval_default;
 
 /* YYTRANSLATE(X) -- Bison symbol number corresponding to X.  */
 #define YYUNDEFTOK  2
-#define YYMAXUTOK   341
+#define YYMAXUTOK   342
 
 #define YYTRANSLATE(YYX)						\
   ((YYX <= 0) ? YYEOF :							\
@@ -521,7 +523,7 @@ static const unsigned char yytranslate[] =
       55,    56,    57,    58,    59,    60,    61,    62,    63,    64,
       65,    66,    67,    68,    69,    70,    71,    72,    73,    74,
       75,    76,    77,    78,    79,    80,    81,    82,    83,    84,
-      85,    86
+      85,    86,    87
 };
 
 #if YYDEBUG
@@ -533,53 +535,53 @@ static const unsigned char yyprhs[] =
       28,    31,    34,    37,    40,    43,    46,    48,    51,    54,
       56,    58,    60,    62,    64,    66,    68,    70,    72,    74,
       76,    78,    80,    82,    84,    86,    88,    90,    92,    94,
-      96,    98,   100,   102,   104,   106,   108,   110,   112,   115,
-     118,   121,   124,   126,   128,   130,   132,   134,   136,   139,
-     142,   145,   148,   151,   154,   157,   160,   163,   166,   169,
-     172,   175,   177,   179,   181,   183,   185,   187,   189,   191,
-     193,   195,   197,   199,   201,   203,   207,   211,   217
+      96,    98,   100,   102,   104,   106,   108,   110,   112,   114,
+     117,   120,   123,   126,   128,   130,   132,   134,   136,   138,
+     141,   144,   147,   150,   153,   156,   159,   162,   165,   168,
+     171,   174,   177,   179,   181,   183,   185,   187,   189,   191,
+     193,   195,   197,   199,   201,   203,   205,   209,   213,   219
 };
 
 /* YYRHS -- A `-1'-separated list of the rules' RHS. */
 static const signed char yyrhs[] =
 {
-      88,     0,    -1,    89,    -1,    -1,    89,    90,    -1,    18,
-      91,     4,    85,    -1,    83,    91,     4,    85,    -1,    86,
-       5,    -1,    76,    92,    -1,    73,    92,    -1,    74,    92,
-      -1,    75,    92,    -1,    77,    92,    -1,    79,    92,    -1,
-      78,    92,    -1,    19,    92,    -1,    82,    -1,    81,    92,
-      -1,    80,    92,    -1,    29,    -1,    30,    -1,    67,    -1,
-      68,    -1,    69,    -1,    57,    -1,    43,    -1,    44,    -1,
-      31,    -1,    63,    -1,    41,    -1,    59,    -1,    60,    -1,
-      58,    -1,    64,    -1,    61,    -1,    62,    -1,    28,    -1,
-      71,    -1,    72,    -1,    40,    -1,    32,    -1,    33,    -1,
+      89,     0,    -1,    90,    -1,    -1,    90,    91,    -1,    18,
+      92,     4,    86,    -1,    84,    92,     4,    86,    -1,    87,
+       5,    -1,    77,    93,    -1,    74,    93,    -1,    75,    93,
+      -1,    76,    93,    -1,    78,    93,    -1,    80,    93,    -1,
+      79,    93,    -1,    19,    93,    -1,    83,    -1,    82,    93,
+      -1,    81,    93,    -1,    29,    -1,    30,    -1,    31,    -1,
+      68,    -1,    69,    -1,    70,    -1,    58,    -1,    44,    -1,
+      45,    -1,    32,    -1,    64,    -1,    42,    -1,    60,    -1,
+      61,    -1,    59,    -1,    65,    -1,    62,    -1,    63,    -1,
+      28,    -1,    72,    -1,    73,    -1,    41,    -1,    33,    -1,
       34,    -1,    35,    -1,    36,    -1,    37,    -1,    38,    -1,
-      39,    -1,    50,    92,    -1,    46,    92,    -1,    50,     6,
-      -1,    50,     7,    -1,    56,    -1,    51,    -1,    55,    -1,
-      52,    -1,    54,    -1,    53,    -1,    65,    92,    -1,    48,
-      92,    -1,    66,    92,    -1,    49,    92,    -1,    66,     6,
-      -1,    45,     6,    -1,    45,     7,    -1,    45,     8,    -1,
-      45,     9,    -1,    45,    10,    -1,    45,    11,    -1,    45,
-      12,    -1,    45,    13,    -1,    70,    -1,    47,    -1,    42,
-      -1,    20,    -1,    23,    -1,    25,    -1,    22,    -1,    27,
-      -1,    21,    -1,    26,    -1,    24,    -1,    91,    -1,    84,
-      -1,    86,    -1,    14,    84,    15,    -1,    14,    91,    15,
-      -1,    14,    91,    16,    85,    15,    -1,    14,    91,    17,
-      85,    15,    -1
+      39,    -1,    40,    -1,    51,    93,    -1,    47,    93,    -1,
+      51,     6,    -1,    51,     7,    -1,    57,    -1,    52,    -1,
+      56,    -1,    53,    -1,    55,    -1,    54,    -1,    66,    93,
+      -1,    49,    93,    -1,    67,    93,    -1,    50,    93,    -1,
+      67,     6,    -1,    46,     6,    -1,    46,     7,    -1,    46,
+       8,    -1,    46,     9,    -1,    46,    10,    -1,    46,    11,
+      -1,    46,    12,    -1,    46,    13,    -1,    71,    -1,    48,
+      -1,    43,    -1,    20,    -1,    23,    -1,    25,    -1,    22,
+      -1,    27,    -1,    21,    -1,    26,    -1,    24,    -1,    92,
+      -1,    85,    -1,    87,    -1,    14,    85,    15,    -1,    14,
+      92,    15,    -1,    14,    92,    16,    86,    15,    -1,    14,
+      92,    17,    86,    15,    -1
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const unsigned short int yyrline[] =
 {
-       0,   217,   217,   219,   220,   222,   223,   224,   225,   226,
-     227,   228,   229,   230,   231,   232,   233,   234,   235,   236,
-     237,   238,   239,   240,   241,   242,   243,   244,   245,   246,
-     247,   248,   249,   250,   251,   252,   253,   254,   255,   256,
-     257,   258,   259,   260,   261,   262,   263,   264,   265,   266,
-     267,   268,   269,   270,   271,   272,   273,   274,   275,   276,
-     277,   278,   279,   280,   281,   282,   283,   284,   285,   286,
-     287,   288,   289,   290,   292,   293,   294,   295,   296,   297,
-     298,   299,   301,   302,   303,   304,   305,   306,   307
+       0,   218,   218,   220,   221,   223,   224,   225,   226,   227,
+     228,   229,   230,   231,   232,   233,   234,   235,   236,   237,
+     238,   239,   240,   241,   242,   243,   244,   245,   246,   247,
+     248,   249,   250,   251,   252,   253,   254,   255,   256,   257,
+     258,   259,   260,   261,   262,   263,   264,   265,   266,   267,
+     268,   269,   270,   271,   272,   273,   274,   275,   276,   277,
+     278,   279,   280,   281,   282,   283,   284,   285,   286,   287,
+     288,   289,   290,   291,   292,   294,   295,   296,   297,   298,
+     299,   300,   301,   303,   304,   305,   306,   307,   308,   309
 };
 #endif
 
@@ -602,23 +604,23 @@ static const char *const yytname[] =
   "_SYMB_62", "_SYMB_63", "_SYMB_64", "_SYMB_65", "_SYMB_66", "_SYMB_67",
   "_SYMB_68", "_SYMB_69", "_SYMB_70", "_SYMB_71", "_SYMB_72", "_SYMB_73",
   "_SYMB_74", "_SYMB_75", "_SYMB_76", "_SYMB_77", "_SYMB_78", "_SYMB_79",
-  "_SYMB_80", "_INTEGER_", "_IDENT_", "$accept", "Code", "ListOperation",
-  "Operation", "Register", "Operand", 0
+  "_SYMB_80", "_SYMB_81", "_INTEGER_", "_IDENT_", "$accept", "Code",
+  "ListOperation", "Operation", "Register", "Operand", 0
 };
 #endif
 
 /* YYR1[YYN] -- Symbol number of symbol that rule YYN derives.  */
 static const unsigned char yyr1[] =
 {
-       0,    87,    88,    89,    89,    90,    90,    90,    90,    90,
-      90,    90,    90,    90,    90,    90,    90,    90,    90,    90,
-      90,    90,    90,    90,    90,    90,    90,    90,    90,    90,
-      90,    90,    90,    90,    90,    90,    90,    90,    90,    90,
-      90,    90,    90,    90,    90,    90,    90,    90,    90,    90,
-      90,    90,    90,    90,    90,    90,    90,    90,    90,    90,
-      90,    90,    90,    90,    90,    90,    90,    90,    90,    90,
-      90,    90,    90,    90,    91,    91,    91,    91,    91,    91,
-      91,    91,    92,    92,    92,    92,    92,    92,    92
+       0,    88,    89,    90,    90,    91,    91,    91,    91,    91,
+      91,    91,    91,    91,    91,    91,    91,    91,    91,    91,
+      91,    91,    91,    91,    91,    91,    91,    91,    91,    91,
+      91,    91,    91,    91,    91,    91,    91,    91,    91,    91,
+      91,    91,    91,    91,    91,    91,    91,    91,    91,    91,
+      91,    91,    91,    91,    91,    91,    91,    91,    91,    91,
+      91,    91,    91,    91,    91,    91,    91,    91,    91,    91,
+      91,    91,    91,    91,    91,    92,    92,    92,    92,    92,
+      92,    92,    92,    93,    93,    93,    93,    93,    93,    93
 };
 
 /* YYR2[YYN] -- Number of symbols composing right hand side of rule YYN.  */
@@ -628,11 +630,11 @@ static const unsigned char yyr2[] =
        2,     2,     2,     2,     2,     2,     1,     2,     2,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
        1,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     1,     1,     1,     2,     2,
-       2,     2,     1,     1,     1,     1,     1,     1,     2,     2,
+       1,     1,     1,     1,     1,     1,     1,     1,     1,     2,
+       2,     2,     2,     1,     1,     1,     1,     1,     1,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
-       2,     1,     1,     1,     1,     1,     1,     1,     1,     1,
-       1,     1,     1,     1,     1,     3,     3,     5,     5
+       2,     2,     1,     1,     1,     1,     1,     1,     1,     1,
+       1,     1,     1,     1,     1,     1,     3,     3,     5,     5
 };
 
 /* YYDPREC[RULE-NUM] -- Dynamic precedence of rule #RULE-NUM (0 if none). */
@@ -646,7 +648,7 @@ static const unsigned char yydprec[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0
 };
 
 /* YYMERGER[RULE-NUM] -- Index of merging function for rule #RULE-NUM. */
@@ -660,7 +662,7 @@ static const unsigned char yymerger[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0
+       0,     0,     0,     0,     0,     0,     0,     0,     0,     0
 };
 
 /* YYDEFACT[S] -- default rule to reduce with in state S when YYTABLE
@@ -668,49 +670,51 @@ static const unsigned char yymerger[] =
    error.  */
 static const unsigned char yydefact[] =
 {
-       3,     0,     2,     1,     0,     0,    36,    19,    20,    27,
-      40,    41,    42,    43,    44,    45,    46,    47,    39,    29,
-      73,    25,    26,     0,     0,    72,     0,     0,     0,    53,
-      55,    57,    56,    54,    52,    24,    32,    30,    31,    34,
-      35,    28,    33,     0,     0,    21,    22,    23,    71,    37,
-      38,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-      16,     0,     0,     4,    74,    79,    77,    75,    81,    76,
-      80,    78,     0,     0,    83,    84,    82,    15,    63,    64,
-      65,    66,    67,    68,    69,    70,    49,    59,    61,    50,
-      51,    48,    58,    62,    60,     9,    10,    11,     8,    12,
-      14,    13,    18,    17,     0,     7,     0,     0,     0,     0,
-       5,    85,    86,     0,     0,     6,     0,     0,    87,    88
+       3,     0,     2,     1,     0,     0,    37,    19,    20,    21,
+      28,    41,    42,    43,    44,    45,    46,    47,    48,    40,
+      30,    74,    26,    27,     0,     0,    73,     0,     0,     0,
+      54,    56,    58,    57,    55,    53,    25,    33,    31,    32,
+      35,    36,    29,    34,     0,     0,    22,    23,    24,    72,
+      38,    39,     0,     0,     0,     0,     0,     0,     0,     0,
+       0,    16,     0,     0,     4,    75,    80,    78,    76,    82,
+      77,    81,    79,     0,     0,    84,    85,    83,    15,    64,
+      65,    66,    67,    68,    69,    70,    71,    50,    60,    62,
+      51,    52,    49,    59,    63,    61,     9,    10,    11,     8,
+      12,    14,    13,    18,    17,     0,     7,     0,     0,     0,
+       0,     5,    86,    87,     0,     0,     6,     0,     0,    88,
+      89
 };
 
 /* YYPDEFGOTO[NTERM-NUM]. */
 static const signed char yydefgoto[] =
 {
-      -1,     1,     2,    63,    76,    77
+      -1,     1,     2,    64,    77,    78
 };
 
 /* YYPACT[STATE-NUM] -- Index in YYTABLE of the portion describing
    STATE-NUM.  */
-#define YYPACT_NINF -76
+#define YYPACT_NINF -77
 static const short int yypact[] =
 {
-     -76,     6,    89,   -76,   164,    30,   -76,   -76,   -76,   -76,
-     -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,
-     -76,   -76,   -76,   186,    30,   -76,    30,    30,    -6,   -76,
-     -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,
-     -76,   -76,   -76,    30,    16,   -76,   -76,   -76,   -76,   -76,
-     -76,    30,    30,    30,    30,    30,    30,    30,    30,    30,
-     -76,   164,     2,   -76,   -76,   -76,   -76,   -76,   -76,   -76,
-     -76,   -76,     5,   156,   -76,   -76,   -76,   -76,   -76,   -76,
-     -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,
-     -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,   -76,
-     -76,   -76,   -76,   -76,     7,   -76,   -75,    -3,   -12,   -72,
-     -76,   -76,   -76,   -62,   -61,   -76,    10,    11,   -76,   -76
+     -77,     6,    90,   -77,   166,    30,   -77,   -77,   -77,   -77,
+     -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,
+     -77,   -77,   -77,   -77,   188,    30,   -77,    30,    30,    -6,
+     -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,
+     -77,   -77,   -77,   -77,    30,    16,   -77,   -77,   -77,   -77,
+     -77,   -77,    30,    30,    30,    30,    30,    30,    30,    30,
+      30,   -77,   166,     2,   -77,   -77,   -77,   -77,   -77,   -77,
+     -77,   -77,   -77,     5,   158,   -77,   -77,   -77,   -77,   -77,
+     -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,
+     -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,   -77,
+     -77,   -77,   -77,   -77,   -77,     7,   -77,   -76,    -3,   -12,
+     -73,   -77,   -77,   -77,   -63,   -62,   -77,    10,    11,   -77,
+     -77
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const signed char yypgoto[] =
 {
-     -76,   -76,   -76,   -76,    -2,    38
+     -77,   -77,   -77,   -77,    -2,    38
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]].  What to do in state STATE-NUM.  If
@@ -720,31 +724,31 @@ static const signed char yypgoto[] =
 #define YYTABLE_NINF -1
 static const unsigned char yytable[] =
 {
-      89,    90,    72,   112,   113,   114,     3,   105,    73,   106,
-     110,   109,   111,   115,    64,    65,    66,    67,    68,    69,
-      70,    71,    93,   116,   117,   118,   119,     0,     0,     0,
-      73,     0,     0,     0,     0,     0,    64,    65,    66,    67,
-      68,    69,    70,    71,    73,     0,     0,     0,     0,     0,
-      64,    65,    66,    67,    68,    69,    70,    71,     0,   104,
-       0,     0,    86,     0,    87,    88,    91,     0,     0,     0,
-       0,   108,     0,     0,     0,     0,     0,     0,    74,     0,
-      75,    92,    94,     0,     0,     0,     0,     0,     0,    95,
-      96,    97,    98,    99,   100,   101,   102,   103,     0,     0,
-      74,     0,    75,     0,     0,     0,     0,     4,     5,     0,
-       0,     0,     0,     0,    74,     0,    75,     6,     7,     8,
-       9,    10,    11,    12,    13,    14,    15,    16,    17,    18,
-      19,    20,    21,    22,    23,    24,    25,    26,    27,    28,
-      29,    30,    31,    32,    33,    34,    35,    36,    37,    38,
-      39,    40,    41,    42,    43,    44,    45,    46,    47,    48,
-      49,    50,    51,    52,    53,    54,    55,    56,    57,    58,
-      59,    60,    61,     0,     0,    62,    64,    65,    66,    67,
-      68,    69,    70,    71,    64,    65,    66,    67,    68,    69,
-      70,    71,    78,    79,    80,    81,    82,    83,    84,    85,
+      90,    91,    73,   113,   114,   115,     3,   106,    74,   107,
+     111,   110,   112,   116,    65,    66,    67,    68,    69,    70,
+      71,    72,    94,   117,   118,   119,   120,     0,     0,     0,
+      74,     0,     0,     0,     0,     0,    65,    66,    67,    68,
+      69,    70,    71,    72,    74,     0,     0,     0,     0,     0,
+      65,    66,    67,    68,    69,    70,    71,    72,     0,     0,
+     105,     0,     0,    87,     0,    88,    89,    92,     0,     0,
+       0,     0,   109,     0,     0,     0,     0,     0,     0,    75,
+       0,    76,    93,    95,     0,     0,     0,     0,     0,     0,
+      96,    97,    98,    99,   100,   101,   102,   103,   104,     0,
+       0,    75,     0,    76,     0,     0,     0,     0,     4,     5,
+       0,     0,     0,     0,     0,    75,     0,    76,     6,     7,
+       8,     9,    10,    11,    12,    13,    14,    15,    16,    17,
+      18,    19,    20,    21,    22,    23,    24,    25,    26,    27,
+      28,    29,    30,    31,    32,    33,    34,    35,    36,    37,
+      38,    39,    40,    41,    42,    43,    44,    45,    46,    47,
+      48,    49,    50,    51,    52,    53,    54,    55,    56,    57,
+      58,    59,    60,    61,    62,     0,     0,    63,    65,    66,
+      67,    68,    69,    70,    71,    72,    65,    66,    67,    68,
+      69,    70,    71,    72,    79,    80,    81,    82,    83,    84,
+      85,    86,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-     107
+       0,     0,     0,   108
 };
 
 /* YYCONFLP[YYPACT[STATE-NUM]] -- Pointer into YYCONFL of start of
@@ -777,7 +781,7 @@ static const unsigned char yyconflp[] =
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0
+       0,     0,     0,     0
 };
 
 /* YYCONFL[I] -- lists of conflicting rule numbers, each terminated by
@@ -790,48 +794,49 @@ static const short int yyconfl[] =
 static const signed char yycheck[] =
 {
        6,     7,     4,    15,    16,    17,     0,     5,    14,     4,
-      85,     4,    15,    85,    20,    21,    22,    23,    24,    25,
-      26,    27,     6,    85,    85,    15,    15,    -1,    -1,    -1,
+      86,     4,    15,    86,    20,    21,    22,    23,    24,    25,
+      26,    27,     6,    86,    86,    15,    15,    -1,    -1,    -1,
       14,    -1,    -1,    -1,    -1,    -1,    20,    21,    22,    23,
       24,    25,    26,    27,    14,    -1,    -1,    -1,    -1,    -1,
-      20,    21,    22,    23,    24,    25,    26,    27,    -1,    61,
-      -1,    -1,    24,    -1,    26,    27,    28,    -1,    -1,    -1,
-      -1,    73,    -1,    -1,    -1,    -1,    -1,    -1,    84,    -1,
-      86,    43,    44,    -1,    -1,    -1,    -1,    -1,    -1,    51,
-      52,    53,    54,    55,    56,    57,    58,    59,    -1,    -1,
-      84,    -1,    86,    -1,    -1,    -1,    -1,    18,    19,    -1,
-      -1,    -1,    -1,    -1,    84,    -1,    86,    28,    29,    30,
-      31,    32,    33,    34,    35,    36,    37,    38,    39,    40,
-      41,    42,    43,    44,    45,    46,    47,    48,    49,    50,
-      51,    52,    53,    54,    55,    56,    57,    58,    59,    60,
-      61,    62,    63,    64,    65,    66,    67,    68,    69,    70,
-      71,    72,    73,    74,    75,    76,    77,    78,    79,    80,
-      81,    82,    83,    -1,    -1,    86,    20,    21,    22,    23,
-      24,    25,    26,    27,    20,    21,    22,    23,    24,    25,
-      26,    27,     6,     7,     8,     9,    10,    11,    12,    13,
+      20,    21,    22,    23,    24,    25,    26,    27,    -1,    -1,
+      62,    -1,    -1,    25,    -1,    27,    28,    29,    -1,    -1,
+      -1,    -1,    74,    -1,    -1,    -1,    -1,    -1,    -1,    85,
+      -1,    87,    44,    45,    -1,    -1,    -1,    -1,    -1,    -1,
+      52,    53,    54,    55,    56,    57,    58,    59,    60,    -1,
+      -1,    85,    -1,    87,    -1,    -1,    -1,    -1,    18,    19,
+      -1,    -1,    -1,    -1,    -1,    85,    -1,    87,    28,    29,
+      30,    31,    32,    33,    34,    35,    36,    37,    38,    39,
+      40,    41,    42,    43,    44,    45,    46,    47,    48,    49,
+      50,    51,    52,    53,    54,    55,    56,    57,    58,    59,
+      60,    61,    62,    63,    64,    65,    66,    67,    68,    69,
+      70,    71,    72,    73,    74,    75,    76,    77,    78,    79,
+      80,    81,    82,    83,    84,    -1,    -1,    87,    20,    21,
+      22,    23,    24,    25,    26,    27,    20,    21,    22,    23,
+      24,    25,    26,    27,     6,     7,     8,     9,    10,    11,
+      12,    13,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
       -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,    -1,
-      84
+      -1,    -1,    -1,    85
 };
 
 /* YYSTOS[STATE-NUM] -- The (internal number of the) accessing
    symbol of state STATE-NUM.  */
 static const unsigned char yystos[] =
 {
-       0,    88,    89,     0,    18,    19,    28,    29,    30,    31,
+       0,    89,    90,     0,    18,    19,    28,    29,    30,    31,
       32,    33,    34,    35,    36,    37,    38,    39,    40,    41,
       42,    43,    44,    45,    46,    47,    48,    49,    50,    51,
       52,    53,    54,    55,    56,    57,    58,    59,    60,    61,
       62,    63,    64,    65,    66,    67,    68,    69,    70,    71,
       72,    73,    74,    75,    76,    77,    78,    79,    80,    81,
-      82,    83,    86,    90,    20,    21,    22,    23,    24,    25,
-      26,    27,    91,    14,    84,    86,    91,    92,     6,     7,
-       8,     9,    10,    11,    12,    13,    92,    92,    92,     6,
-       7,    92,    92,     6,    92,    92,    92,    92,    92,    92,
-      92,    92,    92,    92,    91,     5,     4,    84,    91,     4,
-      85,    15,    15,    16,    17,    85,    85,    85,    15,    15
+      82,    83,    84,    87,    91,    20,    21,    22,    23,    24,
+      25,    26,    27,    92,    14,    85,    87,    92,    93,     6,
+       7,     8,     9,    10,    11,    12,    13,    93,    93,    93,
+       6,     7,    93,    93,     6,    93,    93,    93,    93,    93,
+      93,    93,    93,    93,    93,    92,     5,     4,    85,    92,
+       4,    86,    15,    15,    16,    17,    86,    86,    86,    15,
+      15
 };
 
 
@@ -1236,437 +1241,442 @@ yyuserAction (yyRuleNum yyn, int yyrhslen, yyGLRStackItem* yyvsp,
   switch (yyn)
     {
         case 2:
-#line 217 "FSAssembler.y"
+#line 218 "FSAssembler.y"
     { ((*yyvalp).code_) = new Main(reverseListOperation((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.listoperation_))); YY_RESULT_Code_= ((*yyvalp).code_); ;}
     break;
 
   case 3:
-#line 219 "FSAssembler.y"
+#line 220 "FSAssembler.y"
     { ((*yyvalp).listoperation_) = 0;  ;}
     break;
 
   case 4:
-#line 220 "FSAssembler.y"
+#line 221 "FSAssembler.y"
     { ((*yyvalp).listoperation_) = new ListOperation((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operation_), (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.listoperation_));  ;}
     break;
 
   case 5:
-#line 222 "FSAssembler.y"
+#line 223 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OAddC((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.register_), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.int_));  ;}
     break;
 
   case 6:
-#line 223 "FSAssembler.y"
+#line 224 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OSubC((((yyGLRStackItem const *)yyvsp)[YYFILL (-2)].yystate.yysemantics.yysval.register_), (((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.int_));  ;}
     break;
 
   case 7:
-#line 224 "FSAssembler.y"
+#line 225 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OLbl((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.string_));  ;}
     break;
 
   case 8:
-#line 225 "FSAssembler.y"
+#line 226 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OJmp((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 9:
-#line 226 "FSAssembler.y"
+#line 227 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OJb((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 10:
-#line 227 "FSAssembler.y"
+#line 228 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OJbe((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 11:
-#line 228 "FSAssembler.y"
+#line 229 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OJe((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 12:
-#line 229 "FSAssembler.y"
+#line 230 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OJne((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 13:
-#line 230 "FSAssembler.y"
+#line 231 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OJz((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 14:
-#line 231 "FSAssembler.y"
+#line 232 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OJnz((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 15:
-#line 232 "FSAssembler.y"
+#line 233 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OCall((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 16:
-#line 233 "FSAssembler.y"
+#line 234 "FSAssembler.y"
     { ((*yyvalp).operation_) = new ORet();  ;}
     break;
 
   case 17:
-#line 234 "FSAssembler.y"
+#line 235 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OPush((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 18:
-#line 235 "FSAssembler.y"
+#line 236 "FSAssembler.y"
     { ((*yyvalp).operation_) = new OPop((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 19:
-#line 236 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFadd();  ;}
+#line 237 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFabs();  ;}
     break;
 
   case 20:
-#line 237 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFaddp();  ;}
+#line 238 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFadd();  ;}
     break;
 
   case 21:
-#line 238 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFsub();  ;}
+#line 239 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFaddp();  ;}
     break;
 
   case 22:
-#line 239 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFsubp();  ;}
+#line 240 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFsub();  ;}
     break;
 
   case 23:
-#line 240 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFsubrp();  ;}
+#line 241 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFsubp();  ;}
     break;
 
   case 24:
-#line 241 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFmulp();  ;}
+#line 242 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFsubrp();  ;}
     break;
 
   case 25:
-#line 242 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFdivp();  ;}
+#line 243 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFmulp();  ;}
     break;
 
   case 26:
-#line 243 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFdivrp();  ;}
+#line 244 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFdivp();  ;}
     break;
 
   case 27:
-#line 244 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFchs();  ;}
+#line 245 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFdivrp();  ;}
     break;
 
   case 28:
-#line 245 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFsin();  ;}
+#line 246 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFchs();  ;}
     break;
 
   case 29:
-#line 246 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFcos();  ;}
+#line 247 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFsin();  ;}
     break;
 
   case 30:
-#line 247 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFprem();  ;}
+#line 248 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFcos();  ;}
     break;
 
   case 31:
-#line 248 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFptan();  ;}
+#line 249 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFprem();  ;}
     break;
 
   case 32:
-#line 249 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFpatan();  ;}
+#line 250 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFptan();  ;}
     break;
 
   case 33:
-#line 250 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFsqrt();  ;}
+#line 251 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFpatan();  ;}
     break;
 
   case 34:
-#line 251 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFrndint();  ;}
+#line 252 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFsqrt();  ;}
     break;
 
   case 35:
-#line 252 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFscale();  ;}
+#line 253 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFrndint();  ;}
     break;
 
   case 36:
-#line 253 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFtxmo();  ;}
+#line 254 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFscale();  ;}
     break;
 
   case 37:
-#line 254 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFyltx();  ;}
+#line 255 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFtxmo();  ;}
     break;
 
   case 38:
-#line 255 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFyltxpo();  ;}
+#line 256 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFyltx();  ;}
     break;
 
   case 39:
-#line 256 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFcomi();  ;}
+#line 257 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFyltxpo();  ;}
     break;
 
   case 40:
-#line 257 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFcmovb();  ;}
+#line 258 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFcomi();  ;}
     break;
 
   case 41:
-#line 258 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFcmovbe();  ;}
+#line 259 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFcmovb();  ;}
     break;
 
   case 42:
-#line 259 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFcmove();  ;}
+#line 260 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFcmovbe();  ;}
     break;
 
   case 43:
-#line 260 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFcmovnb();  ;}
+#line 261 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFcmove();  ;}
     break;
 
   case 44:
-#line 261 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFcmovnbe();  ;}
+#line 262 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFcmovnb();  ;}
     break;
 
   case 45:
-#line 262 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFcmovne();  ;}
+#line 263 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFcmovnbe();  ;}
     break;
 
   case 46:
-#line 263 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFcmovnu();  ;}
+#line 264 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFcmovne();  ;}
     break;
 
   case 47:
-#line 264 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFcmovu();  ;}
+#line 265 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFcmovnu();  ;}
     break;
 
   case 48:
-#line 265 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFld((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
+#line 266 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFcmovu();  ;}
     break;
 
   case 49:
-#line 266 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFild((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
+#line 267 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFld((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 50:
-#line 267 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFldt();  ;}
+#line 268 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFild((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 51:
-#line 268 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFldn();  ;}
+#line 269 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFldt();  ;}
     break;
 
   case 52:
-#line 269 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFldz();  ;}
+#line 270 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFldn();  ;}
     break;
 
   case 53:
-#line 270 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFldo();  ;}
+#line 271 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFldz();  ;}
     break;
 
   case 54:
-#line 271 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFldpi();  ;}
+#line 272 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFldo();  ;}
     break;
 
   case 55:
-#line 272 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFldlte();  ;}
+#line 273 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFldpi();  ;}
     break;
 
   case 56:
-#line 273 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFldlnt();  ;}
+#line 274 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFldlte();  ;}
     break;
 
   case 57:
-#line 274 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFldlgt();  ;}
+#line 275 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFldlnt();  ;}
     break;
 
   case 58:
-#line 275 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFst((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
+#line 276 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFldlgt();  ;}
     break;
 
   case 59:
-#line 276 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFist((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
+#line 277 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFst((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 60:
-#line 277 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFstp((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
+#line 278 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFist((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 61:
-#line 278 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFistp((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
+#line 279 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFstp((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 62:
-#line 279 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFstpt();  ;}
+#line 280 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFistp((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.operand_));  ;}
     break;
 
   case 63:
-#line 280 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFfree();  ;}
+#line 281 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFstpt();  ;}
     break;
 
   case 64:
-#line 281 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFfreea();  ;}
+#line 282 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFfree();  ;}
     break;
 
   case 65:
-#line 282 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFfreeb();  ;}
+#line 283 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFfreea();  ;}
     break;
 
   case 66:
-#line 283 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFfreec();  ;}
+#line 284 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFfreeb();  ;}
     break;
 
   case 67:
-#line 284 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFfreed();  ;}
+#line 285 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFfreec();  ;}
     break;
 
   case 68:
-#line 285 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFfreee();  ;}
+#line 286 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFfreed();  ;}
     break;
 
   case 69:
-#line 286 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFfreef();  ;}
+#line 287 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFfreee();  ;}
     break;
 
   case 70:
-#line 287 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFfreeg();  ;}
+#line 288 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFfreef();  ;}
     break;
 
   case 71:
-#line 288 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFxchg();  ;}
+#line 289 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFfreeg();  ;}
     break;
 
   case 72:
-#line 289 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFincstp();  ;}
+#line 290 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFxchg();  ;}
     break;
 
   case 73:
-#line 290 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFdecstp();  ;}
+#line 291 "FSAssembler.y"
+    { ((*yyvalp).operation_) = new OFincstp();  ;}
     break;
 
   case 74:
 #line 292 "FSAssembler.y"
-    { ((*yyvalp).register_) = new REax();  ;}
+    { ((*yyvalp).operation_) = new OFdecstp();  ;}
     break;
 
   case 75:
-#line 293 "FSAssembler.y"
-    { ((*yyvalp).register_) = new REcx();  ;}
+#line 294 "FSAssembler.y"
+    { ((*yyvalp).register_) = new REax();  ;}
     break;
 
   case 76:
-#line 294 "FSAssembler.y"
-    { ((*yyvalp).register_) = new REdx();  ;}
+#line 295 "FSAssembler.y"
+    { ((*yyvalp).register_) = new REcx();  ;}
     break;
 
   case 77:
-#line 295 "FSAssembler.y"
-    { ((*yyvalp).register_) = new REbx();  ;}
+#line 296 "FSAssembler.y"
+    { ((*yyvalp).register_) = new REdx();  ;}
     break;
 
   case 78:
-#line 296 "FSAssembler.y"
-    { ((*yyvalp).register_) = new REsp();  ;}
+#line 297 "FSAssembler.y"
+    { ((*yyvalp).register_) = new REbx();  ;}
     break;
 
   case 79:
-#line 297 "FSAssembler.y"
-    { ((*yyvalp).register_) = new REbp();  ;}
+#line 298 "FSAssembler.y"
+    { ((*yyvalp).register_) = new REsp();  ;}
     break;
 
   case 80:
-#line 298 "FSAssembler.y"
-    { ((*yyvalp).register_) = new REsi();  ;}
+#line 299 "FSAssembler.y"
+    { ((*yyvalp).register_) = new REbp();  ;}
     break;
 
   case 81:
-#line 299 "FSAssembler.y"
-    { ((*yyvalp).register_) = new REdi();  ;}
+#line 300 "FSAssembler.y"
+    { ((*yyvalp).register_) = new REsi();  ;}
     break;
 
   case 82:
 #line 301 "FSAssembler.y"
-    { ((*yyvalp).operand_) = new OReg((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.register_));  ;}
+    { ((*yyvalp).register_) = new REdi();  ;}
     break;
 
   case 83:
-#line 302 "FSAssembler.y"
-    { ((*yyvalp).operand_) = new OHex((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.string_));  ;}
+#line 303 "FSAssembler.y"
+    { ((*yyvalp).operand_) = new OReg((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.register_));  ;}
     break;
 
   case 84:
-#line 303 "FSAssembler.y"
-    { ((*yyvalp).operand_) = new OLab((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.string_));  ;}
+#line 304 "FSAssembler.y"
+    { ((*yyvalp).operand_) = new OHex((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.string_));  ;}
     break;
 
   case 85:
-#line 304 "FSAssembler.y"
-    { ((*yyvalp).operand_) = new OLitAdd((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.string_));  ;}
+#line 305 "FSAssembler.y"
+    { ((*yyvalp).operand_) = new OLab((((yyGLRStackItem const *)yyvsp)[YYFILL (0)].yystate.yysemantics.yysval.string_));  ;}
     break;
 
   case 86:
-#line 305 "FSAssembler.y"
-    { ((*yyvalp).operand_) = new ORegAdd((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.register_));  ;}
+#line 306 "FSAssembler.y"
+    { ((*yyvalp).operand_) = new OLitAdd((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.string_));  ;}
     break;
 
   case 87:
-#line 306 "FSAssembler.y"
-    { ((*yyvalp).operand_) = new ORelAddP((((yyGLRStackItem const *)yyvsp)[YYFILL (-3)].yystate.yysemantics.yysval.register_), (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.int_));  ;}
+#line 307 "FSAssembler.y"
+    { ((*yyvalp).operand_) = new ORegAdd((((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.register_));  ;}
     break;
 
   case 88:
-#line 307 "FSAssembler.y"
+#line 308 "FSAssembler.y"
+    { ((*yyvalp).operand_) = new ORelAddP((((yyGLRStackItem const *)yyvsp)[YYFILL (-3)].yystate.yysemantics.yysval.register_), (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.int_));  ;}
+    break;
+
+  case 89:
+#line 309 "FSAssembler.y"
     { ((*yyvalp).operand_) = new ORelAddS((((yyGLRStackItem const *)yyvsp)[YYFILL (-3)].yystate.yysemantics.yysval.register_), (((yyGLRStackItem const *)yyvsp)[YYFILL (-1)].yystate.yysemantics.yysval.int_));  ;}
     break;
 
@@ -1683,7 +1693,7 @@ yyuserAction (yyRuleNum yyn, int yyrhslen, yyGLRStackItem* yyvsp,
 # undef yyclearin
 # undef YYRECOVERING
 /* Line 872 of glr.c.  */
-#line 1687 "parse.cpp"
+#line 1697 "parse.cpp"
 }
 
 

@@ -33,6 +33,7 @@ class Skeleton : public Visitor
   void visitECInt(ECInt* ecint);
   void visitEVar(EVar* evar);
   void visitEPi(EPi* epi);
+  void visitESimpleCall(ESimpleCall* esimplecall);
   void visitECall(ECall* ecall);
   void visitEPostInc(EPostInc* epostinc);
   void visitEPostDec(EPostDec* epostdec);

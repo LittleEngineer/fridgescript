@@ -147,62 +147,63 @@ ListOperation* reverseListOperation(ListOperation *l)
 %token _SYMB_22    //   esi
 %token _SYMB_23    //   esp
 %token _SYMB_24    //   f2xm1
-%token _SYMB_25    //   fadd
-%token _SYMB_26    //   faddp
-%token _SYMB_27    //   fchs
-%token _SYMB_28    //   fcmovb
-%token _SYMB_29    //   fcmovbe
-%token _SYMB_30    //   fcmove
-%token _SYMB_31    //   fcmovnb
-%token _SYMB_32    //   fcmovnbe
-%token _SYMB_33    //   fcmovne
-%token _SYMB_34    //   fcmovnu
-%token _SYMB_35    //   fcmovu
-%token _SYMB_36    //   fcomi
-%token _SYMB_37    //   fcos
-%token _SYMB_38    //   fdecstp
-%token _SYMB_39    //   fdivp
-%token _SYMB_40    //   fdivrp
-%token _SYMB_41    //   ffree
-%token _SYMB_42    //   fild
-%token _SYMB_43    //   fincstp
-%token _SYMB_44    //   fist
-%token _SYMB_45    //   fistp
-%token _SYMB_46    //   fld
-%token _SYMB_47    //   fld1
-%token _SYMB_48    //   fldl2e
-%token _SYMB_49    //   fldlg2
-%token _SYMB_50    //   fldln2
-%token _SYMB_51    //   fldpi
-%token _SYMB_52    //   fldz
-%token _SYMB_53    //   fmulp
-%token _SYMB_54    //   fpatan
-%token _SYMB_55    //   fprem
-%token _SYMB_56    //   fptan
-%token _SYMB_57    //   frndint
-%token _SYMB_58    //   fscale
-%token _SYMB_59    //   fsin
-%token _SYMB_60    //   fsqrt
-%token _SYMB_61    //   fst
-%token _SYMB_62    //   fstp
-%token _SYMB_63    //   fsub
-%token _SYMB_64    //   fsubp
-%token _SYMB_65    //   fsubrp
-%token _SYMB_66    //   fxch
-%token _SYMB_67    //   fyl2x
-%token _SYMB_68    //   fyl2xp1
-%token _SYMB_69    //   jb
-%token _SYMB_70    //   jbe
-%token _SYMB_71    //   je
-%token _SYMB_72    //   jmp
-%token _SYMB_73    //   jne
-%token _SYMB_74    //   jnz
-%token _SYMB_75    //   jz
-%token _SYMB_76    //   pop
-%token _SYMB_77    //   push
-%token _SYMB_78    //   ret
-%token _SYMB_79    //   sub
-%token<string_> _SYMB_80    //   HexConstant
+%token _SYMB_25    //   fabs
+%token _SYMB_26    //   fadd
+%token _SYMB_27    //   faddp
+%token _SYMB_28    //   fchs
+%token _SYMB_29    //   fcmovb
+%token _SYMB_30    //   fcmovbe
+%token _SYMB_31    //   fcmove
+%token _SYMB_32    //   fcmovnb
+%token _SYMB_33    //   fcmovnbe
+%token _SYMB_34    //   fcmovne
+%token _SYMB_35    //   fcmovnu
+%token _SYMB_36    //   fcmovu
+%token _SYMB_37    //   fcomi
+%token _SYMB_38    //   fcos
+%token _SYMB_39    //   fdecstp
+%token _SYMB_40    //   fdivp
+%token _SYMB_41    //   fdivrp
+%token _SYMB_42    //   ffree
+%token _SYMB_43    //   fild
+%token _SYMB_44    //   fincstp
+%token _SYMB_45    //   fist
+%token _SYMB_46    //   fistp
+%token _SYMB_47    //   fld
+%token _SYMB_48    //   fld1
+%token _SYMB_49    //   fldl2e
+%token _SYMB_50    //   fldlg2
+%token _SYMB_51    //   fldln2
+%token _SYMB_52    //   fldpi
+%token _SYMB_53    //   fldz
+%token _SYMB_54    //   fmulp
+%token _SYMB_55    //   fpatan
+%token _SYMB_56    //   fprem
+%token _SYMB_57    //   fptan
+%token _SYMB_58    //   frndint
+%token _SYMB_59    //   fscale
+%token _SYMB_60    //   fsin
+%token _SYMB_61    //   fsqrt
+%token _SYMB_62    //   fst
+%token _SYMB_63    //   fstp
+%token _SYMB_64    //   fsub
+%token _SYMB_65    //   fsubp
+%token _SYMB_66    //   fsubrp
+%token _SYMB_67    //   fxch
+%token _SYMB_68    //   fyl2x
+%token _SYMB_69    //   fyl2xp1
+%token _SYMB_70    //   jb
+%token _SYMB_71    //   jbe
+%token _SYMB_72    //   je
+%token _SYMB_73    //   jmp
+%token _SYMB_74    //   jne
+%token _SYMB_75    //   jnz
+%token _SYMB_76    //   jz
+%token _SYMB_77    //   pop
+%token _SYMB_78    //   push
+%token _SYMB_79    //   ret
+%token _SYMB_80    //   sub
+%token<string_> _SYMB_81    //   HexConstant
 
 %type <code_> Code
 %type <listoperation_> ListOperation
@@ -220,74 +221,75 @@ ListOperation : /* empty */ { $$ = 0;  }
   | ListOperation Operation { $$ = new ListOperation($2, $1);  }
 ;
 Operation : _SYMB_14 Register _SYMB_0 _INTEGER_ { $$ = new OAddC($2, $4);  } 
-  | _SYMB_79 Register _SYMB_0 _INTEGER_ { $$ = new OSubC($2, $4);  }
+  | _SYMB_80 Register _SYMB_0 _INTEGER_ { $$ = new OSubC($2, $4);  }
   | _IDENT_ _SYMB_1 { $$ = new OLbl($1);  }
-  | _SYMB_72 Operand { $$ = new OJmp($2);  }
-  | _SYMB_69 Operand { $$ = new OJb($2);  }
-  | _SYMB_70 Operand { $$ = new OJbe($2);  }
-  | _SYMB_71 Operand { $$ = new OJe($2);  }
-  | _SYMB_73 Operand { $$ = new OJne($2);  }
-  | _SYMB_75 Operand { $$ = new OJz($2);  }
-  | _SYMB_74 Operand { $$ = new OJnz($2);  }
+  | _SYMB_73 Operand { $$ = new OJmp($2);  }
+  | _SYMB_70 Operand { $$ = new OJb($2);  }
+  | _SYMB_71 Operand { $$ = new OJbe($2);  }
+  | _SYMB_72 Operand { $$ = new OJe($2);  }
+  | _SYMB_74 Operand { $$ = new OJne($2);  }
+  | _SYMB_76 Operand { $$ = new OJz($2);  }
+  | _SYMB_75 Operand { $$ = new OJnz($2);  }
   | _SYMB_15 Operand { $$ = new OCall($2);  }
-  | _SYMB_78 { $$ = new ORet();  }
-  | _SYMB_77 Operand { $$ = new OPush($2);  }
-  | _SYMB_76 Operand { $$ = new OPop($2);  }
-  | _SYMB_25 { $$ = new OFadd();  }
-  | _SYMB_26 { $$ = new OFaddp();  }
-  | _SYMB_63 { $$ = new OFsub();  }
-  | _SYMB_64 { $$ = new OFsubp();  }
-  | _SYMB_65 { $$ = new OFsubrp();  }
-  | _SYMB_53 { $$ = new OFmulp();  }
-  | _SYMB_39 { $$ = new OFdivp();  }
-  | _SYMB_40 { $$ = new OFdivrp();  }
-  | _SYMB_27 { $$ = new OFchs();  }
-  | _SYMB_59 { $$ = new OFsin();  }
-  | _SYMB_37 { $$ = new OFcos();  }
-  | _SYMB_55 { $$ = new OFprem();  }
-  | _SYMB_56 { $$ = new OFptan();  }
-  | _SYMB_54 { $$ = new OFpatan();  }
-  | _SYMB_60 { $$ = new OFsqrt();  }
-  | _SYMB_57 { $$ = new OFrndint();  }
-  | _SYMB_58 { $$ = new OFscale();  }
+  | _SYMB_79 { $$ = new ORet();  }
+  | _SYMB_78 Operand { $$ = new OPush($2);  }
+  | _SYMB_77 Operand { $$ = new OPop($2);  }
+  | _SYMB_25 { $$ = new OFabs();  }
+  | _SYMB_26 { $$ = new OFadd();  }
+  | _SYMB_27 { $$ = new OFaddp();  }
+  | _SYMB_64 { $$ = new OFsub();  }
+  | _SYMB_65 { $$ = new OFsubp();  }
+  | _SYMB_66 { $$ = new OFsubrp();  }
+  | _SYMB_54 { $$ = new OFmulp();  }
+  | _SYMB_40 { $$ = new OFdivp();  }
+  | _SYMB_41 { $$ = new OFdivrp();  }
+  | _SYMB_28 { $$ = new OFchs();  }
+  | _SYMB_60 { $$ = new OFsin();  }
+  | _SYMB_38 { $$ = new OFcos();  }
+  | _SYMB_56 { $$ = new OFprem();  }
+  | _SYMB_57 { $$ = new OFptan();  }
+  | _SYMB_55 { $$ = new OFpatan();  }
+  | _SYMB_61 { $$ = new OFsqrt();  }
+  | _SYMB_58 { $$ = new OFrndint();  }
+  | _SYMB_59 { $$ = new OFscale();  }
   | _SYMB_24 { $$ = new OFtxmo();  }
-  | _SYMB_67 { $$ = new OFyltx();  }
-  | _SYMB_68 { $$ = new OFyltxpo();  }
-  | _SYMB_36 { $$ = new OFcomi();  }
-  | _SYMB_28 { $$ = new OFcmovb();  }
-  | _SYMB_29 { $$ = new OFcmovbe();  }
-  | _SYMB_30 { $$ = new OFcmove();  }
-  | _SYMB_31 { $$ = new OFcmovnb();  }
-  | _SYMB_32 { $$ = new OFcmovnbe();  }
-  | _SYMB_33 { $$ = new OFcmovne();  }
-  | _SYMB_34 { $$ = new OFcmovnu();  }
-  | _SYMB_35 { $$ = new OFcmovu();  }
-  | _SYMB_46 Operand { $$ = new OFld($2);  }
-  | _SYMB_42 Operand { $$ = new OFild($2);  }
-  | _SYMB_46 _SYMB_2 { $$ = new OFldt();  }
-  | _SYMB_46 _SYMB_3 { $$ = new OFldn();  }
-  | _SYMB_52 { $$ = new OFldz();  }
-  | _SYMB_47 { $$ = new OFldo();  }
-  | _SYMB_51 { $$ = new OFldpi();  }
-  | _SYMB_48 { $$ = new OFldlte();  }
-  | _SYMB_50 { $$ = new OFldlnt();  }
-  | _SYMB_49 { $$ = new OFldlgt();  }
-  | _SYMB_61 Operand { $$ = new OFst($2);  }
-  | _SYMB_44 Operand { $$ = new OFist($2);  }
-  | _SYMB_62 Operand { $$ = new OFstp($2);  }
-  | _SYMB_45 Operand { $$ = new OFistp($2);  }
-  | _SYMB_62 _SYMB_2 { $$ = new OFstpt();  }
-  | _SYMB_41 _SYMB_2 { $$ = new OFfree();  }
-  | _SYMB_41 _SYMB_3 { $$ = new OFfreea();  }
-  | _SYMB_41 _SYMB_4 { $$ = new OFfreeb();  }
-  | _SYMB_41 _SYMB_5 { $$ = new OFfreec();  }
-  | _SYMB_41 _SYMB_6 { $$ = new OFfreed();  }
-  | _SYMB_41 _SYMB_7 { $$ = new OFfreee();  }
-  | _SYMB_41 _SYMB_8 { $$ = new OFfreef();  }
-  | _SYMB_41 _SYMB_9 { $$ = new OFfreeg();  }
-  | _SYMB_66 { $$ = new OFxchg();  }
-  | _SYMB_43 { $$ = new OFincstp();  }
-  | _SYMB_38 { $$ = new OFdecstp();  }
+  | _SYMB_68 { $$ = new OFyltx();  }
+  | _SYMB_69 { $$ = new OFyltxpo();  }
+  | _SYMB_37 { $$ = new OFcomi();  }
+  | _SYMB_29 { $$ = new OFcmovb();  }
+  | _SYMB_30 { $$ = new OFcmovbe();  }
+  | _SYMB_31 { $$ = new OFcmove();  }
+  | _SYMB_32 { $$ = new OFcmovnb();  }
+  | _SYMB_33 { $$ = new OFcmovnbe();  }
+  | _SYMB_34 { $$ = new OFcmovne();  }
+  | _SYMB_35 { $$ = new OFcmovnu();  }
+  | _SYMB_36 { $$ = new OFcmovu();  }
+  | _SYMB_47 Operand { $$ = new OFld($2);  }
+  | _SYMB_43 Operand { $$ = new OFild($2);  }
+  | _SYMB_47 _SYMB_2 { $$ = new OFldt();  }
+  | _SYMB_47 _SYMB_3 { $$ = new OFldn();  }
+  | _SYMB_53 { $$ = new OFldz();  }
+  | _SYMB_48 { $$ = new OFldo();  }
+  | _SYMB_52 { $$ = new OFldpi();  }
+  | _SYMB_49 { $$ = new OFldlte();  }
+  | _SYMB_51 { $$ = new OFldlnt();  }
+  | _SYMB_50 { $$ = new OFldlgt();  }
+  | _SYMB_62 Operand { $$ = new OFst($2);  }
+  | _SYMB_45 Operand { $$ = new OFist($2);  }
+  | _SYMB_63 Operand { $$ = new OFstp($2);  }
+  | _SYMB_46 Operand { $$ = new OFistp($2);  }
+  | _SYMB_63 _SYMB_2 { $$ = new OFstpt();  }
+  | _SYMB_42 _SYMB_2 { $$ = new OFfree();  }
+  | _SYMB_42 _SYMB_3 { $$ = new OFfreea();  }
+  | _SYMB_42 _SYMB_4 { $$ = new OFfreeb();  }
+  | _SYMB_42 _SYMB_5 { $$ = new OFfreec();  }
+  | _SYMB_42 _SYMB_6 { $$ = new OFfreed();  }
+  | _SYMB_42 _SYMB_7 { $$ = new OFfreee();  }
+  | _SYMB_42 _SYMB_8 { $$ = new OFfreef();  }
+  | _SYMB_42 _SYMB_9 { $$ = new OFfreeg();  }
+  | _SYMB_67 { $$ = new OFxchg();  }
+  | _SYMB_44 { $$ = new OFincstp();  }
+  | _SYMB_39 { $$ = new OFdecstp();  }
 ;
 Register : _SYMB_16 { $$ = new REax();  } 
   | _SYMB_19 { $$ = new REcx();  }
@@ -299,9 +301,9 @@ Register : _SYMB_16 { $$ = new REax();  }
   | _SYMB_20 { $$ = new REdi();  }
 ;
 Operand : Register { $$ = new OReg($1);  } 
-  | _SYMB_80 { $$ = new OHex($1);  }
+  | _SYMB_81 { $$ = new OHex($1);  }
   | _IDENT_ { $$ = new OLab($1);  }
-  | _SYMB_10 _SYMB_80 _SYMB_11 { $$ = new OLitAdd($2);  }
+  | _SYMB_10 _SYMB_81 _SYMB_11 { $$ = new OLitAdd($2);  }
   | _SYMB_10 Register _SYMB_11 { $$ = new ORegAdd($2);  }
   | _SYMB_10 Register _SYMB_12 _INTEGER_ _SYMB_11 { $$ = new ORelAddP($2, $4);  }
   | _SYMB_10 Register _SYMB_13 _INTEGER_ _SYMB_11 { $$ = new ORelAddS($2, $4);  }

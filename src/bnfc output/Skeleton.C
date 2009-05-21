@@ -198,6 +198,13 @@ void Skeleton::visitEPi(EPi* epi)
 
 }
 
+void Skeleton::visitESimpleCall(ESimpleCall* esimplecall)
+{
+  /* Code For ESimpleCall Goes Here */
+
+  visitIdent(esimplecall->ident_);
+}
+
 void Skeleton::visitECall(ECall* ecall)
 {
   /* Code For ECall Goes Here */

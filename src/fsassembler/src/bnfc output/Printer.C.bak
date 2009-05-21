@@ -313,6 +313,18 @@ void PrintAbsyn::visitOPop(OPop* p)
   _i_ = oldi;
 }
 
+void PrintAbsyn::visitOFabs(OFabs* p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(_L_PAREN);
+
+  render("fabs");
+
+  if (oldi > 0) render(_R_PAREN);
+
+  _i_ = oldi;
+}
+
 void PrintAbsyn::visitOFadd(OFadd* p)
 {
   int oldi = _i_;
@@ -1399,6 +1411,10 @@ void ShowAbsyn::visitOPop(OPop* p)
   if (p->operand_)  p->operand_->accept(this);
   bufAppend(']');
   bufAppend(')');
+}
+void ShowAbsyn::visitOFabs(OFabs* p)
+{
+  bufAppend("OFabs");
 }
 void ShowAbsyn::visitOFadd(OFadd* p)
 {

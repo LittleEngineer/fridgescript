@@ -106,8 +106,9 @@
      _SYMB_78 = 337,
      _SYMB_79 = 338,
      _SYMB_80 = 339,
-     _INTEGER_ = 340,
-     _IDENT_ = 341
+     _SYMB_81 = 340,
+     _INTEGER_ = 341,
+     _IDENT_ = 342
    };
 #endif
 /* Tokens.  */
@@ -193,8 +194,9 @@
 #define _SYMB_78 337
 #define _SYMB_79 338
 #define _SYMB_80 339
-#define _INTEGER_ 340
-#define _IDENT_ 341
+#define _SYMB_81 340
+#define _INTEGER_ 341
+#define _IDENT_ 342
 
 
 
@@ -214,7 +216,7 @@ typedef union YYSTYPE {
 
 } YYSTYPE;
 /* Line 2359 of glr.c.  */
-#line 218 "parse.hpp"
+#line 220 "parse.hpp"
 # define YYSTYPE_IS_DECLARED 1
 # define YYSTYPE_IS_TRIVIAL 1
 #endif
