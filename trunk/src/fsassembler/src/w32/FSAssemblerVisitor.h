@@ -51,6 +51,7 @@ public:
     virtual void visitORet(ORet *p) {}
     virtual void visitOPush(OPush *p) {}
     virtual void visitOPop(OPop *p) {}
+    virtual void visitOFabs(OFabs *p) {}
     virtual void visitOFadd(OFadd *p) {}
     virtual void visitOFaddp(OFaddp *p) {}
     virtual void visitOFsub(OFsub *p) {}

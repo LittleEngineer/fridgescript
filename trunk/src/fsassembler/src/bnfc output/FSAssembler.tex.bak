@@ -47,25 +47,26 @@ The reserved words used in FSAssembler are the following: \\
 {\reserved{add}} &{\reserved{call}} &{\reserved{eax}} \\
 {\reserved{ebp}} &{\reserved{ebx}} &{\reserved{ecx}} \\
 {\reserved{edi}} &{\reserved{edx}} &{\reserved{esi}} \\
-{\reserved{esp}} &{\reserved{f2xm1}} &{\reserved{fadd}} \\
-{\reserved{faddp}} &{\reserved{fchs}} &{\reserved{fcmovb}} \\
-{\reserved{fcmovbe}} &{\reserved{fcmove}} &{\reserved{fcmovnb}} \\
-{\reserved{fcmovnbe}} &{\reserved{fcmovne}} &{\reserved{fcmovnu}} \\
-{\reserved{fcmovu}} &{\reserved{fcomi}} &{\reserved{fcos}} \\
-{\reserved{fdecstp}} &{\reserved{fdivp}} &{\reserved{fdivrp}} \\
-{\reserved{ffree}} &{\reserved{fild}} &{\reserved{fincstp}} \\
-{\reserved{fist}} &{\reserved{fistp}} &{\reserved{fld}} \\
-{\reserved{fld1}} &{\reserved{fldl2e}} &{\reserved{fldlg2}} \\
-{\reserved{fldln2}} &{\reserved{fldpi}} &{\reserved{fldz}} \\
-{\reserved{fmulp}} &{\reserved{fpatan}} &{\reserved{fprem}} \\
-{\reserved{fptan}} &{\reserved{frndint}} &{\reserved{fscale}} \\
-{\reserved{fsin}} &{\reserved{fsqrt}} &{\reserved{fst}} \\
-{\reserved{fstp}} &{\reserved{fsub}} &{\reserved{fsubp}} \\
-{\reserved{fsubrp}} &{\reserved{fxch}} &{\reserved{fyl2x}} \\
-{\reserved{fyl2xp1}} &{\reserved{jb}} &{\reserved{jbe}} \\
-{\reserved{je}} &{\reserved{jmp}} &{\reserved{jne}} \\
-{\reserved{jnz}} &{\reserved{jz}} &{\reserved{pop}} \\
-{\reserved{push}} &{\reserved{ret}} &{\reserved{sub}} \\
+{\reserved{esp}} &{\reserved{f2xm1}} &{\reserved{fabs}} \\
+{\reserved{fadd}} &{\reserved{faddp}} &{\reserved{fchs}} \\
+{\reserved{fcmovb}} &{\reserved{fcmovbe}} &{\reserved{fcmove}} \\
+{\reserved{fcmovnb}} &{\reserved{fcmovnbe}} &{\reserved{fcmovne}} \\
+{\reserved{fcmovnu}} &{\reserved{fcmovu}} &{\reserved{fcomi}} \\
+{\reserved{fcos}} &{\reserved{fdecstp}} &{\reserved{fdivp}} \\
+{\reserved{fdivrp}} &{\reserved{ffree}} &{\reserved{fild}} \\
+{\reserved{fincstp}} &{\reserved{fist}} &{\reserved{fistp}} \\
+{\reserved{fld}} &{\reserved{fld1}} &{\reserved{fldl2e}} \\
+{\reserved{fldlg2}} &{\reserved{fldln2}} &{\reserved{fldpi}} \\
+{\reserved{fldz}} &{\reserved{fmulp}} &{\reserved{fpatan}} \\
+{\reserved{fprem}} &{\reserved{fptan}} &{\reserved{frndint}} \\
+{\reserved{fscale}} &{\reserved{fsin}} &{\reserved{fsqrt}} \\
+{\reserved{fst}} &{\reserved{fstp}} &{\reserved{fsub}} \\
+{\reserved{fsubp}} &{\reserved{fsubrp}} &{\reserved{fxch}} \\
+{\reserved{fyl2x}} &{\reserved{fyl2xp1}} &{\reserved{jb}} \\
+{\reserved{jbe}} &{\reserved{je}} &{\reserved{jmp}} \\
+{\reserved{jne}} &{\reserved{jnz}} &{\reserved{jz}} \\
+{\reserved{pop}} &{\reserved{push}} &{\reserved{ret}} \\
+{\reserved{sub}} & & \\
 \end{tabular}\\
 
 The symbols used in FSAssembler are the following: \\
@@ -111,6 +112,7 @@ All other symbols are terminals.\\
  & {\delimit}  &{\terminal{ret}}  \\
  & {\delimit}  &{\terminal{push}} {\nonterminal{Operand}}  \\
  & {\delimit}  &{\terminal{pop}} {\nonterminal{Operand}}  \\
+ & {\delimit}  &{\terminal{fabs}}  \\
  & {\delimit}  &{\terminal{fadd}}  \\
  & {\delimit}  &{\terminal{faddp}}  \\
  & {\delimit}  &{\terminal{fsub}}  \\

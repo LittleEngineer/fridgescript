@@ -528,6 +528,20 @@ void FSParseTree::visitEPi(EPi *epi)
 }
 
 ///////////////////////////////////////////////
+// ESimpleCall : Function call
+// the function result is to return in st(0)
+// there are no parameters
+///////////////////////////////////////////////
+
+void FSParseTree::visitESimpleCall(ESimpleCall* esimplecall)
+{
+    // evaluate expression
+    // esimplecall->expression_->accept(this);
+    // call function
+    // ...
+}
+
+///////////////////////////////////////////////
 // ECall : Function call
 // the function result is to return in st(0)
 // the parameters are handled as locals and

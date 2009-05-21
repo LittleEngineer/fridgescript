@@ -45,6 +45,7 @@ ORet.		Operation	::=	"ret" ;
 OPush.		Operation	::= "push" Operand ;
 OPop.		Operation	::= "pop" Operand ;
 
+OFabs.		Operation	::= "fabs" ;
 OFadd.		Operation	::= "fadd" ;
 OFaddp.		Operation	::= "faddp" ;
 OFsub.		Operation	::= "fsub" ;

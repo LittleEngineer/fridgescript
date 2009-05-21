@@ -30,6 +30,7 @@ class OCall;
 class ORet;
 class OPush;
 class OPop;
+class OFabs;
 class OFadd;
 class OFaddp;
 class OFsub;
@@ -128,6 +129,7 @@ class Visitor
   virtual void visitORet(ORet *p) = 0;
   virtual void visitOPush(OPush *p) = 0;
   virtual void visitOPop(OPop *p) = 0;
+  virtual void visitOFabs(OFabs *p) = 0;
   virtual void visitOFadd(OFadd *p) = 0;
   virtual void visitOFaddp(OFaddp *p) = 0;
   virtual void visitOFsub(OFsub *p) = 0;
@@ -458,6 +460,19 @@ class OPop : public Operation
   virtual void accept(Visitor *v);
   virtual  OPop  *clone() const;
   void swap(OPop &);
+};
+
+class OFabs : public Operation
+{
+ public:
+
+  OFabs(const OFabs &);
+  OFabs &operator=(const OFabs &);
+  OFabs();
+  ~OFabs();
+  virtual void accept(Visitor *v);
+  virtual  OFabs  *clone() const;
+  void swap(OFabs &);
 };
 
 class OFadd : public Operation

@@ -654,6 +654,28 @@ EPi *EPi::clone() const {
   return new EPi(*this);
 }
 
+/********************   ESimpleCall    ********************/
+ESimpleCall::ESimpleCall(Ident p1) { ident_ = p1; }
+ESimpleCall::ESimpleCall(const ESimpleCall & other) {   ident_ = other.ident_;
+
+}
+ESimpleCall &ESimpleCall::operator=(const ESimpleCall & other) {
+  ESimpleCall tmp(other);
+  swap(tmp);
+  return *this;
+}
+void ESimpleCall::swap(ESimpleCall & other) {
+  std::swap(ident_, other.ident_);
+
+}
+
+ESimpleCall::~ESimpleCall() { }
+
+void ESimpleCall::accept(Visitor *v) { v->visitESimpleCall(this); }
+ESimpleCall *ESimpleCall::clone() const {
+  return new ESimpleCall(*this);
+}
+
 /********************   ECall    ********************/
 ECall::ECall(Ident p1, ListExpression *p2) { ident_ = p1; listexpression_ = p2; }
 ECall::ECall(const ECall & other) {   ident_ = other.ident_;

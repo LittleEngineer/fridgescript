@@ -55,6 +55,7 @@ public:
     virtual void visitECInt(ECInt* ecint) {}
     virtual void visitEVar(EVar *p) {}
     virtual void visitEPi(EPi *p) {}
+    virtual void visitESimpleCall(ESimpleCall* esimplecall) {}
     virtual void visitECall(ECall* ecall) {}
     virtual void visitEPostInc(EPostInc* epostinc) {}
     virtual void visitEPostDec(EPostDec* epostdec) {}

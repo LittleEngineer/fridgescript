@@ -36,6 +36,7 @@ class ECDbl;
 class ECInt;
 class EVar;
 class EPi;
+class ESimpleCall;
 class ECall;
 class EPostInc;
 class EPostDec;
@@ -127,6 +128,7 @@ class Visitor
   virtual void visitECInt(ECInt *p) = 0;
   virtual void visitEVar(EVar *p) = 0;
   virtual void visitEPi(EPi *p) = 0;
+  virtual void visitESimpleCall(ESimpleCall *p) = 0;
   virtual void visitECall(ECall *p) = 0;
   virtual void visitEPostInc(EPostInc *p) = 0;
   virtual void visitEPostDec(EPostDec *p) = 0;
@@ -578,6 +580,20 @@ class EPi : public Expression
   virtual void accept(Visitor *v);
   virtual  EPi  *clone() const;
   void swap(EPi &);
+};
+
+class ESimpleCall : public Expression
+{
+ public:
+  Ident ident_;
+
+  ESimpleCall(const ESimpleCall &);
+  ESimpleCall &operator=(const ESimpleCall &);
+  ESimpleCall(Ident p1);
+  ~ESimpleCall();
+  virtual void accept(Visitor *v);
+  virtual  ESimpleCall  *clone() const;
+  void swap(ESimpleCall &);
 };
 
 class ECall : public Expression

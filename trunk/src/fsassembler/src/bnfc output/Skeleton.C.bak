@@ -126,6 +126,12 @@ void Skeleton::visitOPop(OPop* opop)
   opop->operand_->accept(this);
 }
 
+void Skeleton::visitOFabs(OFabs* ofabs)
+{
+  /* Code For OFabs Goes Here */
+
+}
+
 void Skeleton::visitOFadd(OFadd* ofadd)
 {
   /* Code For OFadd Goes Here */

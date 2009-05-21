@@ -68,6 +68,7 @@ public:
     void visitECInt(ECInt* ecint);
     void visitEVar(EVar *p);
     void visitEPi(EPi *p);
+    void visitESimpleCall(ESimpleCall* esimplecall);
     void visitECall(ECall* ecall);
     void visitEPostInc(EPostInc* epostinc);
     void visitEPostDec(EPostDec* epostdec);

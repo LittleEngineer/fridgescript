@@ -45,6 +45,7 @@ class PrintAbsyn : public Visitor
   void visitORet(ORet *p);
   void visitOPush(OPush *p);
   void visitOPop(OPop *p);
+  void visitOFabs(OFabs *p);
   void visitOFadd(OFadd *p);
   void visitOFaddp(OFaddp *p);
   void visitOFsub(OFsub *p);
@@ -203,6 +204,7 @@ class ShowAbsyn : public Visitor
   void visitORet(ORet *p);
   void visitOPush(OPush *p);
   void visitOPop(OPop *p);
+  void visitOFabs(OFabs *p);
   void visitOFadd(OFadd *p);
   void visitOFaddp(OFaddp *p);
   void visitOFsub(OFsub *p);

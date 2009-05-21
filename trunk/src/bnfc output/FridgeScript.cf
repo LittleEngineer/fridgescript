@@ -47,6 +47,7 @@ ECInt.			Expression12	::= Integer ;
 EVar.			Expression12	::= Ident ;
 EPi.			Expression12	::= "pi" ;
 
+ESimpleCall.	Expression11	::= Ident "("")" ;
 ECall.			Expression11	::= Ident "(" [Expression] ")" ;
 EPostInc.		Expression11	::= Ident "++" ;
 EPostDec.		Expression11	::= Ident "--" ;

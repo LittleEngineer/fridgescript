@@ -25,6 +25,7 @@ class Skeleton : public Visitor
   void visitORet(ORet* oret);
   void visitOPush(OPush* opush);
   void visitOPop(OPop* opop);
+  void visitOFabs(OFabs* ofabs);
   void visitOFadd(OFadd* ofadd);
   void visitOFaddp(OFaddp* ofaddp);
   void visitOFsub(OFsub* ofsub);

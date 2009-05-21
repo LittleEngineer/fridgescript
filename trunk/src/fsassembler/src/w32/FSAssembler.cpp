@@ -304,6 +304,12 @@ void FSAssembler::visitOPop(OPop* opop)
     }
 }
 
+void FSAssembler::visitOFabs(OFabs* ofabs)
+{
+    out.Push(0xD9);
+    out.Push(0xE1);
+}
+
 void FSAssembler::visitOFadd(OFadd* ofadd)
 {
     out.Push(0xD8);
