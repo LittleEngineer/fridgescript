@@ -375,16 +375,21 @@ void FSParseTree::visitSUntil(SUntil* suntil)
 void FSParseTree::visitSFor(SFor* sfor)
 {
     assembler += "-- for statement\r\n";
+    
     assembler += "-- initialise\r\n";
-    sfor->expression_1->accept(this);
+    
+    sfor->listexpression_1->accept(this);
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(0)\r\n";
+    
     assembler += "-- start of loop\r\n";
+    
     Simple::ANSIString lblStart = GetRandomLabel();
     assembler += lblStart;
     assembler += ":\r\n";
     assembler += "-- run test\r\n";
-    sfor->expression_2->accept(this);
+    sfor->expression_->accept(this);
+    
     // compare st0 with zero
     assembler += "fldz\r\n";
     assembler += "fcomi\r\n";
@@ -400,7 +405,7 @@ void FSParseTree::visitSFor(SFor* sfor)
     assembler += "-- run for contents\r\n";
     sfor->statement_->accept(this);
     assembler += "-- run for expression\r\n";
-    sfor->expression_3->accept(this);
+    sfor->listexpression_2->accept(this);
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(0)\r\n";
     assembler += "-- loop\r\n";
@@ -606,7 +611,29 @@ void FSParseTree::visitEPostDec(EPostDec* epostdec)
 }
 
 ///////////////////////////////////////////////
-// EPow : Power function
+// EAbs : Absolute value
+// Absolute value (makes it positive)
+///////////////////////////////////////////////
+
+void FSParseTree::visitEAbs(EAbs* eabs)
+{
+    /*
+        evaluate the expression
+        abs the result and leave it in st(0) for the rest of the expression
+    */
+
+    assembler += "-- expression for abs\r\n";
+
+    eabs->expression_->accept(this);
+
+    assembler += "-- abs\r\n";
+    assembler += "fabs\r\n";
+
+    assembler += "-- end abs\r\n";
+}
+
+///////////////////////////////////////////////
+// EPow : Power (exponentiation)
 // This is quite expensive and messy
 ///////////////////////////////////////////////
 
@@ -677,7 +704,7 @@ void FSParseTree::visitEPow(EPow* epow)
 }
 
 ///////////////////////////////////////////////
-// ESqrt : Square-root function
+// ESqrt : Square-root
 // This can be optimised:
 // * SSE sqrt function
 // * magic number hack
@@ -702,12 +729,11 @@ void FSParseTree::visitESqrt(ESqrt* esqrt)
 
 ///////////////////////////////////////////////
 // EExp : Exponential function
-// This is messy like EPow
+// This is messy like EPow but uses e for x
 ///////////////////////////////////////////////
 
 void FSParseTree::visitEExp(EExp* eexp)
 {
-    // this just copies pow but uses e for x
     /*
         pow(x,y) = 2^(y*lg(x))
         since:
@@ -816,6 +842,10 @@ void FSParseTree::visitELogD(ELogD* elogd)
     assembler += "-- end log 10\r\n";
 }
 
+///////////////////////////////////////////////
+// ESin : Sine
+///////////////////////////////////////////////
+
 void FSParseTree::visitESin(ESin* esin)
 {
     /*
@@ -823,11 +853,19 @@ void FSParseTree::visitESin(ESin* esin)
         take sine of the result and leave it in st(0) for the rest of the expression
     */
     assembler += "-- expression for sin\r\n";
+
     esin->expression_->accept(this);
+    
     assembler += "-- sin\r\n";
+    
     assembler += "fsin\r\n";
+    
     assembler += "-- end sin\r\n";
 }
+
+///////////////////////////////////////////////
+// ECos : Cosine
+///////////////////////////////////////////////
 
 void FSParseTree::visitECos(ECos* ecos)
 {
@@ -835,12 +873,21 @@ void FSParseTree::visitECos(ECos* ecos)
         evaluate the expression
         take cosine of the result and leave it in st(0) for the rest of the expression
     */
+
     assembler += "-- expression for cos\r\n";
+
     ecos->expression_->accept(this);
+
     assembler += "-- cos\r\n";
+
     assembler += "fcos\r\n";
+
     assembler += "-- end cos\r\n";
 }
+
+///////////////////////////////////////////////
+// ETan : Tangent
+///////////////////////////////////////////////
 
 void FSParseTree::visitETan(ETan* etan)
 {
@@ -849,11 +896,22 @@ void FSParseTree::visitETan(ETan* etan)
         take tan of the result and leave it in st(0) for the rest of the expression
         fptan pushes 1.0 so we need an extra pop
     */
+
+    assembler += "-- expression for tan\r\n";
+
     etan->expression_->accept(this);
     
+    assembler += "-- tan\r\n";
+
     assembler += "fptan\r\n";
     assembler += "fstp st(0)\r\n";
+
+    assembler += "-- end tan\r\n";
 }
+
+///////////////////////////////////////////////
+// EAtan : Inverse tangent
+///////////////////////////////////////////////
 
 void FSParseTree::visitEAtan(EAtan* eatan)
 {
@@ -862,39 +920,77 @@ void FSParseTree::visitEAtan(EAtan* eatan)
         take atan of the result and leave it in st(0) for the rest of the expression
         fpatan takes the atan of st(1)/st(0) so load a 1 before executing fpatan
     */
+
+    assembler += "-- expression for atan\r\n";
+
     eatan->expression_->accept(this);
     
+    assembler += "-- atan\r\n";
+
     assembler += "fld1\r\n";
     assembler += "fpatan\r\n";
+
+    assembler += "-- end atan\r\n";
 }
+
+///////////////////////////////////////////////
+// EAtanT : Inverse tangent with 2 parameters
+// e.g. atan2(y, x);
+///////////////////////////////////////////////
 
 void FSParseTree::visitEAtanT(EAtanT* eatant)
 {
     /*
         evaluate first expression and push
     */
+
+    assembler += "-- first expression for atan2\r\n";
+
     eatant->expression_2->accept(this);
     pushDouble();
+
     /*
         evaluate second expression than pop previous result
         ready for a binary operation
     */
+
+    assembler += "-- second expression for atan2\r\n";
+
     eatant->expression_1->accept(this);
     popDouble();
+
     /*
         fpatan does st(0) = atan(st(1)/st(0)) and pops
         leaving the result in st(0) ready for the next expression
     */
+
+    assembler += "-- atan2\r\n";
+    
     assembler += "fpatan\r\n";
+
+    assembler += "-- end atan2\r\n";
 }
+
+///////////////////////////////////////////////
+// EAsin : Inverse sine
+// relies on this identity:
+// asin( x ) =
+// 2 * atan( x / ( 1 + sqrt ( 1 - x * x ) ) )
+///////////////////////////////////////////////
 
 void FSParseTree::visitEAsin(EAsin* easin)
 {
     /*
         asin(x) = 2*atan(x/(1 + sqrt(1 - x*x)))
     */
+
+    assembler += "-- expression for asin\r\n";
+
     // load x
     easin->expression_->accept(this);
+
+    assembler += "-- asin\r\n";
+
     // we want st(0) to equal 1+sqrt(1-st(1)*st(1))
     assembler += "fld1\r\n";
     assembler += "fld st(1)\r\n";
@@ -903,32 +999,41 @@ void FSParseTree::visitEAsin(EAsin* easin)
     // st(2) = 1
     // st(1) = x
     // st(0) = x
+    
     assembler += "fmulp\r\n";
     // st(2) = x
     // st(1) = 1
     // st(0) = x*x
+    
     assembler += "fsubp\r\n";
     // st(1) = x
     // st(0) = 1-x*x
+    
     assembler += "fsqrt\r\n";
     // st(1) = x
     // st(0) = sqrt(1-x*x)
+    
     assembler += "fld1\r\n";
     // st(2) = x
     // st(1) = sqrt(1-x*x)
     // st(0) = 1
+    
     assembler += "faddp\r\n";
     // st(1) = x
     // st(0) = 1+sqrt(1-x*x)
+    
     assembler += "fpatan\r\n";
     // st(0) = atan(x/(1 + sqrt (1-x*x))
+    
     // multiply by 2 by adding to itself
     assembler += "fld st(0)\r\n";
-    assembler += "faddp\r\n";   
+    assembler += "faddp\r\n";
+
+    assembler += "-- end asin\r\n";
 }
 
 ///////////////////////////////////////////////
-// EAcos : Inverse cosine function
+// EAcos : Inverse cosine
 // this is a naive implementation since it can
 // divide by zero and relies on this identity:
 // acos( x ) =
@@ -984,36 +1089,55 @@ void FSParseTree::visitEAcos(EAcos* eacos)
     // st(0) = 1+x
     
     assembler += "fpatan\r\n";
-    // st(0) = atan(sqrt(1-x*x)/(1+x))
-    // multiply by 2 by adding to itself
+    // st(0) = atan((1+x)/sqrt(1-x*x))
     
+    // multiply by 2 by adding to itself
     assembler += "fld st(0)\r\n";
     assembler += "faddp\r\n";
 
-    assembler += "-- end of acos\r\n";
+    assembler += "-- end acos\r\n";
 }
+
+///////////////////////////////////////////////
+// ELnot : Logical not
+///////////////////////////////////////////////
 
 void FSParseTree::visitELnot(ELnot* elnot)
 {
     /*
         test if expression is equal to 0 and return 1 if it is, otherwise 0
     */
+
     assembler += "-- expression for logical not\r\n";
+    
     elnot->expression_->accept(this);
+    
     assembler += "-- logical not\r\n";
+    
     assembler += "fldz\r\n";
     assembler += "fcomi\r\n";
+    
     // zero is on top, so load 1 then exchange
     assembler += "fld1\r\n";
+    
+    // cleaning the stack in between...
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(2)";
+    
     assembler += "fxch\r\n";
+    
     // if it was equal move st(1) to st(0)
     assembler += "fcmove\r\n";
+    
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(1)";
+    
     assembler += "-- end of logical not\r\n";
 }
+
+///////////////////////////////////////////////
+// EPreInc : Pre-increment
+///////////////////////////////////////////////
 
 void FSParseTree::visitEPreInc(EPreInc* epreinc)
 {
@@ -1023,20 +1147,26 @@ void FSParseTree::visitEPreInc(EPreInc* epreinc)
         so st(0) = var + 1
         store the result but don't pop, leave it in st(0) for the rest of the expression
     */
+    
     assembler += "-- pre-increment variable ";
     assembler += epreinc->ident_;
     assembler += "\r\n";
+
     assembler += "fld [ebp+";
     assembler.AppendInt(GetVariableOffset(epreinc->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(epreinc->ident_, 0)));
     assembler += "]\r\n";
+
     assembler += "fld1\r\n";
     assembler += "faddp\r\n";
+
     assembler += "fst [ebp+";
     assembler.AppendInt(GetVariableOffset(epreinc->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(epreinc->ident_, 0)));
     assembler += "]\r\n";
 }
+
+///////////////////////////////////////////////
+// EPreDec : Pre-decrement
+///////////////////////////////////////////////
 
 void FSParseTree::visitEPreDec(EPreDec* epredec)
 {
@@ -1046,20 +1176,26 @@ void FSParseTree::visitEPreDec(EPreDec* epredec)
         so st(0) = var - 1
         store the result but don't pop, leave it in st(0) for the rest of the expression
     */
+    
     assembler += "-- pre-decrement variable ";
     assembler += epredec->ident_;
     assembler += "\r\n";
+    
     assembler += "fld [ebp+";
     assembler.AppendInt(GetVariableOffset(epredec->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(epredec->ident_, 0)));
     assembler += "]\r\n";
+
     assembler += "fld1\r\n";
     assembler += "fsubp\r\n";
+    
     assembler += "fst [ebp+";
     assembler.AppendInt(GetVariableOffset(epredec->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(epredec->ident_, 0)));
     assembler += "]\r\n";
 }
+
+///////////////////////////////////////////////
+// ENeg : Unary minus operator
+///////////////////////////////////////////////
 
 void FSParseTree::visitENeg(ENeg* eneg)
 {
@@ -1067,8 +1203,16 @@ void FSParseTree::visitENeg(ENeg* eneg)
         evaluate the expression
         take cosine of the result and leave it in st(0) for the rest of the expression
     */
+
+    assembler += "-- expression for unary minus\r\n";
+
     eneg->expression_->accept(this);
+    
+    assembler += "-- unary minus\r\n";
+    
     assembler += "fchs\r\n";
+    
+    assembler += "-- end unary minus\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -1081,69 +1225,124 @@ void FSParseTree::visitEBnot(EBnot* ebnot)
 {
 }
 
+///////////////////////////////////////////////
+// EPos : Unary plus operator
+///////////////////////////////////////////////
+
 void FSParseTree::visitEPos(EPos* epos)
 {
     // no need to do anything here... unary plus is a bit of a waste. :)
 }
+
+///////////////////////////////////////////////
+// EMul : Multiplication operator
+///////////////////////////////////////////////
 
 void FSParseTree::visitEMul(EMul* emul)
 {
     /*
         evaluate first expression and push
     */
+
+    assembler += "-- first expression for multiply\r\n";
+    
     emul->expression_2->accept(this);
     pushDouble();
+    
     /*
         evaluate second expression than pop previous result
         ready for a binary operation
     */
+
+    assembler += "-- second expression for multiply\r\n";
+    
     emul->expression_1->accept(this);
     popDouble();
+
     /*
         fmulp does st(1) = st(0) * st(1) and pops
         leaving the result in st(0) ready for the next expression
     */
+    
+    assembler += "-- multiply\r\n";
+
     assembler += "fmulp\r\n";
+
+    assembler += "-- end multiply\r\n";
 }
+
+///////////////////////////////////////////////
+// EDiv : Division operator
+///////////////////////////////////////////////
 
 void FSParseTree::visitEDiv(EDiv* ediv)
 {
     /*
         evaluate first expression and push
     */
+
+    assembler += "-- first expression for divide\r\n";
+
     ediv->expression_2->accept(this);
     pushDouble();
+
     /*
         evaluate second expression than pop previous result
         ready for a binary operation
     */
+    
+    assembler += "-- second expression for divide\r\n";
+
     ediv->expression_1->accept(this);
     popDouble();
+    
     /*
         fdivp does st(1) = st(1) / st(0) and pops
         leaving the result in st(0) ready for the next expression
     */
+
+    assembler += "-- divide\r\n";
+
     assembler += "fdivp\r\n";
+
+    assembler += "-- end divide\r\n";
 }
+
+///////////////////////////////////////////////
+// EMod : Remainder from division operator
+///////////////////////////////////////////////
 
 void FSParseTree::visitEMod(EMod* emod)
 {
     /*
         evaluate second expression and push
     */
+
+    assembler += "-- first parameter for remainder\r\n";
+
     emod->expression_1->accept(this);
     pushDouble();
+
     /*
         evaluate first expression than pop previous result
         ready for a binary operation
     */
+
+    assembler += "-- second parameter for remainder\r\n";
+
     emod->expression_2->accept(this);
     popDouble();
+
     /*
         fprem does st(1) = st(1) % st(0) and pops
         leaving the result in st(0) ready for the next expression
     */
+
+    assembler += "-- remainder\r\n";
+
     assembler += "fprem\r\n";
+
+    assembler += "-- end remainder\r\n";
 }
 
 void FSParseTree::visitEAdd(EAdd* eadd)
@@ -1331,51 +1530,40 @@ void FSParseTree::visitEGE(EGE* ege)
     assembler += "ffree st(3)\r\n";
 }
 
+///////////////////////////////////////////////
+// EE : Equality operator
+///////////////////////////////////////////////
+
 void FSParseTree::visitEE(EE* ee)
 {
     /*
         evaluate first expression and push
     */
-    assembler += "-- expressions for comparison\r\n";
+    
+    assembler += "-- first expression for comparison\r\n";
+    
     ee->expression_1->accept(this);
     pushDouble();
+    
     /*
         evaluate second expression then pop previous result
         ready for a binary operation
     */
+    
+    assembler += "-- second expression for comparison\r\n";
+
     ee->expression_2->accept(this);
     popDouble();
-    assembler += "-- logical equal\r\n";
+    
+    assembler += "-- logical equal test\r\n";
+    
     assembler += "fcomi\r\n";
     assembler += "fld1\r\n";
     assembler += "fldz\r\n";
     assembler += "fcmove\r\n";
-    // clean stack
-    assembler += "-- clean stack\r\n";
-    assembler += "ffree st(1)\r\n";
-    assembler += "ffree st(2)\r\n";
-    assembler += "ffree st(3)\r\n";
-}
 
-void FSParseTree::visitENE(ENE* ene)
-{
-    /*
-        evaluate first expression and push
-    */
-    assembler += "-- expressions for comparison\r\n";
-    ene->expression_1->accept(this);
-    pushDouble();
-    /*
-        evaluate second expression then pop previous result
-        ready for a binary operation
-    */
-    ene->expression_2->accept(this);
-    popDouble();
-    assembler += "-- logical not equal\r\n";
-    assembler += "fcomi\r\n";
-    assembler += "fld1\r\n";
-    assembler += "fldz\r\n";
-    assembler += "fcmovne\r\n";
+    assembler += "-- end logical equal test\r\n";
+
     // clean stack
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(1)\r\n";
@@ -1384,7 +1572,48 @@ void FSParseTree::visitENE(ENE* ene)
 }
 
 ///////////////////////////////////////////////
-// ELand : Bitwise and operator
+// ENE : Not-equal operator
+///////////////////////////////////////////////
+
+void FSParseTree::visitENE(ENE* ene)
+{
+    /*
+        evaluate first expression and push
+    */
+    
+    assembler += "-- first expression for comparison\r\n";
+    
+    ene->expression_1->accept(this);
+    pushDouble();
+    
+    /*
+        evaluate second expression then pop previous result
+        ready for a binary operation
+    */
+
+    assembler += "-- second expression for comparison\r\n";
+
+    ene->expression_2->accept(this);
+    popDouble();
+    
+    assembler += "-- logical not equal test\r\n";
+    
+    assembler += "fcomi\r\n";
+    assembler += "fld1\r\n";
+    assembler += "fldz\r\n";
+    assembler += "fcmovne\r\n";
+
+    assembler += "-- end logical not equal test\r\n";
+    
+    // clean stack
+    assembler += "-- clean stack\r\n";
+    assembler += "ffree st(1)\r\n";
+    assembler += "ffree st(2)\r\n";
+    assembler += "ffree st(3)\r\n";
+}
+
+///////////////////////////////////////////////
+// EBand : Bitwise and operator
 ///////////////////////////////////////////////
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
@@ -1420,23 +1649,30 @@ void FSParseTree::visitEBxor(EBxor* ebxor)
 void FSParseTree::visitELand(ELand* eland)
 {
     /*
-        expression1 && expression2
-        test if expression1 is equal to 0 and return 0 if it is, otherwise return expression2
+        expression2 && expression1
+        test if expression2 is equal to 0 and return 0 if it is, otherwise return expression1
     */
+    
     eland->expression_2->accept(this);
+    
     assembler += "fldz\r\n";
     assembler += "fcomi\r\n";
+
     // clean stack
     assembler += "ffree st(1)\r\n";
-    Simple::ANSIString lblEnd = GetRandomLabel();
+    
     // zero is in st(0) so ending now returns zero ...
+    Simple::ANSIString lblEnd = GetRandomLabel();
     assembler += "je ";
     assembler += lblEnd;
     assembler += "\r\n";
+    
     // clean stack
     assembler += "ffree st(0)\r\n";
+    
     // ... otherwise evaluate the next expression
     eland->expression_1->accept(this);
+    
     assembler += lblEnd;
     assembler += ":\r\n";
 }
@@ -1485,6 +1721,9 @@ void FSParseTree::visitELxor(ELxor* elxor)
 // ECon : Ternary conditional operator
 ///////////////////////////////////////////////
 // N E E D S    I M P L E M E N T A T I O N
+///////////////////////////////////////////////
+// this can probably be modified from SIfElse
+// but should we have it at all?
 ///////////////////////////////////////////////
 
 void FSParseTree::visitECon(ECon* econ)
@@ -1670,12 +1909,25 @@ void FSParseTree::visitERShAss(ERShAss* ershass)
 
 ///////////////////////////////////////////////
 // ListExpression : List of expressions
-// does nothing at the moment as function calls
-// should traverse these themsevles, might need
-// inclusion for for statements like:
-// for(i = 0, j = 0;...;...)
+// this is not really used... when needed
+// the owner (function call, for) traverses it
+// the most common case is to evaluate
+// expressions in sequence and ignore
+// the results... e.g. the first two sets of
+// expressions in a for loop
 ///////////////////////////////////////////////
 
 void FSParseTree::visitListExpression(ListExpression* listexpression)
 {
+    while(listexpression)
+    {
+        // convert each expression to assembler and emit
+        listexpression->expression_->accept(this);
+
+        // iterate over the list
+        listexpression = listexpression->listexpression_;
+        
+        assembler += "-- clean stack\r\n";
+        assembler += "ffree st(0)\r\n";
+    }
 }

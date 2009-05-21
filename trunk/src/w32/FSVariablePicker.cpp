@@ -98,9 +98,9 @@ void FSVariablePicker::visitSUntil(SUntil* suntil)
 
 void FSVariablePicker::visitSFor(SFor* sfor)
 {
-    sfor->expression_1->accept(this);
-    sfor->expression_2->accept(this);
-    sfor->expression_3->accept(this);
+    sfor->listexpression_1->accept(this);
+    sfor->listexpression_2->accept(this);
+    sfor->expression_->accept(this);
     sfor->statement_->accept(this);
 }
 

@@ -306,27 +306,28 @@ ListExpression* reverseListExpression(ListExpression *l)
 %token _SYMB_39    //   ^=
 %token _SYMB_40    //   <<=
 %token _SYMB_41    //   >>=
-%token _SYMB_42    //   acos
-%token _SYMB_43    //   asin
-%token _SYMB_44    //   atan
-%token _SYMB_45    //   atan2
-%token _SYMB_46    //   break
-%token _SYMB_47    //   continue
-%token _SYMB_48    //   cos
-%token _SYMB_49    //   else
-%token _SYMB_50    //   exp
-%token _SYMB_51    //   for
-%token _SYMB_52    //   if
-%token _SYMB_53    //   log
-%token _SYMB_54    //   log10
-%token _SYMB_55    //   pi
-%token _SYMB_56    //   pow
-%token _SYMB_57    //   return
-%token _SYMB_58    //   sin
-%token _SYMB_59    //   sqrt
-%token _SYMB_60    //   tan
-%token _SYMB_61    //   until
-%token _SYMB_62    //   while
+%token _SYMB_42    //   abs
+%token _SYMB_43    //   acos
+%token _SYMB_44    //   asin
+%token _SYMB_45    //   atan
+%token _SYMB_46    //   atan2
+%token _SYMB_47    //   break
+%token _SYMB_48    //   continue
+%token _SYMB_49    //   cos
+%token _SYMB_50    //   else
+%token _SYMB_51    //   exp
+%token _SYMB_52    //   for
+%token _SYMB_53    //   if
+%token _SYMB_54    //   log
+%token _SYMB_55    //   log10
+%token _SYMB_56    //   pi
+%token _SYMB_57    //   pow
+%token _SYMB_58    //   return
+%token _SYMB_59    //   sin
+%token _SYMB_60    //   sqrt
+%token _SYMB_61    //   tan
+%token _SYMB_62    //   until
+%token _SYMB_63    //   while
 
 %type <program_> Program
 %type <block_> Block
@@ -380,36 +381,37 @@ ListParameter : Parameter { $$ = new ListParameter($1);  }
 ;
 Statement : Expression _SYMB_5 { $$ = new SExp($1);  } 
   | _SYMB_2 ListStatement _SYMB_3 { $$ = new SScope($2);  }
-  | _SYMB_57 Expression _SYMB_5 { $$ = new SRet($2);  }
-  | _SYMB_52 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SIf($3, $6);  }
-  | _SYMB_52 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_49 _SYMB_2 Statement _SYMB_3 { $$ = new SIfElse($3, $6, $9);  }
-  | _SYMB_62 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SWhile($3, $6);  }
-  | _SYMB_61 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SUntil($3, $6);  }
-  | _SYMB_51 _SYMB_0 Expression _SYMB_5 Expression _SYMB_5 Expression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SFor($3, $5, $7, $10);  }
-  | _SYMB_46 _SYMB_5 { $$ = new SBreak();  }
-  | _SYMB_47 _SYMB_5 { $$ = new SContinue();  }
+  | _SYMB_58 Expression _SYMB_5 { $$ = new SRet($2);  }
+  | _SYMB_53 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SIf($3, $6);  }
+  | _SYMB_53 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_50 _SYMB_2 Statement _SYMB_3 { $$ = new SIfElse($3, $6, $9);  }
+  | _SYMB_63 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SWhile($3, $6);  }
+  | _SYMB_62 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SUntil($3, $6);  }
+  | _SYMB_52 _SYMB_0 ListExpression _SYMB_5 Expression _SYMB_5 ListExpression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SFor($3, $5, $7, $10);  }
+  | _SYMB_47 _SYMB_5 { $$ = new SBreak();  }
+  | _SYMB_48 _SYMB_5 { $$ = new SContinue();  }
 ;
 Expression12 : _DOUBLE_ { $$ = new ECDbl($1);  } 
   | _INTEGER_ { $$ = new ECInt($1);  }
   | _IDENT_ { $$ = new EVar($1);  }
-  | _SYMB_55 { $$ = new EPi();  }
+  | _SYMB_56 { $$ = new EPi();  }
   | _SYMB_0 Expression _SYMB_1 { $$ = $2;  }
 ;
 Expression11 : _IDENT_ _SYMB_0 ListExpression _SYMB_1 { $$ = new ECall($1, $3);  } 
   | _IDENT_ _SYMB_6 { $$ = new EPostInc($1);  }
   | _IDENT_ _SYMB_7 { $$ = new EPostDec($1);  }
-  | _SYMB_56 _SYMB_0 Expression _SYMB_4 Expression _SYMB_1 { $$ = new EPow($3, $5);  }
-  | _SYMB_59 _SYMB_0 Expression _SYMB_1 { $$ = new ESqrt($3);  }
-  | _SYMB_50 _SYMB_0 Expression _SYMB_1 { $$ = new EExp($3);  }
-  | _SYMB_53 _SYMB_0 Expression _SYMB_1 { $$ = new ELog($3);  }
-  | _SYMB_54 _SYMB_0 Expression _SYMB_1 { $$ = new ELogD($3);  }
-  | _SYMB_58 _SYMB_0 Expression _SYMB_1 { $$ = new ESin($3);  }
-  | _SYMB_48 _SYMB_0 Expression _SYMB_1 { $$ = new ECos($3);  }
-  | _SYMB_60 _SYMB_0 Expression _SYMB_1 { $$ = new ETan($3);  }
-  | _SYMB_44 _SYMB_0 Expression _SYMB_1 { $$ = new EAtan($3);  }
-  | _SYMB_45 _SYMB_0 Expression _SYMB_4 Expression _SYMB_1 { $$ = new EAtanT($3, $5);  }
-  | _SYMB_43 _SYMB_0 Expression _SYMB_1 { $$ = new EAsin($3);  }
-  | _SYMB_42 _SYMB_0 Expression _SYMB_1 { $$ = new EAcos($3);  }
+  | _SYMB_42 _SYMB_0 Expression _SYMB_1 { $$ = new EAbs($3);  }
+  | _SYMB_57 _SYMB_0 Expression _SYMB_4 Expression _SYMB_1 { $$ = new EPow($3, $5);  }
+  | _SYMB_60 _SYMB_0 Expression _SYMB_1 { $$ = new ESqrt($3);  }
+  | _SYMB_51 _SYMB_0 Expression _SYMB_1 { $$ = new EExp($3);  }
+  | _SYMB_54 _SYMB_0 Expression _SYMB_1 { $$ = new ELog($3);  }
+  | _SYMB_55 _SYMB_0 Expression _SYMB_1 { $$ = new ELogD($3);  }
+  | _SYMB_59 _SYMB_0 Expression _SYMB_1 { $$ = new ESin($3);  }
+  | _SYMB_49 _SYMB_0 Expression _SYMB_1 { $$ = new ECos($3);  }
+  | _SYMB_61 _SYMB_0 Expression _SYMB_1 { $$ = new ETan($3);  }
+  | _SYMB_45 _SYMB_0 Expression _SYMB_1 { $$ = new EAtan($3);  }
+  | _SYMB_46 _SYMB_0 Expression _SYMB_4 Expression _SYMB_1 { $$ = new EAtanT($3, $5);  }
+  | _SYMB_44 _SYMB_0 Expression _SYMB_1 { $$ = new EAsin($3);  }
+  | _SYMB_43 _SYMB_0 Expression _SYMB_1 { $$ = new EAcos($3);  }
   | Expression12 { $$ = $1;  }
 ;
 Expression10 : _SYMB_8 Expression { $$ = new ELnot($2);  } 
@@ -471,8 +473,7 @@ Expression1 : _IDENT_ _SYMB_31 Expression { $$ = new EAss($1, $3);  }
 ;
 Expression : Expression1 { $$ = $1;  } 
 ;
-ListExpression : /* empty */ { $$ = 0;  } 
-  | Expression { $$ = new ListExpression($1);  }
+ListExpression : Expression { $$ = new ListExpression($1);  } 
   | Expression _SYMB_4 ListExpression { $$ = new ListExpression($1, $3);  }
 ;
 

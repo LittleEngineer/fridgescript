@@ -39,6 +39,7 @@ class EPi;
 class ECall;
 class EPostInc;
 class EPostDec;
+class EAbs;
 class EPow;
 class ESqrt;
 class EExp;
@@ -129,6 +130,7 @@ class Visitor
   virtual void visitECall(ECall *p) = 0;
   virtual void visitEPostInc(EPostInc *p) = 0;
   virtual void visitEPostDec(EPostDec *p) = 0;
+  virtual void visitEAbs(EAbs *p) = 0;
   virtual void visitEPow(EPow *p) = 0;
   virtual void visitESqrt(ESqrt *p) = 0;
   virtual void visitEExp(EExp *p) = 0;
@@ -478,12 +480,13 @@ class SUntil : public Statement
 class SFor : public Statement
 {
  public:
-  Expression *expression_1, *expression_2, *expression_3;
+  ListExpression *listexpression_1, *listexpression_2;
+  Expression *expression_;
   Statement *statement_;
 
   SFor(const SFor &);
   SFor &operator=(const SFor &);
-  SFor(Expression *p1, Expression *p2, Expression *p3, Statement *p4);
+  SFor(ListExpression *p1, Expression *p2, ListExpression *p3, Statement *p4);
   ~SFor();
   virtual void accept(Visitor *v);
   virtual  SFor  *clone() const;
@@ -618,6 +621,20 @@ class EPostDec : public Expression
   virtual void accept(Visitor *v);
   virtual  EPostDec  *clone() const;
   void swap(EPostDec &);
+};
+
+class EAbs : public Expression
+{
+ public:
+  Expression *expression_;
+
+  EAbs(const EAbs &);
+  EAbs &operator=(const EAbs &);
+  EAbs(Expression *p1);
+  ~EAbs();
+  virtual void accept(Visitor *v);
+  virtual  EAbs  *clone() const;
+  void swap(EAbs &);
 };
 
 class EPow : public Expression

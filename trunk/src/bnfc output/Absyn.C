@@ -501,10 +501,10 @@ SUntil *SUntil::clone() const {
 }
 
 /********************   SFor    ********************/
-SFor::SFor(Expression *p1, Expression *p2, Expression *p3, Statement *p4) { expression_1 = p1; expression_2 = p2; expression_3 = p3; statement_ = p4; }
-SFor::SFor(const SFor & other) {   expression_1 = other.expression_1->clone();
-  expression_2 = other.expression_2->clone();
-  expression_3 = other.expression_3->clone();
+SFor::SFor(ListExpression *p1, Expression *p2, ListExpression *p3, Statement *p4) { listexpression_1 = p1; expression_ = p2; listexpression_2 = p3; statement_ = p4; }
+SFor::SFor(const SFor & other) {   listexpression_1 = other.listexpression_1->clone();
+  expression_ = other.expression_->clone();
+  listexpression_2 = other.listexpression_2->clone();
   statement_ = other.statement_->clone();
 
 }
@@ -514,14 +514,14 @@ SFor &SFor::operator=(const SFor & other) {
   return *this;
 }
 void SFor::swap(SFor & other) {
-  std::swap(expression_1, other.expression_1);
-  std::swap(expression_2, other.expression_2);
-  std::swap(expression_3, other.expression_3);
+  std::swap(listexpression_1, other.listexpression_1);
+  std::swap(expression_, other.expression_);
+  std::swap(listexpression_2, other.listexpression_2);
   std::swap(statement_, other.statement_);
 
 }
 
-SFor::~SFor() { delete(expression_1); delete(expression_2); delete(expression_3); delete(statement_); }
+SFor::~SFor() { delete(listexpression_1); delete(expression_); delete(listexpression_2); delete(statement_); }
 
 void SFor::accept(Visitor *v) { v->visitSFor(this); }
 SFor *SFor::clone() const {
@@ -720,6 +720,28 @@ EPostDec::~EPostDec() { }
 void EPostDec::accept(Visitor *v) { v->visitEPostDec(this); }
 EPostDec *EPostDec::clone() const {
   return new EPostDec(*this);
+}
+
+/********************   EAbs    ********************/
+EAbs::EAbs(Expression *p1) { expression_ = p1; }
+EAbs::EAbs(const EAbs & other) {   expression_ = other.expression_->clone();
+
+}
+EAbs &EAbs::operator=(const EAbs & other) {
+  EAbs tmp(other);
+  swap(tmp);
+  return *this;
+}
+void EAbs::swap(EAbs & other) {
+  std::swap(expression_, other.expression_);
+
+}
+
+EAbs::~EAbs() { delete(expression_); }
+
+void EAbs::accept(Visitor *v) { v->visitEAbs(this); }
+EAbs *EAbs::clone() const {
+  return new EAbs(*this);
 }
 
 /********************   EPow    ********************/

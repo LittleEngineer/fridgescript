@@ -38,38 +38,38 @@ The reserved words used in FridgeScript are the following:
 </P>
 <TABLE ALIGN="center" CELLPADDING="4">
 <TR>
+<TD><CODE>abs</CODE></TD>
 <TD><CODE>acos</CODE></TD>
 <TD><CODE>asin</CODE></TD>
 <TD><CODE>atan</CODE></TD>
-<TD><CODE>atan2</CODE></TD>
 </TR>
 <TR>
+<TD><CODE>atan2</CODE></TD>
 <TD><CODE>break</CODE></TD>
 <TD><CODE>continue</CODE></TD>
 <TD><CODE>cos</CODE></TD>
-<TD><CODE>else</CODE></TD>
 </TR>
 <TR>
+<TD><CODE>else</CODE></TD>
 <TD><CODE>exp</CODE></TD>
 <TD><CODE>for</CODE></TD>
 <TD><CODE>if</CODE></TD>
-<TD><CODE>log</CODE></TD>
 </TR>
 <TR>
+<TD><CODE>log</CODE></TD>
 <TD><CODE>log10</CODE></TD>
 <TD><CODE>pi</CODE></TD>
 <TD><CODE>pow</CODE></TD>
-<TD><CODE>return</CODE></TD>
 </TR>
 <TR>
+<TD><CODE>return</CODE></TD>
 <TD><CODE>sin</CODE></TD>
 <TD><CODE>sqrt</CODE></TD>
 <TD><CODE>tan</CODE></TD>
-<TD><CODE>until</CODE></TD>
 </TR>
 <TR>
+<TD><CODE>until</CODE></TD>
 <TD><CODE>while</CODE></TD>
-<TD></TD>
 <TD></TD>
 </TR>
 </TABLE>
@@ -262,7 +262,7 @@ All other symbols are terminals.
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><CODE>for</CODE> <CODE>(</CODE> <I>Expression</I> <CODE>;</CODE> <I>Expression</I> <CODE>;</CODE> <I>Expression</I> <CODE>)</CODE> <CODE>{</CODE> <I>Statement</I> <CODE>}</CODE></TD>
+<TD><CODE>for</CODE> <CODE>(</CODE> <I>[Expression]</I> <CODE>;</CODE> <I>Expression</I> <CODE>;</CODE> <I>[Expression]</I> <CODE>)</CODE> <CODE>{</CODE> <I>Statement</I> <CODE>}</CODE></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -313,6 +313,11 @@ All other symbols are terminals.
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
 <TD><I>Ident</I> <CODE>--</CODE></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD ALIGN="center"><B>|</B></TD>
+<TD><CODE>abs</CODE> <CODE>(</CODE> <I>Expression</I> <CODE>)</CODE></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -622,11 +627,6 @@ All other symbols are terminals.
 <TR>
 <TD><I>[Expression]</I></TD>
 <TD>-&gt;</TD>
-<TD><B>eps</B></TD>
-</TR>
-<TR>
-<TD></TD>
-<TD ALIGN="center"><B>|</B></TD>
 <TD><I>Expression</I></TD>
 </TR>
 <TR>
