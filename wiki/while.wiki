@@ -8,7 +8,7 @@ A while loop runs until a test fails.
 
 = Details =
 
-While loops run until their condition fail. Although they enclose code with what looks like a C++ style scope it simply acts to contain code and doesn't clean up variables at its end. 
+While loops run until their condition fails. Although they enclose code with what looks like a C++ style scope it simply acts to contain code and doesn't clean up variables at its end. 
 
 = Example =
 
