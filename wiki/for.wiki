@@ -3,7 +3,7 @@
 
 = Introduction =
 
-A for loop uses 3 little pieces of code together to iterate. A starting condition like `i = 0`, a test like `i < foo` and an iterator like `++i`.
+A for [Loops loop] uses 3 little pieces of code together to iterate. A starting condition like `i = 0`, a test like `i < foo` and an iterator like `++i`.
 
 
 = Details =
