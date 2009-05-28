@@ -15,10 +15,15 @@
     along with FridgeScript.  If not, see <http://www.gnu.org/licenses/>
 */
 
+// main header
+#include "FridgeScript.h"
+
+// FridgeScript headers
 #include "FSContext.h"
 #include "FSParseTree.h"
 #include "FSVariable.h"
 
+// C/C++ headers
 #include <string.h>
 
 #define _export extern "C" unsigned int __declspec(dllexport) __stdcall
@@ -41,7 +46,7 @@ const unsigned int varMash = 0x1A2B3C4D;
 
 _export FSCreateContext()
 {
-    return reinterpret_cast<unsigned int>(new FSContext()) ^ ptrMash;
+    return reinterpret_cast<unsigned int>( new FSContext() ) ^ ptrMash;
 }
 
 ///////////////////////////////////////////////
@@ -50,7 +55,10 @@ _export FSCreateContext()
 
 _export FSDestroyContext(unsigned int context)
 {
-    delete reinterpret_cast<FSContext*>(context ^ ptrMash);
+    FSAssert( ( context ^ ptrMash ) != 0, "Trying to destroy null context" );
+
+    delete reinterpret_cast<FSContext*>( context ^ ptrMash );
+    
     return 0;
 }
 
@@ -62,10 +70,12 @@ _export FSDestroyContext(unsigned int context)
 
 _export FSGetVariableHandle(unsigned int context, unsigned int codeHandle, char* name)
 {
-    Simple::Stack<FSVariable*>* p = reinterpret_cast<FSContext*>(context ^ ptrMash)->GetVariables(codeHandle ^ codeMash);
-    for(unsigned int i = 0; i < p->GetCount(); ++i)
+    FSAssert( ( context ^ ptrMash ) != 0, "Trying to use null context" );
+
+    Simple::Stack<FSVariable*>* p = reinterpret_cast<FSContext*>( context ^ ptrMash )->GetVariables( codeHandle ^ codeMash );
+    for( unsigned int i = 0; i < p->GetCount(); ++i )
     {
-        if(!strcmp((*p)[i]->name, name)) return reinterpret_cast<unsigned int>((*p)[i]) ^ varMash;
+        if( !strcmp( ( *p )[i]->name, name ) ) return reinterpret_cast<unsigned int>( ( *p )[i] ) ^ varMash;
     }
 
     return 0;
@@ -77,7 +87,10 @@ _export FSGetVariableHandle(unsigned int context, unsigned int codeHandle, char*
 
 _exportval FSGetVariableValue(unsigned int varHandle)
 {
-    FSVariable* p = reinterpret_cast<FSVariable*>(varHandle ^ varMash);
+    FSAssert( ( varHandle ^ varMash ) != 0, "Trying to use null variable" );
+
+    FSVariable* p = reinterpret_cast<FSVariable*>( varHandle ^ varMash );
+
     return p->_auto;
 }
 
@@ -87,8 +100,11 @@ _exportval FSGetVariableValue(unsigned int varHandle)
 
 _exportval FSSetVariableValue(unsigned int varHandle, double value)
 {
-    FSVariable* p = reinterpret_cast<FSVariable*>(varHandle ^ varMash);
-    return (p->_auto = value);
+    FSAssert( ( varHandle ^ varMash ) != 0, "Trying to use null variable" );
+
+    FSVariable* p = reinterpret_cast<FSVariable*>( varHandle ^ varMash );
+    
+    return ( p->_auto = value );
 }
 
 ///////////////////////////////////////////////
@@ -99,9 +115,13 @@ _exportval FSSetVariableValue(unsigned int varHandle, double value)
 
 _export FSCompile(unsigned int context, char* code)
 {
-    FSContext* pContext = reinterpret_cast<FSContext*>(context ^ ptrMash);
-    unsigned int ret = pContext->CompileCode(code);
-    return (ret) ? ret ^ codeMash : 0;
+    FSAssert( ( context ^ ptrMash ) != 0, "Trying to use null context" );
+
+    FSContext* pContext = reinterpret_cast<FSContext*>( context ^ ptrMash );
+    
+    unsigned int ret = pContext->CompileCode( code );
+    
+    return ( ret != 0 ) ? ret ^ codeMash : 0;
 }
 
 ///////////////////////////////////////////////
@@ -111,9 +131,13 @@ _export FSCompile(unsigned int context, char* code)
 
 _export FSExecute(unsigned int context, unsigned int codeHandle)
 {
-    FSContext* pContext = reinterpret_cast<FSContext*>(context ^ ptrMash);
+    FSAssert( ( context ^ ptrMash ) != 0, "Trying to use null context" );
 
-    pContext->ExecuteCode(codeHandle ^ codeMash);
+    FSContext* pContext = reinterpret_cast<FSContext*>( context ^ ptrMash );
+
+    FSAssert( ( codeHandle ^ codeMash ) != 0, "Trying to use null code" );
+
+    pContext->ExecuteCode( codeHandle ^ codeMash );
 
     return 0; 
 }

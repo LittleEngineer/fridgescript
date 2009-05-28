@@ -325,6 +325,18 @@ void PrintAbsyn::visitOFabs(OFabs* p)
   _i_ = oldi;
 }
 
+void PrintAbsyn::visitOFchs(OFchs* p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(_L_PAREN);
+
+  render("fchs");
+
+  if (oldi > 0) render(_R_PAREN);
+
+  _i_ = oldi;
+}
+
 void PrintAbsyn::visitOFadd(OFadd* p)
 {
   int oldi = _i_;
@@ -415,18 +427,6 @@ void PrintAbsyn::visitOFdivrp(OFdivrp* p)
   if (oldi > 0) render(_L_PAREN);
 
   render("fdivrp");
-
-  if (oldi > 0) render(_R_PAREN);
-
-  _i_ = oldi;
-}
-
-void PrintAbsyn::visitOFchs(OFchs* p)
-{
-  int oldi = _i_;
-  if (oldi > 0) render(_L_PAREN);
-
-  render("fchs");
 
   if (oldi > 0) render(_R_PAREN);
 
@@ -1416,6 +1416,10 @@ void ShowAbsyn::visitOFabs(OFabs* p)
 {
   bufAppend("OFabs");
 }
+void ShowAbsyn::visitOFchs(OFchs* p)
+{
+  bufAppend("OFchs");
+}
 void ShowAbsyn::visitOFadd(OFadd* p)
 {
   bufAppend("OFadd");
@@ -1447,10 +1451,6 @@ void ShowAbsyn::visitOFdivp(OFdivp* p)
 void ShowAbsyn::visitOFdivrp(OFdivrp* p)
 {
   bufAppend("OFdivrp");
-}
-void ShowAbsyn::visitOFchs(OFchs* p)
-{
-  bufAppend("OFchs");
 }
 void ShowAbsyn::visitOFsin(OFsin* p)
 {

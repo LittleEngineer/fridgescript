@@ -26,6 +26,7 @@ class Skeleton : public Visitor
   void visitOPush(OPush* opush);
   void visitOPop(OPop* opop);
   void visitOFabs(OFabs* ofabs);
+  void visitOFchs(OFchs* ofchs);
   void visitOFadd(OFadd* ofadd);
   void visitOFaddp(OFaddp* ofaddp);
   void visitOFsub(OFsub* ofsub);
@@ -34,7 +35,6 @@ class Skeleton : public Visitor
   void visitOFmulp(OFmulp* ofmulp);
   void visitOFdivp(OFdivp* ofdivp);
   void visitOFdivrp(OFdivrp* ofdivrp);
-  void visitOFchs(OFchs* ofchs);
   void visitOFsin(OFsin* ofsin);
   void visitOFcos(OFcos* ofcos);
   void visitOFprem(OFprem* ofprem);

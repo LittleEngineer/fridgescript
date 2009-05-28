@@ -550,9 +550,9 @@ static const signed char yyrhs[] =
        5,    -1,    77,    93,    -1,    74,    93,    -1,    75,    93,
       -1,    76,    93,    -1,    78,    93,    -1,    80,    93,    -1,
       79,    93,    -1,    19,    93,    -1,    83,    -1,    82,    93,
-      -1,    81,    93,    -1,    29,    -1,    30,    -1,    31,    -1,
-      68,    -1,    69,    -1,    70,    -1,    58,    -1,    44,    -1,
-      45,    -1,    32,    -1,    64,    -1,    42,    -1,    60,    -1,
+      -1,    81,    93,    -1,    29,    -1,    32,    -1,    30,    -1,
+      31,    -1,    68,    -1,    69,    -1,    70,    -1,    58,    -1,
+      44,    -1,    45,    -1,    64,    -1,    42,    -1,    60,    -1,
       61,    -1,    59,    -1,    65,    -1,    62,    -1,    63,    -1,
       28,    -1,    72,    -1,    73,    -1,    41,    -1,    33,    -1,
       34,    -1,    35,    -1,    36,    -1,    37,    -1,    38,    -1,
@@ -670,11 +670,11 @@ static const unsigned char yymerger[] =
    error.  */
 static const unsigned char yydefact[] =
 {
-       3,     0,     2,     1,     0,     0,    37,    19,    20,    21,
-      28,    41,    42,    43,    44,    45,    46,    47,    48,    40,
-      30,    74,    26,    27,     0,     0,    73,     0,     0,     0,
-      54,    56,    58,    57,    55,    53,    25,    33,    31,    32,
-      35,    36,    29,    34,     0,     0,    22,    23,    24,    72,
+       3,     0,     2,     1,     0,     0,    37,    19,    21,    22,
+      20,    41,    42,    43,    44,    45,    46,    47,    48,    40,
+      30,    74,    27,    28,     0,     0,    73,     0,     0,     0,
+      54,    56,    58,    57,    55,    53,    26,    33,    31,    32,
+      35,    36,    29,    34,     0,     0,    23,    24,    25,    72,
       38,    39,     0,     0,     0,     0,     0,     0,     0,     0,
        0,    16,     0,     0,     4,    75,    80,    78,    76,    82,
       77,    81,    79,     0,     0,    84,    85,    83,    15,    64,
@@ -1332,47 +1332,47 @@ yyuserAction (yyRuleNum yyn, int yyrhslen, yyGLRStackItem* yyvsp,
 
   case 20:
 #line 238 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFadd();  ;}
+    { ((*yyvalp).operation_) = new OFchs();  ;}
     break;
 
   case 21:
 #line 239 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFaddp();  ;}
+    { ((*yyvalp).operation_) = new OFadd();  ;}
     break;
 
   case 22:
 #line 240 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFsub();  ;}
+    { ((*yyvalp).operation_) = new OFaddp();  ;}
     break;
 
   case 23:
 #line 241 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFsubp();  ;}
+    { ((*yyvalp).operation_) = new OFsub();  ;}
     break;
 
   case 24:
 #line 242 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFsubrp();  ;}
+    { ((*yyvalp).operation_) = new OFsubp();  ;}
     break;
 
   case 25:
 #line 243 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFmulp();  ;}
+    { ((*yyvalp).operation_) = new OFsubrp();  ;}
     break;
 
   case 26:
 #line 244 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFdivp();  ;}
+    { ((*yyvalp).operation_) = new OFmulp();  ;}
     break;
 
   case 27:
 #line 245 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFdivrp();  ;}
+    { ((*yyvalp).operation_) = new OFdivp();  ;}
     break;
 
   case 28:
 #line 246 "FSAssembler.y"
-    { ((*yyvalp).operation_) = new OFchs();  ;}
+    { ((*yyvalp).operation_) = new OFdivrp();  ;}
     break;
 
   case 29:

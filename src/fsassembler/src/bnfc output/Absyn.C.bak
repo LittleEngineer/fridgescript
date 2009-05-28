@@ -409,6 +409,26 @@ OFabs *OFabs::clone() const {
   return new OFabs(*this);
 }
 
+/********************   OFchs    ********************/
+OFchs::OFchs() { }
+OFchs::OFchs(const OFchs & other) { 
+}
+OFchs &OFchs::operator=(const OFchs & other) {
+  OFchs tmp(other);
+  swap(tmp);
+  return *this;
+}
+void OFchs::swap(OFchs & other) {
+
+}
+
+OFchs::~OFchs() { }
+
+void OFchs::accept(Visitor *v) { v->visitOFchs(this); }
+OFchs *OFchs::clone() const {
+  return new OFchs(*this);
+}
+
 /********************   OFadd    ********************/
 OFadd::OFadd() { }
 OFadd::OFadd(const OFadd & other) { 
@@ -567,26 +587,6 @@ OFdivrp::~OFdivrp() { }
 void OFdivrp::accept(Visitor *v) { v->visitOFdivrp(this); }
 OFdivrp *OFdivrp::clone() const {
   return new OFdivrp(*this);
-}
-
-/********************   OFchs    ********************/
-OFchs::OFchs() { }
-OFchs::OFchs(const OFchs & other) { 
-}
-OFchs &OFchs::operator=(const OFchs & other) {
-  OFchs tmp(other);
-  swap(tmp);
-  return *this;
-}
-void OFchs::swap(OFchs & other) {
-
-}
-
-OFchs::~OFchs() { }
-
-void OFchs::accept(Visitor *v) { v->visitOFchs(this); }
-OFchs *OFchs::clone() const {
-  return new OFchs(*this);
 }
 
 /********************   OFsin    ********************/
