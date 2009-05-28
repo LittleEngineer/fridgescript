@@ -132,6 +132,12 @@ void Skeleton::visitOFabs(OFabs* ofabs)
 
 }
 
+void Skeleton::visitOFchs(OFchs* ofchs)
+{
+  /* Code For OFchs Goes Here */
+
+}
+
 void Skeleton::visitOFadd(OFadd* ofadd)
 {
   /* Code For OFadd Goes Here */
@@ -177,12 +183,6 @@ void Skeleton::visitOFdivp(OFdivp* ofdivp)
 void Skeleton::visitOFdivrp(OFdivrp* ofdivrp)
 {
   /* Code For OFdivrp Goes Here */
-
-}
-
-void Skeleton::visitOFchs(OFchs* ofchs)
-{
-  /* Code For OFchs Goes Here */
 
 }
 

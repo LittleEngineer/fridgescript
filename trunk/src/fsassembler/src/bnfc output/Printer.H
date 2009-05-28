@@ -46,6 +46,7 @@ class PrintAbsyn : public Visitor
   void visitOPush(OPush *p);
   void visitOPop(OPop *p);
   void visitOFabs(OFabs *p);
+  void visitOFchs(OFchs *p);
   void visitOFadd(OFadd *p);
   void visitOFaddp(OFaddp *p);
   void visitOFsub(OFsub *p);
@@ -54,7 +55,6 @@ class PrintAbsyn : public Visitor
   void visitOFmulp(OFmulp *p);
   void visitOFdivp(OFdivp *p);
   void visitOFdivrp(OFdivrp *p);
-  void visitOFchs(OFchs *p);
   void visitOFsin(OFsin *p);
   void visitOFcos(OFcos *p);
   void visitOFprem(OFprem *p);
@@ -205,6 +205,7 @@ class ShowAbsyn : public Visitor
   void visitOPush(OPush *p);
   void visitOPop(OPop *p);
   void visitOFabs(OFabs *p);
+  void visitOFchs(OFchs *p);
   void visitOFadd(OFadd *p);
   void visitOFaddp(OFaddp *p);
   void visitOFsub(OFsub *p);
@@ -213,7 +214,6 @@ class ShowAbsyn : public Visitor
   void visitOFmulp(OFmulp *p);
   void visitOFdivp(OFdivp *p);
   void visitOFdivrp(OFdivrp *p);
-  void visitOFchs(OFchs *p);
   void visitOFsin(OFsin *p);
   void visitOFcos(OFcos *p);
   void visitOFprem(OFprem *p);

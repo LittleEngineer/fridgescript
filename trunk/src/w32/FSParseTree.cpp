@@ -23,6 +23,10 @@
     constants currently use the heap and are bug prone
 */
 
+// main header
+#include "FridgeScript.h"
+
+// this file's header
 #include "FSParseTree.h"
 
 #include "Absyn.h"
@@ -97,6 +101,8 @@ unsigned int FSParseTree::GetVariableOffset(const char* const& name)
             return 8*(GetVariableStackPointer()->GetCount() - i - 1);
         }
     }
+
+    FSAssert ( false, "Failed to locate variable for identifier %s, function will return INVALID_VARIABLE_OFFSET (0x%X)", name, INVALID_VARIABLE_OFFSET );
     
     return INVALID_VARIABLE_OFFSET;
 }

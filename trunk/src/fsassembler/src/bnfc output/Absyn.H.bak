@@ -31,6 +31,7 @@ class ORet;
 class OPush;
 class OPop;
 class OFabs;
+class OFchs;
 class OFadd;
 class OFaddp;
 class OFsub;
@@ -39,7 +40,6 @@ class OFsubrp;
 class OFmulp;
 class OFdivp;
 class OFdivrp;
-class OFchs;
 class OFsin;
 class OFcos;
 class OFprem;
@@ -130,6 +130,7 @@ class Visitor
   virtual void visitOPush(OPush *p) = 0;
   virtual void visitOPop(OPop *p) = 0;
   virtual void visitOFabs(OFabs *p) = 0;
+  virtual void visitOFchs(OFchs *p) = 0;
   virtual void visitOFadd(OFadd *p) = 0;
   virtual void visitOFaddp(OFaddp *p) = 0;
   virtual void visitOFsub(OFsub *p) = 0;
@@ -138,7 +139,6 @@ class Visitor
   virtual void visitOFmulp(OFmulp *p) = 0;
   virtual void visitOFdivp(OFdivp *p) = 0;
   virtual void visitOFdivrp(OFdivrp *p) = 0;
-  virtual void visitOFchs(OFchs *p) = 0;
   virtual void visitOFsin(OFsin *p) = 0;
   virtual void visitOFcos(OFcos *p) = 0;
   virtual void visitOFprem(OFprem *p) = 0;
@@ -475,6 +475,19 @@ class OFabs : public Operation
   void swap(OFabs &);
 };
 
+class OFchs : public Operation
+{
+ public:
+
+  OFchs(const OFchs &);
+  OFchs &operator=(const OFchs &);
+  OFchs();
+  ~OFchs();
+  virtual void accept(Visitor *v);
+  virtual  OFchs  *clone() const;
+  void swap(OFchs &);
+};
+
 class OFadd : public Operation
 {
  public:
@@ -577,19 +590,6 @@ class OFdivrp : public Operation
   virtual void accept(Visitor *v);
   virtual  OFdivrp  *clone() const;
   void swap(OFdivrp &);
-};
-
-class OFchs : public Operation
-{
- public:
-
-  OFchs(const OFchs &);
-  OFchs &operator=(const OFchs &);
-  OFchs();
-  ~OFchs();
-  virtual void accept(Visitor *v);
-  virtual  OFchs  *clone() const;
-  void swap(OFchs &);
 };
 
 class OFsin : public Operation

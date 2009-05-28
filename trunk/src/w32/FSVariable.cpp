@@ -15,6 +15,10 @@
     along with FridgeScript.  If not, see <http://www.gnu.org/licenses/>
 */
 
+// main header
+#include "FridgeScript.h"
+
+// this file's header
 #include "FSVariable.h"
 
 #include <string.h>

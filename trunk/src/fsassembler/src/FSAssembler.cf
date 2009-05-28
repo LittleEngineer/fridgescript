@@ -46,6 +46,8 @@ OPush.		Operation	::= "push" Operand ;
 OPop.		Operation	::= "pop" Operand ;
 
 OFabs.		Operation	::= "fabs" ;
+OFchs.		Operation	::= "fchs" ;
+
 OFadd.		Operation	::= "fadd" ;
 OFaddp.		Operation	::= "faddp" ;
 OFsub.		Operation	::= "fsub" ;
@@ -55,7 +57,6 @@ OFmulp.		Operation	::= "fmulp" ;
 OFdivp.		Operation	::= "fdivp" ;
 OFdivrp.	Operation	::= "fdivrp" ;
 
-OFchs.		Operation	::= "fchs" ;
 OFsin.		Operation	::= "fsin" ;
 OFcos.		Operation	::= "fcos" ;
 OFprem.		Operation	::= "fprem" ;

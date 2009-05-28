@@ -15,11 +15,15 @@
     along with FridgeScript.  If not, see <http://www.gnu.org/licenses/>
 */
 
+#include "FridgeScript.h"
+
 #include "FSCompiledCode.h"
 #include "FSVariable.h"
 
 void FSCompiledCode::operator ()()
 {
+    FSAssert( bytes != 0, "Trying to execute code before it has been compiled!" );
+    
     // need to set up the stack etc...
     // this is a really crappy solution
     static double crap[4096];

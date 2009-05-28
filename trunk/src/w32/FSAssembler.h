@@ -25,6 +25,6 @@ _importbptr FSAssemble(const char* const& source, unsigned int& length);
 _import FSAFree(unsigned char* ptr);
 
 #undef _import
-#undef _importbptr 
+#undef _importbptr
 
 #endif
