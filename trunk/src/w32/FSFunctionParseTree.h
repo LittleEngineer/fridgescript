@@ -41,6 +41,11 @@ public:
 
     void AddParameterOffset(const unsigned int& offset);
     void ResetParameterOffsets();
+
+    Simple::ANSIString GetName() const { return name; }
+    Simple::ANSIString GetLabel() const { return label; }
+    Simple::ANSIString GetAssembler() const { return assembler; }
+    void SetAssembler(Simple::ANSIString sAssembler) { assembler = sAssembler; }
 };
 
 ///////////////////////////////////////////////
