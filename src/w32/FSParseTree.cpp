@@ -132,6 +132,8 @@ void FSParseTree::visitMain(Main* main)
 
     // all of the assembler code has been emitted, just one thing left to do...
     assembler += "ret\r\n";
+
+    assembler += fnTree.GetAssembler();
 }
 
 ///////////////////////////////////////////////

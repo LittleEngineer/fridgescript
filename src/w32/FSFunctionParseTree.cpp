@@ -35,6 +35,28 @@ void FSFunction::ResetParameterOffsets()
     varOffsets.Clear();
 }
 
+Simple::ANSIString FSFunctionParseTree::GetAssembler() const
+{
+    Simple::ANSIString sResult = "";
+
+    for( unsigned int i = 0; i < fnList.GetCount(); ++i )
+    {
+        // comment
+        sResult += "-- function ";
+        sResult += fnList[i]->GetName();
+        sResult += "\r\n";
+
+        // label
+        sResult += fnList[i]->GetLabel();
+        sResult += ":\r\n";
+
+        // the function's code
+        sResult += fnList[i]->GetAssembler();
+    }
+
+    return sResult;
+}
+
 ///////////////////////////////////////////////
 // F U N C T I O N    V I S I T O R
 ///////////////////////////////////////////////
@@ -86,6 +108,9 @@ void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
     // create an object to represent the function
     // for the moment the label used in assembler can be the function name, it would be nice to prefix it with something though
     FSFunction* fnStructure = new FSFunction( dtfunc->ident_, dtfunc->ident_ );
+
+    // set the assembler code
+    fnStructure->SetAssembler( fp->GetAssemblerString() );
 
     // check which parameters are actually used in the function
     // this is both optimisation and simplification
