@@ -33,9 +33,14 @@ private:
     Simple::ANSIString  name;
     Simple::ANSIString  assembler;
     Simple::ANSIString  label;
+
+    Simple::Stack<unsigned int> varOffsets;
 public:
-    FSFunction(const char* const identifier, const char* const asmLabel) : name(identifier), label(asmLabel), assembler() {}
+    FSFunction(const char* const identifier, const char* const asmLabel) : name(identifier), label(asmLabel), assembler(), varOffsets() {}
     ~FSFunction() {}
+
+    void AddParameterOffset(const unsigned int& offset);
+    void ResetParameterOffsets();
 };
 
 ///////////////////////////////////////////////
@@ -60,6 +65,8 @@ public:
     void visitListBlock(ListBlock* listblock);
     void visitListFunction(ListFunction* listfunction);
     void visitListParameter(ListParameter* listparameter);
+
+    Simple::ANSIString GetAssembler() const;
 };
 
 #endif

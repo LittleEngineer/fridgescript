@@ -22,12 +22,26 @@
 #include "FSParseTree.h"
 
 ///////////////////////////////////////////////
+// H E L P E R    F U N C T I O N S
+///////////////////////////////////////////////
+
+void FSFunction::AddParameterOffset(const unsigned int &offset)
+{
+    varOffsets.Push( offset );
+}
+
+void FSFunction::ResetParameterOffsets()
+{
+    varOffsets.Clear();
+}
+
+///////////////////////////////////////////////
 // F U N C T I O N    V I S I T O R
 ///////////////////////////////////////////////
 
 FSFunctionParseTree::~FSFunctionParseTree()
 {
-    for(unsigned int i = 0; i < fnList.GetCount(); ++i) delete fnList[i];
+    for( unsigned int i = 0; i < fnList.GetCount(); ++i ) delete fnList[i];
 }
 
 ///////////////////////////////////////////////
@@ -36,7 +50,7 @@ FSFunctionParseTree::~FSFunctionParseTree()
 
 void FSFunctionParseTree::visitMain(Main* main)
 {
-    main->listblock_->accept(this);
+    main->listblock_->accept( this );
 }
 
 ///////////////////////////////////////////////
@@ -46,7 +60,7 @@ void FSFunctionParseTree::visitMain(Main* main)
 
 void FSFunctionParseTree::visitBFunc(BFunc* bfunc)
 {
-    bfunc->listfunction_->accept(this);
+    bfunc->listfunction_->accept( this );
 }
 
 ///////////////////////////////////////////////
@@ -61,36 +75,38 @@ void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
 {
     // default type function
     // create a new parse tree for the function
-    FSParseTree* fp = new FSParseTree(context);
-    //dtfunc->liststatement_->accept(fp);
+    FSParseTree* fp = new FSParseTree( context );
     
     // create a seperate parse tree for the function
-    Main fnMain(dtfunc->listblock_);
+    Main fnMain( dtfunc->listblock_ );
 
     // parse the function code block
-    fnMain.accept(fp);
+    fnMain.accept( fp );
 
     // create an object to represent the function
     // for the moment the label used in assembler can be the function name, it would be nice to prefix it with something though
-    FSFunction* fnStructure = new FSFunction(dtfunc->ident_, dtfunc->ident_);
+    FSFunction* fnStructure = new FSFunction( dtfunc->ident_, dtfunc->ident_ );
 
     // check which parameters are actually used in the function
     // this is both optimisation and simplification
     // since we can setup the stack for the locals and just chuck the parameter in there
     ListParameter* pList = dtfunc->listparameter_;
-    while(pList)
+    while( pList != 0 )
     {
         // because it is a default type function is is safe to assume this
         unsigned int uOffset = fp->GetVariableOffset( static_cast<DTParam*>( pList->parameter_ )->ident_ );
+
         if( uOffset != INVALID_VARIABLE_OFFSET )
         {
             // this parameter goes into [ebp+uOffset]
-            // TODO: Keep track of this in the function structure
+            fnStructure->AddParameterOffset( uOffset );
         }
 
         // otherwise throw this parameter away
         pList = pList->listparameter_;
     }
+
+    fnList.Push( fnStructure );
     
     delete fp;
 }
@@ -113,7 +129,7 @@ void FSFunctionParseTree::visitListBlock(ListBlock* listblock)
 {
     while(listblock)
     {
-        listblock->block_->accept(this);
+        listblock->block_->accept( this );
         listblock = listblock->listblock_;
     }
 }
@@ -124,9 +140,9 @@ void FSFunctionParseTree::visitListBlock(ListBlock* listblock)
 
 void FSFunctionParseTree::visitListFunction(ListFunction* listfunction)
 {
-    while(listfunction)
+    while( listfunction )
     {
-        listfunction->function_->accept(this);
+        listfunction->function_->accept( this );
         listfunction = listfunction->listfunction_;
     }
 }
@@ -138,11 +154,4 @@ void FSFunctionParseTree::visitListFunction(ListFunction* listfunction)
 void FSFunctionParseTree::visitListParameter(ListParameter* listparameter)
 {
     // this gets handled in the function definition proper e.g. visitDTFunc(DTFunc*)
-    /*
-    while(listparameter)
-    {
-        listparameter->parameter_->accept(this);
-        listparameter = listparameter->listparameter_;
-    }
-    */
 }
