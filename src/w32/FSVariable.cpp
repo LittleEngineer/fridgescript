@@ -25,8 +25,9 @@
 
 FSVariable::FSVariable(const char* const& id)
 {
-    unsigned int fNAN = 0xFFC00000;
-    _auto = static_cast<double>( *reinterpret_cast<float*>( &fNAN ) );
+    unsigned long long ullQNaN = 0xFFFFFFFFFFFFFFFF;
+    _auto = *reinterpret_cast<double*>( &ullQNaN );
+
     unsigned int i = strlen( id ) + 1;
     name = new char[i];
     while( i > 0 )

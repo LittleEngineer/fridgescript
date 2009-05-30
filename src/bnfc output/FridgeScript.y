@@ -381,11 +381,11 @@ ListParameter : Parameter { $$ = new ListParameter($1);  }
 Statement : Expression _SYMB_5 { $$ = new SExp($1);  } 
   | _SYMB_2 ListStatement _SYMB_3 { $$ = new SScope($2);  }
   | _SYMB_58 Expression _SYMB_5 { $$ = new SRet($2);  }
-  | _SYMB_53 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SIf($3, $6);  }
-  | _SYMB_53 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_50 _SYMB_2 Statement _SYMB_3 { $$ = new SIfElse($3, $6, $9);  }
-  | _SYMB_63 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SWhile($3, $6);  }
-  | _SYMB_62 _SYMB_0 Expression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SUntil($3, $6);  }
-  | _SYMB_52 _SYMB_0 ListExpression _SYMB_5 Expression _SYMB_5 ListExpression _SYMB_1 _SYMB_2 Statement _SYMB_3 { $$ = new SFor($3, $5, $7, $10);  }
+  | _SYMB_53 _SYMB_0 Expression _SYMB_1 _SYMB_2 ListStatement _SYMB_3 { $$ = new SIf($3, $6);  }
+  | _SYMB_53 _SYMB_0 Expression _SYMB_1 _SYMB_2 ListStatement _SYMB_3 _SYMB_50 _SYMB_2 ListStatement _SYMB_3 { $$ = new SIfElse($3, $6, $10);  }
+  | _SYMB_63 _SYMB_0 Expression _SYMB_1 _SYMB_2 ListStatement _SYMB_3 { $$ = new SWhile($3, $6);  }
+  | _SYMB_62 _SYMB_0 Expression _SYMB_1 _SYMB_2 ListStatement _SYMB_3 { $$ = new SUntil($3, $6);  }
+  | _SYMB_52 _SYMB_0 ListExpression _SYMB_5 Expression _SYMB_5 ListExpression _SYMB_1 _SYMB_2 ListStatement _SYMB_3 { $$ = new SFor($3, $5, $7, $10);  }
   | _SYMB_47 _SYMB_5 { $$ = new SBreak();  }
   | _SYMB_48 _SYMB_5 { $$ = new SContinue();  }
 ;

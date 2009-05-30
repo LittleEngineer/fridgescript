@@ -291,8 +291,7 @@ void PrintAbsyn::visitSIf(SIf* p)
   _i_ = 0; p->expression_->accept(this);
   render(')');
   render('{');
-  _i_ = 0; p->statement_->accept(this);
-  render('}');
+  if(p->liststatement_) {_i_ = 0; p->liststatement_->accept(this);}  render('}');
 
   if (oldi > 0) render(_R_PAREN);
 
@@ -309,11 +308,10 @@ void PrintAbsyn::visitSIfElse(SIfElse* p)
   _i_ = 0; p->expression_->accept(this);
   render(')');
   render('{');
-  _i_ = 0; p->statement_1->accept(this);
+  if(p->liststatement_1) {_i_ = 0; p->liststatement_1->accept(this);}  render('}');
   render("else");
   render('{');
-  _i_ = 0; p->statement_2->accept(this);
-  render('}');
+  if(p->liststatement_2) {_i_ = 0; p->liststatement_2->accept(this);}  render('}');
 
   if (oldi > 0) render(_R_PAREN);
 
@@ -330,8 +328,7 @@ void PrintAbsyn::visitSWhile(SWhile* p)
   _i_ = 0; p->expression_->accept(this);
   render(')');
   render('{');
-  _i_ = 0; p->statement_->accept(this);
-  render('}');
+  if(p->liststatement_) {_i_ = 0; p->liststatement_->accept(this);}  render('}');
 
   if (oldi > 0) render(_R_PAREN);
 
@@ -348,8 +345,7 @@ void PrintAbsyn::visitSUntil(SUntil* p)
   _i_ = 0; p->expression_->accept(this);
   render(')');
   render('{');
-  _i_ = 0; p->statement_->accept(this);
-  render('}');
+  if(p->liststatement_) {_i_ = 0; p->liststatement_->accept(this);}  render('}');
 
   if (oldi > 0) render(_R_PAREN);
 
@@ -368,8 +364,7 @@ void PrintAbsyn::visitSFor(SFor* p)
   render(';');
   if(p->listexpression_2) {_i_ = 0; p->listexpression_2->accept(this);}  render(')');
   render('{');
-  _i_ = 0; p->statement_->accept(this);
-  render('}');
+  if(p->liststatement_) {_i_ = 0; p->liststatement_->accept(this);}  render('}');
 
   if (oldi > 0) render(_R_PAREN);
 
@@ -1463,7 +1458,7 @@ void ShowAbsyn::visitSIf(SIf* p)
   bufAppend(']');
   bufAppend(' ');
   bufAppend('[');
-  if (p->statement_)  p->statement_->accept(this);
+  if (p->liststatement_)  p->liststatement_->accept(this);
   bufAppend(']');
   bufAppend(' ');
   bufAppend(')');
@@ -1477,9 +1472,9 @@ void ShowAbsyn::visitSIfElse(SIfElse* p)
   if (p->expression_)  p->expression_->accept(this);
   bufAppend(']');
   bufAppend(' ');
-  p->statement_1->accept(this);
+  p->liststatement_1->accept(this);
   bufAppend(' ');
-  p->statement_2->accept(this);
+  p->liststatement_2->accept(this);
   bufAppend(' ');
   bufAppend(')');
 }
@@ -1493,7 +1488,7 @@ void ShowAbsyn::visitSWhile(SWhile* p)
   bufAppend(']');
   bufAppend(' ');
   bufAppend('[');
-  if (p->statement_)  p->statement_->accept(this);
+  if (p->liststatement_)  p->liststatement_->accept(this);
   bufAppend(']');
   bufAppend(' ');
   bufAppend(')');
@@ -1508,7 +1503,7 @@ void ShowAbsyn::visitSUntil(SUntil* p)
   bufAppend(']');
   bufAppend(' ');
   bufAppend('[');
-  if (p->statement_)  p->statement_->accept(this);
+  if (p->liststatement_)  p->liststatement_->accept(this);
   bufAppend(']');
   bufAppend(' ');
   bufAppend(')');
@@ -1527,7 +1522,7 @@ void ShowAbsyn::visitSFor(SFor* p)
   p->listexpression_2->accept(this);
   bufAppend(' ');
   bufAppend('[');
-  if (p->statement_)  p->statement_->accept(this);
+  if (p->liststatement_)  p->liststatement_->accept(this);
   bufAppend(']');
   bufAppend(' ');
   bufAppend(')');

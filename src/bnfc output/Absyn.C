@@ -403,9 +403,9 @@ SRet *SRet::clone() const {
 }
 
 /********************   SIf    ********************/
-SIf::SIf(Expression *p1, Statement *p2) { expression_ = p1; statement_ = p2; }
+SIf::SIf(Expression *p1, ListStatement *p2) { expression_ = p1; liststatement_ = p2; }
 SIf::SIf(const SIf & other) {   expression_ = other.expression_->clone();
-  statement_ = other.statement_->clone();
+  liststatement_ = other.liststatement_->clone();
 
 }
 SIf &SIf::operator=(const SIf & other) {
@@ -415,11 +415,11 @@ SIf &SIf::operator=(const SIf & other) {
 }
 void SIf::swap(SIf & other) {
   std::swap(expression_, other.expression_);
-  std::swap(statement_, other.statement_);
+  std::swap(liststatement_, other.liststatement_);
 
 }
 
-SIf::~SIf() { delete(expression_); delete(statement_); }
+SIf::~SIf() { delete(expression_); delete(liststatement_); }
 
 void SIf::accept(Visitor *v) { v->visitSIf(this); }
 SIf *SIf::clone() const {
@@ -427,10 +427,10 @@ SIf *SIf::clone() const {
 }
 
 /********************   SIfElse    ********************/
-SIfElse::SIfElse(Expression *p1, Statement *p2, Statement *p3) { expression_ = p1; statement_1 = p2; statement_2 = p3; }
+SIfElse::SIfElse(Expression *p1, ListStatement *p2, ListStatement *p3) { expression_ = p1; liststatement_1 = p2; liststatement_2 = p3; }
 SIfElse::SIfElse(const SIfElse & other) {   expression_ = other.expression_->clone();
-  statement_1 = other.statement_1->clone();
-  statement_2 = other.statement_2->clone();
+  liststatement_1 = other.liststatement_1->clone();
+  liststatement_2 = other.liststatement_2->clone();
 
 }
 SIfElse &SIfElse::operator=(const SIfElse & other) {
@@ -440,12 +440,12 @@ SIfElse &SIfElse::operator=(const SIfElse & other) {
 }
 void SIfElse::swap(SIfElse & other) {
   std::swap(expression_, other.expression_);
-  std::swap(statement_1, other.statement_1);
-  std::swap(statement_2, other.statement_2);
+  std::swap(liststatement_1, other.liststatement_1);
+  std::swap(liststatement_2, other.liststatement_2);
 
 }
 
-SIfElse::~SIfElse() { delete(expression_); delete(statement_1); delete(statement_2); }
+SIfElse::~SIfElse() { delete(expression_); delete(liststatement_1); delete(liststatement_2); }
 
 void SIfElse::accept(Visitor *v) { v->visitSIfElse(this); }
 SIfElse *SIfElse::clone() const {
@@ -453,9 +453,9 @@ SIfElse *SIfElse::clone() const {
 }
 
 /********************   SWhile    ********************/
-SWhile::SWhile(Expression *p1, Statement *p2) { expression_ = p1; statement_ = p2; }
+SWhile::SWhile(Expression *p1, ListStatement *p2) { expression_ = p1; liststatement_ = p2; }
 SWhile::SWhile(const SWhile & other) {   expression_ = other.expression_->clone();
-  statement_ = other.statement_->clone();
+  liststatement_ = other.liststatement_->clone();
 
 }
 SWhile &SWhile::operator=(const SWhile & other) {
@@ -465,11 +465,11 @@ SWhile &SWhile::operator=(const SWhile & other) {
 }
 void SWhile::swap(SWhile & other) {
   std::swap(expression_, other.expression_);
-  std::swap(statement_, other.statement_);
+  std::swap(liststatement_, other.liststatement_);
 
 }
 
-SWhile::~SWhile() { delete(expression_); delete(statement_); }
+SWhile::~SWhile() { delete(expression_); delete(liststatement_); }
 
 void SWhile::accept(Visitor *v) { v->visitSWhile(this); }
 SWhile *SWhile::clone() const {
@@ -477,9 +477,9 @@ SWhile *SWhile::clone() const {
 }
 
 /********************   SUntil    ********************/
-SUntil::SUntil(Expression *p1, Statement *p2) { expression_ = p1; statement_ = p2; }
+SUntil::SUntil(Expression *p1, ListStatement *p2) { expression_ = p1; liststatement_ = p2; }
 SUntil::SUntil(const SUntil & other) {   expression_ = other.expression_->clone();
-  statement_ = other.statement_->clone();
+  liststatement_ = other.liststatement_->clone();
 
 }
 SUntil &SUntil::operator=(const SUntil & other) {
@@ -489,11 +489,11 @@ SUntil &SUntil::operator=(const SUntil & other) {
 }
 void SUntil::swap(SUntil & other) {
   std::swap(expression_, other.expression_);
-  std::swap(statement_, other.statement_);
+  std::swap(liststatement_, other.liststatement_);
 
 }
 
-SUntil::~SUntil() { delete(expression_); delete(statement_); }
+SUntil::~SUntil() { delete(expression_); delete(liststatement_); }
 
 void SUntil::accept(Visitor *v) { v->visitSUntil(this); }
 SUntil *SUntil::clone() const {
@@ -501,11 +501,11 @@ SUntil *SUntil::clone() const {
 }
 
 /********************   SFor    ********************/
-SFor::SFor(ListExpression *p1, Expression *p2, ListExpression *p3, Statement *p4) { listexpression_1 = p1; expression_ = p2; listexpression_2 = p3; statement_ = p4; }
+SFor::SFor(ListExpression *p1, Expression *p2, ListExpression *p3, ListStatement *p4) { listexpression_1 = p1; expression_ = p2; listexpression_2 = p3; liststatement_ = p4; }
 SFor::SFor(const SFor & other) {   listexpression_1 = other.listexpression_1->clone();
   expression_ = other.expression_->clone();
   listexpression_2 = other.listexpression_2->clone();
-  statement_ = other.statement_->clone();
+  liststatement_ = other.liststatement_->clone();
 
 }
 SFor &SFor::operator=(const SFor & other) {
@@ -517,11 +517,11 @@ void SFor::swap(SFor & other) {
   std::swap(listexpression_1, other.listexpression_1);
   std::swap(expression_, other.expression_);
   std::swap(listexpression_2, other.listexpression_2);
-  std::swap(statement_, other.statement_);
+  std::swap(liststatement_, other.liststatement_);
 
 }
 
-SFor::~SFor() { delete(listexpression_1); delete(expression_); delete(listexpression_2); delete(statement_); }
+SFor::~SFor() { delete(listexpression_1); delete(expression_); delete(listexpression_2); delete(liststatement_); }
 
 void SFor::accept(Visitor *v) { v->visitSFor(this); }
 SFor *SFor::clone() const {

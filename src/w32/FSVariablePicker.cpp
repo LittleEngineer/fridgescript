@@ -86,26 +86,26 @@ void FSVariablePicker::visitSRet(SRet* sret)
 void FSVariablePicker::visitSIf(SIf* sif)
 {
     sif->expression_->accept( this );
-    sif->statement_->accept( this );
+    sif->liststatement_->accept( this );
 }
 
 void FSVariablePicker::visitSIfElse(SIfElse* sifelse)
 {
     sifelse->expression_->accept( this );
-    sifelse->statement_1->accept( this );
-    sifelse->statement_2->accept( this );
+    sifelse->liststatement_1->accept( this );
+    sifelse->liststatement_2->accept( this );
 }
 
 void FSVariablePicker::visitSWhile(SWhile* swhile)
 {
     swhile->expression_->accept( this );
-    swhile->statement_->accept( this );
+    swhile->liststatement_->accept( this );
 }
 
 void FSVariablePicker::visitSUntil(SUntil* suntil)
 {
     suntil->expression_->accept( this );
-    suntil->statement_->accept( this );
+    suntil->liststatement_->accept( this );
 }
 
 void FSVariablePicker::visitSFor(SFor* sfor)
@@ -113,7 +113,7 @@ void FSVariablePicker::visitSFor(SFor* sfor)
     sfor->listexpression_1->accept( this );
     sfor->listexpression_2->accept( this );
     sfor->expression_->accept( this );
-    sfor->statement_->accept( this );
+    sfor->liststatement_->accept( this );
 }
 
 void FSVariablePicker::visitEVar(EVar *p)
