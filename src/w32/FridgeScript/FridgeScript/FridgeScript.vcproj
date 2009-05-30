@@ -49,7 +49,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4996;4065;4530;4731"
+				DisableSpecificWarnings="4996;4065;4530;4731;4273"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -123,7 +123,7 @@
 				UsePrecompiledHeader="0"
 				WarningLevel="3"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4996;4065;4530;4731"
+				DisableSpecificWarnings="4996;4065;4530;4731;4273"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -199,11 +199,23 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\FSAssemblerComment.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\FSAssert.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\FSCompiledCode.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\FSContext.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\FSFunctionParseTree.cpp"
 				>
 			</File>
 			<File
@@ -257,7 +269,19 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\FridgeScript.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\FSAssembler.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\FSAssemblerComment.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\FSAssert.h"
 				>
 			</File>
 			<File
@@ -266,6 +290,10 @@
 			</File>
 			<File
 				RelativePath="..\..\FSContext.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\FSFunctionParseTree.h"
 				>
 			</File>
 			<File
