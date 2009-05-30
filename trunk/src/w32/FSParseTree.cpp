@@ -163,7 +163,7 @@ void FSParseTree::visitListBlock(ListBlock* listblock)
 }
 
 ///////////////////////////////////////////////
-// ListBlock : A list of statements
+// ListStatement : A list of statements
 // e.g. if, for, expressions, etc.
 ///////////////////////////////////////////////
 
@@ -243,7 +243,7 @@ void FSParseTree::visitSIf(SIf* sif)
     assembler += comment.GetComment();
     assembler += " )\r\n";
     assembler += "  {\r\n";
-    assembler += ";\r\n-}\r\n";
+    assembler += "-}\r\n";
 
     // evaluate expression
     assembler += "-- if statement expresion\r\n";
@@ -278,7 +278,7 @@ void FSParseTree::visitSIf(SIf* sif)
 
     assembler += "{-\r\n";
     assembler += "  }\r\n";
-    assembler += "\r\n-}\r\n";
+    assembler += "-}\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -295,7 +295,7 @@ void FSParseTree::visitSIfElse(SIfElse* sifelse)
     assembler += comment.GetComment();
     assembler += " )\r\n";
     assembler += "  {\r\n";
-    assembler += ";\r\n-}\r\n";
+    assembler += "-}\r\n";
 
     // evaluate expression
     assembler += "-- if statement expresion\r\n";
@@ -349,7 +349,7 @@ void FSParseTree::visitSIfElse(SIfElse* sifelse)
 
     assembler += "{-\r\n";
     assembler += "  }\r\n";
-    assembler += "\r\n-}\r\n";
+    assembler += "-}\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -369,7 +369,7 @@ void FSParseTree::visitSWhile(SWhile* swhile)
     assembler += comment.GetComment();
     assembler += " )\r\n";
     assembler += "  {\r\n";
-    assembler += ";\r\n-}\r\n";
+    assembler += "-}\r\n";
 
     Simple::ANSIString lblStart = GetRandomLabel();
     assembler += lblStart;
@@ -402,7 +402,7 @@ void FSParseTree::visitSWhile(SWhile* swhile)
 
     assembler += "{-\r\n";
     assembler += "  }\r\n";
-    assembler += "\r\n-}\r\n";
+    assembler += "-}\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -422,7 +422,7 @@ void FSParseTree::visitSUntil(SUntil* suntil)
     assembler += comment.GetComment();
     assembler += " )\r\n";
     assembler += "  {\r\n";
-    assembler += ";\r\n-}\r\n";
+    assembler += "-}\r\n";
 
     Simple::ANSIString lblStart = GetRandomLabel();
     assembler += lblStart;
@@ -446,7 +446,7 @@ void FSParseTree::visitSUntil(SUntil* suntil)
 
     assembler += "{-\r\n";
     assembler += "  }\r\n";
-    assembler += "\r\n-}\r\n";
+    assembler += "-}\r\n";
 }
 
 ///////////////////////////////////////////////

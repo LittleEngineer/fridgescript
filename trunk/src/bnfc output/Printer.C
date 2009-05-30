@@ -407,11 +407,11 @@ void PrintAbsyn::visitExpression(Expression*p) {} //abstract class
 void PrintAbsyn::visitECDbl(ECDbl* p)
 {
   int oldi = _i_;
-  if (oldi > 12) render(_L_PAREN);
+  if (oldi > 11) render(_L_PAREN);
 
   visitDouble(p->double_);
 
-  if (oldi > 12) render(_R_PAREN);
+  if (oldi > 11) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -419,11 +419,11 @@ void PrintAbsyn::visitECDbl(ECDbl* p)
 void PrintAbsyn::visitECInt(ECInt* p)
 {
   int oldi = _i_;
-  if (oldi > 12) render(_L_PAREN);
+  if (oldi > 11) render(_L_PAREN);
 
   visitInteger(p->integer_);
 
-  if (oldi > 12) render(_R_PAREN);
+  if (oldi > 11) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -431,11 +431,11 @@ void PrintAbsyn::visitECInt(ECInt* p)
 void PrintAbsyn::visitEVar(EVar* p)
 {
   int oldi = _i_;
-  if (oldi > 12) render(_L_PAREN);
+  if (oldi > 11) render(_L_PAREN);
 
   visitIdent(p->ident_);
 
-  if (oldi > 12) render(_R_PAREN);
+  if (oldi > 11) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -443,11 +443,11 @@ void PrintAbsyn::visitEVar(EVar* p)
 void PrintAbsyn::visitEPi(EPi* p)
 {
   int oldi = _i_;
-  if (oldi > 12) render(_L_PAREN);
+  if (oldi > 11) render(_L_PAREN);
 
   render("pi");
 
-  if (oldi > 12) render(_R_PAREN);
+  if (oldi > 11) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -455,13 +455,13 @@ void PrintAbsyn::visitEPi(EPi* p)
 void PrintAbsyn::visitESimpleCall(ESimpleCall* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render('(');
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -469,13 +469,13 @@ void PrintAbsyn::visitESimpleCall(ESimpleCall* p)
 void PrintAbsyn::visitECall(ECall* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render('(');
   if(p->listexpression_) {_i_ = 0; p->listexpression_->accept(this);}  render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -483,12 +483,12 @@ void PrintAbsyn::visitECall(ECall* p)
 void PrintAbsyn::visitEPostInc(EPostInc* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("++");
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -496,12 +496,12 @@ void PrintAbsyn::visitEPostInc(EPostInc* p)
 void PrintAbsyn::visitEPostDec(EPostDec* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("--");
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -509,14 +509,14 @@ void PrintAbsyn::visitEPostDec(EPostDec* p)
 void PrintAbsyn::visitEAbs(EAbs* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("abs");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -524,7 +524,7 @@ void PrintAbsyn::visitEAbs(EAbs* p)
 void PrintAbsyn::visitEPow(EPow* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("pow");
   render('(');
@@ -533,7 +533,7 @@ void PrintAbsyn::visitEPow(EPow* p)
   _i_ = 0; p->expression_2->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -541,14 +541,14 @@ void PrintAbsyn::visitEPow(EPow* p)
 void PrintAbsyn::visitESqrt(ESqrt* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("sqrt");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -556,14 +556,14 @@ void PrintAbsyn::visitESqrt(ESqrt* p)
 void PrintAbsyn::visitEExp(EExp* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("exp");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -571,14 +571,14 @@ void PrintAbsyn::visitEExp(EExp* p)
 void PrintAbsyn::visitELog(ELog* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("log");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -586,14 +586,14 @@ void PrintAbsyn::visitELog(ELog* p)
 void PrintAbsyn::visitELogD(ELogD* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("log10");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -601,14 +601,14 @@ void PrintAbsyn::visitELogD(ELogD* p)
 void PrintAbsyn::visitESin(ESin* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("sin");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -616,14 +616,14 @@ void PrintAbsyn::visitESin(ESin* p)
 void PrintAbsyn::visitECos(ECos* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("cos");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -631,14 +631,14 @@ void PrintAbsyn::visitECos(ECos* p)
 void PrintAbsyn::visitETan(ETan* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("tan");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -646,14 +646,14 @@ void PrintAbsyn::visitETan(ETan* p)
 void PrintAbsyn::visitEAtan(EAtan* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("atan");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -661,7 +661,7 @@ void PrintAbsyn::visitEAtan(EAtan* p)
 void PrintAbsyn::visitEAtanT(EAtanT* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("atan2");
   render('(');
@@ -670,7 +670,7 @@ void PrintAbsyn::visitEAtanT(EAtanT* p)
   _i_ = 0; p->expression_2->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -678,14 +678,14 @@ void PrintAbsyn::visitEAtanT(EAtanT* p)
 void PrintAbsyn::visitEAsin(EAsin* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("asin");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -693,14 +693,14 @@ void PrintAbsyn::visitEAsin(EAsin* p)
 void PrintAbsyn::visitEAcos(EAcos* p)
 {
   int oldi = _i_;
-  if (oldi > 11) render(_L_PAREN);
+  if (oldi > 10) render(_L_PAREN);
 
   render("acos");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
 
-  if (oldi > 11) render(_R_PAREN);
+  if (oldi > 10) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -708,12 +708,12 @@ void PrintAbsyn::visitEAcos(EAcos* p)
 void PrintAbsyn::visitELnot(ELnot* p)
 {
   int oldi = _i_;
-  if (oldi > 10) render(_L_PAREN);
+  if (oldi > 9) render(_L_PAREN);
 
   render('!');
-  _i_ = 0; p->expression_->accept(this);
+  _i_ = 10; p->expression_->accept(this);
 
-  if (oldi > 10) render(_R_PAREN);
+  if (oldi > 9) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -721,12 +721,12 @@ void PrintAbsyn::visitELnot(ELnot* p)
 void PrintAbsyn::visitEPreInc(EPreInc* p)
 {
   int oldi = _i_;
-  if (oldi > 10) render(_L_PAREN);
+  if (oldi > 9) render(_L_PAREN);
 
   render("++");
   visitIdent(p->ident_);
 
-  if (oldi > 10) render(_R_PAREN);
+  if (oldi > 9) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -734,12 +734,12 @@ void PrintAbsyn::visitEPreInc(EPreInc* p)
 void PrintAbsyn::visitEPreDec(EPreDec* p)
 {
   int oldi = _i_;
-  if (oldi > 10) render(_L_PAREN);
+  if (oldi > 9) render(_L_PAREN);
 
   render("--");
   visitIdent(p->ident_);
 
-  if (oldi > 10) render(_R_PAREN);
+  if (oldi > 9) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -747,12 +747,12 @@ void PrintAbsyn::visitEPreDec(EPreDec* p)
 void PrintAbsyn::visitENeg(ENeg* p)
 {
   int oldi = _i_;
-  if (oldi > 10) render(_L_PAREN);
+  if (oldi > 9) render(_L_PAREN);
 
   render('-');
-  _i_ = 0; p->expression_->accept(this);
+  _i_ = 10; p->expression_->accept(this);
 
-  if (oldi > 10) render(_R_PAREN);
+  if (oldi > 9) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -760,12 +760,12 @@ void PrintAbsyn::visitENeg(ENeg* p)
 void PrintAbsyn::visitEBnot(EBnot* p)
 {
   int oldi = _i_;
-  if (oldi > 10) render(_L_PAREN);
+  if (oldi > 9) render(_L_PAREN);
 
   render('~');
-  _i_ = 0; p->expression_->accept(this);
+  _i_ = 10; p->expression_->accept(this);
 
-  if (oldi > 10) render(_R_PAREN);
+  if (oldi > 9) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -773,12 +773,12 @@ void PrintAbsyn::visitEBnot(EBnot* p)
 void PrintAbsyn::visitEPos(EPos* p)
 {
   int oldi = _i_;
-  if (oldi > 10) render(_L_PAREN);
+  if (oldi > 9) render(_L_PAREN);
 
   render('+');
-  _i_ = 0; p->expression_->accept(this);
+  _i_ = 10; p->expression_->accept(this);
 
-  if (oldi > 10) render(_R_PAREN);
+  if (oldi > 9) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -786,13 +786,13 @@ void PrintAbsyn::visitEPos(EPos* p)
 void PrintAbsyn::visitEMul(EMul* p)
 {
   int oldi = _i_;
-  if (oldi > 9) render(_L_PAREN);
+  if (oldi > 8) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 8; p->expression_1->accept(this);
   render('*');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 9; p->expression_2->accept(this);
 
-  if (oldi > 9) render(_R_PAREN);
+  if (oldi > 8) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -800,13 +800,13 @@ void PrintAbsyn::visitEMul(EMul* p)
 void PrintAbsyn::visitEDiv(EDiv* p)
 {
   int oldi = _i_;
-  if (oldi > 9) render(_L_PAREN);
+  if (oldi > 8) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 8; p->expression_1->accept(this);
   render('/');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 9; p->expression_2->accept(this);
 
-  if (oldi > 9) render(_R_PAREN);
+  if (oldi > 8) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -814,13 +814,13 @@ void PrintAbsyn::visitEDiv(EDiv* p)
 void PrintAbsyn::visitEMod(EMod* p)
 {
   int oldi = _i_;
-  if (oldi > 9) render(_L_PAREN);
+  if (oldi > 8) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 8; p->expression_1->accept(this);
   render('%');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 9; p->expression_2->accept(this);
 
-  if (oldi > 9) render(_R_PAREN);
+  if (oldi > 8) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -828,13 +828,13 @@ void PrintAbsyn::visitEMod(EMod* p)
 void PrintAbsyn::visitEAdd(EAdd* p)
 {
   int oldi = _i_;
-  if (oldi > 8) render(_L_PAREN);
+  if (oldi > 7) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 7; p->expression_1->accept(this);
   render('+');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 8; p->expression_2->accept(this);
 
-  if (oldi > 8) render(_R_PAREN);
+  if (oldi > 7) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -842,13 +842,13 @@ void PrintAbsyn::visitEAdd(EAdd* p)
 void PrintAbsyn::visitESub(ESub* p)
 {
   int oldi = _i_;
-  if (oldi > 8) render(_L_PAREN);
+  if (oldi > 7) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 7; p->expression_1->accept(this);
   render('-');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 8; p->expression_2->accept(this);
 
-  if (oldi > 8) render(_R_PAREN);
+  if (oldi > 7) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -856,13 +856,13 @@ void PrintAbsyn::visitESub(ESub* p)
 void PrintAbsyn::visitELSh(ELSh* p)
 {
   int oldi = _i_;
-  if (oldi > 7) render(_L_PAREN);
+  if (oldi > 6) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 6; p->expression_1->accept(this);
   render("<<");
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 7; p->expression_2->accept(this);
 
-  if (oldi > 7) render(_R_PAREN);
+  if (oldi > 6) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -870,13 +870,13 @@ void PrintAbsyn::visitELSh(ELSh* p)
 void PrintAbsyn::visitERSh(ERSh* p)
 {
   int oldi = _i_;
-  if (oldi > 7) render(_L_PAREN);
+  if (oldi > 6) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 6; p->expression_1->accept(this);
   render(">>");
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 7; p->expression_2->accept(this);
 
-  if (oldi > 7) render(_R_PAREN);
+  if (oldi > 6) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -884,13 +884,13 @@ void PrintAbsyn::visitERSh(ERSh* p)
 void PrintAbsyn::visitELT(ELT* p)
 {
   int oldi = _i_;
-  if (oldi > 6) render(_L_PAREN);
+  if (oldi > 5) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 6; p->expression_1->accept(this);
   render('<');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 6; p->expression_2->accept(this);
 
-  if (oldi > 6) render(_R_PAREN);
+  if (oldi > 5) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -898,13 +898,13 @@ void PrintAbsyn::visitELT(ELT* p)
 void PrintAbsyn::visitEGT(EGT* p)
 {
   int oldi = _i_;
-  if (oldi > 6) render(_L_PAREN);
+  if (oldi > 5) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 6; p->expression_1->accept(this);
   render('>');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 6; p->expression_2->accept(this);
 
-  if (oldi > 6) render(_R_PAREN);
+  if (oldi > 5) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -912,13 +912,13 @@ void PrintAbsyn::visitEGT(EGT* p)
 void PrintAbsyn::visitELE(ELE* p)
 {
   int oldi = _i_;
-  if (oldi > 6) render(_L_PAREN);
+  if (oldi > 5) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 6; p->expression_1->accept(this);
   render("<=");
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 6; p->expression_2->accept(this);
 
-  if (oldi > 6) render(_R_PAREN);
+  if (oldi > 5) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -926,13 +926,13 @@ void PrintAbsyn::visitELE(ELE* p)
 void PrintAbsyn::visitEGE(EGE* p)
 {
   int oldi = _i_;
-  if (oldi > 6) render(_L_PAREN);
+  if (oldi > 5) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 6; p->expression_1->accept(this);
   render(">=");
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 6; p->expression_2->accept(this);
 
-  if (oldi > 6) render(_R_PAREN);
+  if (oldi > 5) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -940,13 +940,13 @@ void PrintAbsyn::visitEGE(EGE* p)
 void PrintAbsyn::visitEE(EE* p)
 {
   int oldi = _i_;
-  if (oldi > 5) render(_L_PAREN);
+  if (oldi > 4) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 5; p->expression_1->accept(this);
   render("==");
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 5; p->expression_2->accept(this);
 
-  if (oldi > 5) render(_R_PAREN);
+  if (oldi > 4) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -954,13 +954,13 @@ void PrintAbsyn::visitEE(EE* p)
 void PrintAbsyn::visitENE(ENE* p)
 {
   int oldi = _i_;
-  if (oldi > 5) render(_L_PAREN);
+  if (oldi > 4) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 5; p->expression_1->accept(this);
   render("!=");
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 5; p->expression_2->accept(this);
 
-  if (oldi > 5) render(_R_PAREN);
+  if (oldi > 4) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -968,13 +968,13 @@ void PrintAbsyn::visitENE(ENE* p)
 void PrintAbsyn::visitEBand(EBand* p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(_L_PAREN);
+  if (oldi > 3) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 3; p->expression_1->accept(this);
   render('&');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 4; p->expression_2->accept(this);
 
-  if (oldi > 4) render(_R_PAREN);
+  if (oldi > 3) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -982,13 +982,13 @@ void PrintAbsyn::visitEBand(EBand* p)
 void PrintAbsyn::visitEBor(EBor* p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(_L_PAREN);
+  if (oldi > 3) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 3; p->expression_1->accept(this);
   render('|');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 4; p->expression_2->accept(this);
 
-  if (oldi > 4) render(_R_PAREN);
+  if (oldi > 3) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -996,13 +996,13 @@ void PrintAbsyn::visitEBor(EBor* p)
 void PrintAbsyn::visitEBxor(EBxor* p)
 {
   int oldi = _i_;
-  if (oldi > 4) render(_L_PAREN);
+  if (oldi > 3) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 3; p->expression_1->accept(this);
   render('^');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 4; p->expression_2->accept(this);
 
-  if (oldi > 4) render(_R_PAREN);
+  if (oldi > 3) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1010,13 +1010,13 @@ void PrintAbsyn::visitEBxor(EBxor* p)
 void PrintAbsyn::visitELand(ELand* p)
 {
   int oldi = _i_;
-  if (oldi > 3) render(_L_PAREN);
+  if (oldi > 2) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 3; p->expression_1->accept(this);
   render("&&");
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 3; p->expression_2->accept(this);
 
-  if (oldi > 3) render(_R_PAREN);
+  if (oldi > 2) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1024,13 +1024,13 @@ void PrintAbsyn::visitELand(ELand* p)
 void PrintAbsyn::visitELor(ELor* p)
 {
   int oldi = _i_;
-  if (oldi > 3) render(_L_PAREN);
+  if (oldi > 2) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 3; p->expression_1->accept(this);
   render("||");
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 3; p->expression_2->accept(this);
 
-  if (oldi > 3) render(_R_PAREN);
+  if (oldi > 2) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1038,13 +1038,13 @@ void PrintAbsyn::visitELor(ELor* p)
 void PrintAbsyn::visitELxor(ELxor* p)
 {
   int oldi = _i_;
-  if (oldi > 3) render(_L_PAREN);
+  if (oldi > 2) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 3; p->expression_1->accept(this);
   render("^^");
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 3; p->expression_2->accept(this);
 
-  if (oldi > 3) render(_R_PAREN);
+  if (oldi > 2) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1052,15 +1052,15 @@ void PrintAbsyn::visitELxor(ELxor* p)
 void PrintAbsyn::visitECon(ECon* p)
 {
   int oldi = _i_;
-  if (oldi > 2) render(_L_PAREN);
+  if (oldi > 1) render(_L_PAREN);
 
-  _i_ = 0; p->expression_1->accept(this);
+  _i_ = 2; p->expression_1->accept(this);
   render('?');
-  _i_ = 0; p->expression_2->accept(this);
+  _i_ = 2; p->expression_2->accept(this);
   render(':');
-  _i_ = 0; p->expression_3->accept(this);
+  _i_ = 2; p->expression_3->accept(this);
 
-  if (oldi > 2) render(_R_PAREN);
+  if (oldi > 1) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1068,13 +1068,13 @@ void PrintAbsyn::visitECon(ECon* p)
 void PrintAbsyn::visitEAss(EAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render('=');
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1082,13 +1082,13 @@ void PrintAbsyn::visitEAss(EAss* p)
 void PrintAbsyn::visitEAddAss(EAddAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("+=");
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1096,13 +1096,13 @@ void PrintAbsyn::visitEAddAss(EAddAss* p)
 void PrintAbsyn::visitESubAss(ESubAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("-=");
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1110,13 +1110,13 @@ void PrintAbsyn::visitESubAss(ESubAss* p)
 void PrintAbsyn::visitEMulAss(EMulAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("*=");
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1124,13 +1124,13 @@ void PrintAbsyn::visitEMulAss(EMulAss* p)
 void PrintAbsyn::visitEDivAss(EDivAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("/=");
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1138,13 +1138,13 @@ void PrintAbsyn::visitEDivAss(EDivAss* p)
 void PrintAbsyn::visitEModAss(EModAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("%=");
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1152,13 +1152,13 @@ void PrintAbsyn::visitEModAss(EModAss* p)
 void PrintAbsyn::visitEAndAss(EAndAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("&=");
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1166,13 +1166,13 @@ void PrintAbsyn::visitEAndAss(EAndAss* p)
 void PrintAbsyn::visitEOrAss(EOrAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("|=");
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1180,13 +1180,13 @@ void PrintAbsyn::visitEOrAss(EOrAss* p)
 void PrintAbsyn::visitEXorAss(EXorAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("^=");
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1194,13 +1194,13 @@ void PrintAbsyn::visitEXorAss(EXorAss* p)
 void PrintAbsyn::visitELShAss(ELShAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render("<<=");
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }
@@ -1208,13 +1208,13 @@ void PrintAbsyn::visitELShAss(ELShAss* p)
 void PrintAbsyn::visitERShAss(ERShAss* p)
 {
   int oldi = _i_;
-  if (oldi > 1) render(_L_PAREN);
+  if (oldi > 0) render(_L_PAREN);
 
   visitIdent(p->ident_);
   render(">>=");
   _i_ = 0; p->expression_->accept(this);
 
-  if (oldi > 1) render(_R_PAREN);
+  if (oldi > 0) render(_R_PAREN);
 
   _i_ = oldi;
 }

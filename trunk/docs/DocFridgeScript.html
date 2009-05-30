@@ -275,7 +275,7 @@ All other symbols are terminals.
 <TD><CODE>continue</CODE> <CODE>;</CODE></TD>
 </TR>
 <TR>
-<TD><I>Expression12</I></TD>
+<TD><I>Expression11</I></TD>
 <TD>-&gt;</TD>
 <TD><I>Double</I></TD>
 </TR>
@@ -300,7 +300,7 @@ All other symbols are terminals.
 <TD><CODE>(</CODE> <I>Expression</I> <CODE>)</CODE></TD>
 </TR>
 <TR>
-<TD><I>Expression11</I></TD>
+<TD><I>Expression10</I></TD>
 <TD>-&gt;</TD>
 <TD><I>Ident</I> <CODE>(</CODE> <CODE>)</CODE></TD>
 </TR>
@@ -387,12 +387,12 @@ All other symbols are terminals.
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression12</I></TD>
+<TD><I>Expression11</I></TD>
 </TR>
 <TR>
-<TD><I>Expression10</I></TD>
+<TD><I>Expression9</I></TD>
 <TD>-&gt;</TD>
-<TD><CODE>!</CODE> <I>Expression</I></TD>
+<TD><CODE>!</CODE> <I>Expression10</I></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -407,37 +407,17 @@ All other symbols are terminals.
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><CODE>-</CODE> <I>Expression</I></TD>
+<TD><CODE>-</CODE> <I>Expression10</I></TD>
 </TR>
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><CODE>~</CODE> <I>Expression</I></TD>
+<TD><CODE>~</CODE> <I>Expression10</I></TD>
 </TR>
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><CODE>+</CODE> <I>Expression</I></TD>
-</TR>
-<TR>
-<TD></TD>
-<TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression11</I></TD>
-</TR>
-<TR>
-<TD><I>Expression9</I></TD>
-<TD>-&gt;</TD>
-<TD><I>Expression</I> <CODE>*</CODE> <I>Expression</I></TD>
-</TR>
-<TR>
-<TD></TD>
-<TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>/</CODE> <I>Expression</I></TD>
-</TR>
-<TR>
-<TD></TD>
-<TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>%</CODE> <I>Expression</I></TD>
+<TD><CODE>+</CODE> <I>Expression10</I></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -447,12 +427,17 @@ All other symbols are terminals.
 <TR>
 <TD><I>Expression8</I></TD>
 <TD>-&gt;</TD>
-<TD><I>Expression</I> <CODE>+</CODE> <I>Expression</I></TD>
+<TD><I>Expression8</I> <CODE>*</CODE> <I>Expression9</I></TD>
 </TR>
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>-</CODE> <I>Expression</I></TD>
+<TD><I>Expression8</I> <CODE>/</CODE> <I>Expression9</I></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD ALIGN="center"><B>|</B></TD>
+<TD><I>Expression8</I> <CODE>%</CODE> <I>Expression9</I></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -462,12 +447,12 @@ All other symbols are terminals.
 <TR>
 <TD><I>Expression7</I></TD>
 <TD>-&gt;</TD>
-<TD><I>Expression</I> <CODE>&lt;&lt;</CODE> <I>Expression</I></TD>
+<TD><I>Expression7</I> <CODE>+</CODE> <I>Expression8</I></TD>
 </TR>
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>&gt;&gt;</CODE> <I>Expression</I></TD>
+<TD><I>Expression7</I> <CODE>-</CODE> <I>Expression8</I></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -477,22 +462,12 @@ All other symbols are terminals.
 <TR>
 <TD><I>Expression6</I></TD>
 <TD>-&gt;</TD>
-<TD><I>Expression</I> <CODE>&lt;</CODE> <I>Expression</I></TD>
+<TD><I>Expression6</I> <CODE>&lt;&lt;</CODE> <I>Expression7</I></TD>
 </TR>
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>&gt;</CODE> <I>Expression</I></TD>
-</TR>
-<TR>
-<TD></TD>
-<TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>&lt;=</CODE> <I>Expression</I></TD>
-</TR>
-<TR>
-<TD></TD>
-<TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>&gt;=</CODE> <I>Expression</I></TD>
+<TD><I>Expression6</I> <CODE>&gt;&gt;</CODE> <I>Expression7</I></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -502,12 +477,22 @@ All other symbols are terminals.
 <TR>
 <TD><I>Expression5</I></TD>
 <TD>-&gt;</TD>
-<TD><I>Expression</I> <CODE>==</CODE> <I>Expression</I></TD>
+<TD><I>Expression6</I> <CODE>&lt;</CODE> <I>Expression6</I></TD>
 </TR>
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>!=</CODE> <I>Expression</I></TD>
+<TD><I>Expression6</I> <CODE>&gt;</CODE> <I>Expression6</I></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD ALIGN="center"><B>|</B></TD>
+<TD><I>Expression6</I> <CODE>&lt;=</CODE> <I>Expression6</I></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD ALIGN="center"><B>|</B></TD>
+<TD><I>Expression6</I> <CODE>&gt;=</CODE> <I>Expression6</I></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -517,17 +502,12 @@ All other symbols are terminals.
 <TR>
 <TD><I>Expression4</I></TD>
 <TD>-&gt;</TD>
-<TD><I>Expression</I> <CODE>&amp;</CODE> <I>Expression</I></TD>
+<TD><I>Expression5</I> <CODE>==</CODE> <I>Expression5</I></TD>
 </TR>
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>|</CODE> <I>Expression</I></TD>
-</TR>
-<TR>
-<TD></TD>
-<TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>^</CODE> <I>Expression</I></TD>
+<TD><I>Expression5</I> <CODE>!=</CODE> <I>Expression5</I></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -537,17 +517,17 @@ All other symbols are terminals.
 <TR>
 <TD><I>Expression3</I></TD>
 <TD>-&gt;</TD>
-<TD><I>Expression</I> <CODE>&amp;&amp;</CODE> <I>Expression</I></TD>
+<TD><I>Expression3</I> <CODE>&amp;</CODE> <I>Expression4</I></TD>
 </TR>
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>||</CODE> <I>Expression</I></TD>
+<TD><I>Expression3</I> <CODE>|</CODE> <I>Expression4</I></TD>
 </TR>
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression</I> <CODE>^^</CODE> <I>Expression</I></TD>
+<TD><I>Expression3</I> <CODE>^</CODE> <I>Expression4</I></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -557,7 +537,17 @@ All other symbols are terminals.
 <TR>
 <TD><I>Expression2</I></TD>
 <TD>-&gt;</TD>
-<TD><I>Expression</I> <CODE>?</CODE> <I>Expression</I> <CODE>:</CODE> <I>Expression</I></TD>
+<TD><I>Expression3</I> <CODE>&amp;&amp;</CODE> <I>Expression3</I></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD ALIGN="center"><B>|</B></TD>
+<TD><I>Expression3</I> <CODE>||</CODE> <I>Expression3</I></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD ALIGN="center"><B>|</B></TD>
+<TD><I>Expression3</I> <CODE>^^</CODE> <I>Expression3</I></TD>
 </TR>
 <TR>
 <TD></TD>
@@ -566,6 +556,16 @@ All other symbols are terminals.
 </TR>
 <TR>
 <TD><I>Expression1</I></TD>
+<TD>-&gt;</TD>
+<TD><I>Expression2</I> <CODE>?</CODE> <I>Expression2</I> <CODE>:</CODE> <I>Expression2</I></TD>
+</TR>
+<TR>
+<TD></TD>
+<TD ALIGN="center"><B>|</B></TD>
+<TD><I>Expression2</I></TD>
+</TR>
+<TR>
+<TD><I>Expression</I></TD>
 <TD>-&gt;</TD>
 <TD><I>Ident</I> <CODE>=</CODE> <I>Expression</I></TD>
 </TR>
@@ -622,11 +622,6 @@ All other symbols are terminals.
 <TR>
 <TD></TD>
 <TD ALIGN="center"><B>|</B></TD>
-<TD><I>Expression2</I></TD>
-</TR>
-<TR>
-<TD><I>Expression</I></TD>
-<TD>-&gt;</TD>
 <TD><I>Expression1</I></TD>
 </TR>
 <TR>
