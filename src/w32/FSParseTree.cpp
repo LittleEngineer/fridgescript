@@ -30,12 +30,15 @@
 #include "FSParseTree.h"
 
 #include "Absyn.h"
+#include "FSAssemblerComment.h"
 #include "FSContext.h"
 #include "FSFunctionParseTree.h"
 #include "FSVariable.h"
 
 #include <string.h>
 #include <time.h>
+
+static FSAssemblerComment comment;
 
 ///////////////////////////////////////////////
 // H E L P E R    F U N C T I O N S
@@ -119,16 +122,16 @@ void FSParseTree::visitMain(Main* main)
 {
     // first parse the variables
     // this must be done first so that the variable references can be resolved in a single pass
-    main->accept(&varPicker);
+    main->accept( &varPicker );
 
     // parse the functions, this is important:
     // * function calls can be done in one pass
     // * some optimisations can be done in one pass
-    main->accept(&fnTree);
+    main->accept( &fnTree );
 
     // now we should have the complete tree of functions and references for every variable
     // this allows for single pass generation of code (ignoring any optimisations we may decide to add later)
-    main->listblock_->accept(this);
+    main->listblock_->accept( this );
 
     // all of the assembler code has been emitted, just one thing left to do...
     assembler += "ret\r\n";
@@ -142,7 +145,7 @@ void FSParseTree::visitMain(Main* main)
 
 void FSParseTree::visitBStmt(BStmt* bstmt)
 {
-    bstmt->liststatement_->accept(this);
+    bstmt->liststatement_->accept( this );
 }
 
 ///////////////////////////////////////////////
@@ -152,9 +155,9 @@ void FSParseTree::visitBStmt(BStmt* bstmt)
 
 void FSParseTree::visitListBlock(ListBlock* listblock)
 {
-    while(listblock)
+    while( listblock )
     {
-        listblock->block_->accept(this);
+        listblock->block_->accept( this );
         listblock = listblock->listblock_;
     }
 }
@@ -166,9 +169,9 @@ void FSParseTree::visitListBlock(ListBlock* listblock)
 
 void FSParseTree::visitListStatement(ListStatement* liststatement)
 {
-    while(liststatement)
+    while( liststatement )
     {
-        liststatement->statement_->accept(this);
+        liststatement->statement_->accept( this );
         liststatement = liststatement->liststatement_;
     }
 }
@@ -182,7 +185,13 @@ void FSParseTree::visitSExp(SExp* sexp)
 {
     assembler += "-- expression statement\r\n";
 
-    sexp->expression_->accept(this);
+    comment.Reset();
+    assembler += "{-\r\n  ";
+    sexp->expression_->accept(&comment);
+    assembler += comment.GetComment();
+    assembler += ";\r\n-}\r\n";
+
+    sexp->expression_->accept( this );
 
     // clean the expression result off of the fpu stack
     assembler += "-- end of expression\r\nffree st(0)\r\n";
@@ -195,7 +204,7 @@ void FSParseTree::visitSExp(SExp* sexp)
 
 void FSParseTree::visitSScope(SScope* sscope)
 {
-    sscope->liststatement_->accept(this);
+    sscope->liststatement_->accept( this );
 }
 
 ///////////////////////////////////////////////
@@ -207,7 +216,14 @@ void FSParseTree::visitSRet(SRet* sret)
 {
     assembler += "-- return statement\r\n";
 
-    sret->expression_->accept(this);
+    comment.Reset();
+    assembler += "{-\r\n  ";
+    sret->expression_->accept(&comment);
+    assembler += "return ";
+    assembler += comment.GetComment();
+    assembler += ";\r\n-}\r\n";
+
+    sret->expression_->accept( this );
     assembler += "ret\r\n";
 
     assembler += "-- end of return statement\r\n";
@@ -220,10 +236,19 @@ void FSParseTree::visitSRet(SRet* sret)
 
 void FSParseTree::visitSIf(SIf* sif)
 {
+    comment.Reset();
+    assembler += "{-\r\n  ";
+    assembler += "if( ";
+    sif->expression_->accept(&comment);
+    assembler += comment.GetComment();
+    assembler += " )\r\n";
+    assembler += "  {\r\n";
+    assembler += ";\r\n-}\r\n";
+
     // evaluate expression
     assembler += "-- if statement expresion\r\n";
 
-    sif->expression_->accept(this);
+    sif->expression_->accept( this );
 
     // compare st0 with zero
     assembler += "-- compare result with zero for if statement\r\n";
@@ -243,13 +268,17 @@ void FSParseTree::visitSIf(SIf* sif)
 
     // ... otherwise do what the if contains
     assembler += "-- if statement contents\r\n";
-    sif->statement_->accept(this);
+    sif->statement_->accept( this );
     
     // end label
     assembler += lbl;
     assembler += ":\r\n";
     
     assembler += "-- end of if statement\r\n";
+
+    assembler += "{-\r\n";
+    assembler += "  }\r\n";
+    assembler += "\r\n-}\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -259,10 +288,19 @@ void FSParseTree::visitSIf(SIf* sif)
 
 void FSParseTree::visitSIfElse(SIfElse* sifelse)
 {
+    comment.Reset();
+    assembler += "{-\r\n  ";
+    assembler += "if( ";
+    sifelse->expression_->accept(&comment);
+    assembler += comment.GetComment();
+    assembler += " )\r\n";
+    assembler += "  {\r\n";
+    assembler += ";\r\n-}\r\n";
+
     // evaluate expression
     assembler += "-- if statement expresion\r\n";
     
-    sifelse->expression_->accept(this);
+    sifelse->expression_->accept( this );
     
     // compare st0 with zero
     assembler += "-- compare result with zero for if statement\r\n";
@@ -283,25 +321,35 @@ void FSParseTree::visitSIfElse(SIfElse* sifelse)
     // ... otherwise run the contents of the if block then jump to the end
     assembler += "-- if statement contents\r\n";
     
-    sifelse->statement_1->accept(this);
+    sifelse->statement_1->accept( this );
     
     assembler += "jmp ";
     Simple::ANSIString lblEnd = GetRandomLabel();
     assembler += lblEnd;
     assembler += "\r\n";
     
+    assembler += "{-\r\n";
+    assembler += "  }\r\n";
+    assembler += "  else\r\n";
+    assembler += "  {\r\n";
+    assembler += "-}\r\n";
+
     // now put the else block and its label
     assembler += "-- else contents\r\n";
     assembler += lblElse;
     assembler += ":\r\n";
     
-    sifelse->statement_2->accept(this);
+    sifelse->statement_2->accept( this );
 
     // then the end label for the if block
     assembler += lblEnd;
     assembler += ":\r\n";
 
     assembler += "-- end of if statement\r\n";
+
+    assembler += "{-\r\n";
+    assembler += "  }\r\n";
+    assembler += "\r\n-}\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -313,12 +361,22 @@ void FSParseTree::visitSIfElse(SIfElse* sifelse)
 void FSParseTree::visitSWhile(SWhile* swhile)
 {
     assembler += "-- while statement\r\n";
+
+    comment.Reset();
+    assembler += "{-\r\n  ";
+    assembler += "while( ";
+    swhile->expression_->accept(&comment);
+    assembler += comment.GetComment();
+    assembler += " )\r\n";
+    assembler += "  {\r\n";
+    assembler += ";\r\n-}\r\n";
+
     Simple::ANSIString lblStart = GetRandomLabel();
     assembler += lblStart;
     assembler += ":\r\n";
     // evaluate expression
     assembler += "-- while statement expression\r\n";
-    swhile->expression_->accept(this);
+    swhile->expression_->accept( this );
     // compare st0 with zero
     assembler += "-- compare result with zero for while statement\r\n";
     assembler += "fldz\r\n";
@@ -334,13 +392,17 @@ void FSParseTree::visitSWhile(SWhile* swhile)
     assembler += "\r\n";
     // ... otherwise run the contents of the loop block then jump back to the start
     assembler += "-- while statement contents\r\n";
-    swhile->statement_->accept(this);
+    swhile->statement_->accept( this );
     assembler += "jmp ";
     assembler += lblStart;
     assembler += "\r\n";
     assembler += "-- end of while statement\r\n";
     assembler += lblEnd;
     assembler += ":\r\n";
+
+    assembler += "{-\r\n";
+    assembler += "  }\r\n";
+    assembler += "\r\n-}\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -352,13 +414,23 @@ void FSParseTree::visitSWhile(SWhile* swhile)
 void FSParseTree::visitSUntil(SUntil* suntil)
 {
     assembler += "-- until statement\r\n";
+
+    comment.Reset();
+    assembler += "{-\r\n  ";
+    assembler += "until( ";
+    suntil->expression_->accept(&comment);
+    assembler += comment.GetComment();
+    assembler += " )\r\n";
+    assembler += "  {\r\n";
+    assembler += ";\r\n-}\r\n";
+
     Simple::ANSIString lblStart = GetRandomLabel();
     assembler += lblStart;
     assembler += ":\r\n";
     // run the contents of the loop block then jump back to the start
-    suntil->statement_->accept(this);
+    suntil->statement_->accept( this );
     // evaluate expression
-    suntil->expression_->accept(this);
+    suntil->expression_->accept( this );
     // compare st0 with zero
     assembler += "fldz\r\n";
     assembler += "fcomi\r\n";
@@ -371,6 +443,10 @@ void FSParseTree::visitSUntil(SUntil* suntil)
     assembler += lblStart;
     assembler += "\r\n";
     // ... otherwise continue
+
+    assembler += "{-\r\n";
+    assembler += "  }\r\n";
+    assembler += "\r\n-}\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -383,10 +459,25 @@ void FSParseTree::visitSUntil(SUntil* suntil)
 void FSParseTree::visitSFor(SFor* sfor)
 {
     assembler += "-- for statement\r\n";
-    
+
+    comment.Reset();
+    assembler += "{-\r\n  ";
+    assembler += "for( ";
+    sfor->listexpression_1->accept(&comment);
+    assembler += comment.GetComment();
+    assembler += "; ";
+    comment.Reset();
+    sfor->expression_->accept(&comment);
+    assembler += comment.GetComment();
+    assembler += "; ";
+    comment.Reset();
+    sfor->listexpression_2->accept(&comment);
+    assembler += comment.GetComment();
+    assembler += " )\r\n  {\r\n-}\r\n";
+
     assembler += "-- initialise\r\n";
     
-    sfor->listexpression_1->accept(this);
+    sfor->listexpression_1->accept( this );
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(0)\r\n";
     
@@ -396,33 +487,44 @@ void FSParseTree::visitSFor(SFor* sfor)
     assembler += lblStart;
     assembler += ":\r\n";
     assembler += "-- run test\r\n";
-    sfor->expression_->accept(this);
+    sfor->expression_->accept( this );
     
     // compare st0 with zero
     assembler += "fldz\r\n";
     assembler += "fcomi\r\n";
+    
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(0)\r\n";
     assembler += "ffree st(1)\r\n";
+    
     // skip to end if condition fails ...
     Simple::ANSIString lblEnd = GetRandomLabel();
     assembler += "jz ";
     assembler += lblEnd;
     assembler += "\r\n";
+    
     // ... otherwise run for block then the final loop expression
     assembler += "-- run for contents\r\n";
-    sfor->statement_->accept(this);
+    sfor->statement_->accept( this );
+    
     assembler += "-- run for expression\r\n";
-    sfor->listexpression_2->accept(this);
+    sfor->listexpression_2->accept( this );
+    
     assembler += "-- clean stack\r\n";
     assembler += "ffree st(0)\r\n";
+    
     assembler += "-- loop\r\n";
     assembler += "jmp ";
     assembler += lblStart;
     assembler += "\r\n";
+    
     assembler += "-- end of for statement\r\n";
     assembler += lblEnd;
     assembler += ":\r\n";
+
+    assembler += "{-\r\n";
+    assembler += "  }\r\n";
+    assembler += "\r\n-}\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -471,7 +573,7 @@ void FSParseTree::visitECDbl(ECDbl* ecdbl)
     {
         assembler += "-- load constant\r\n";
         assembler += "fld [";
-        assembler.AppendHex(reinterpret_cast<unsigned int>(context->GetConstant(ecdbl->double_)));
+        assembler.AppendHex( reinterpret_cast<unsigned int>( context->GetConstant( ecdbl->double_ ) ) );
         assembler += "]\r\n";
     }
 }
@@ -499,10 +601,10 @@ void FSParseTree::visitECInt(ECInt* ecint)
     else
     {
         assembler += "-- load constant ";
-        assembler.AppendInt(ecint->integer_);
+        assembler.AppendInt( ecint->integer_ );
         assembler += "\r\n";
         assembler += "fld [";
-        assembler.AppendHex(reinterpret_cast<unsigned int>(context->GetConstant(static_cast<double>(ecint->integer_))));
+        assembler.AppendHex( reinterpret_cast<unsigned int>( context->GetConstant( static_cast<double>( ecint->integer_) ) ) );
         assembler += "]\r\n";
     }
 }
@@ -513,13 +615,13 @@ void FSParseTree::visitECInt(ECInt* ecint)
 
 void FSParseTree::visitEVar(EVar *evar)
 {
-    // load the variable
     assembler += "-- load variable ";
     assembler += evar->ident_;
     assembler += "\r\n";
+
+    // load the variable
     assembler += "fld [ebp+";
-    assembler.AppendInt(GetVariableOffset(evar->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(evar->ident_, 0)));
+    assembler.AppendInt( GetVariableOffset( evar->ident_ ) );
     assembler += "]\r\n";
 
 }
@@ -544,7 +646,7 @@ void FSParseTree::visitEPi(EPi *epi)
 void FSParseTree::visitESimpleCall(ESimpleCall* esimplecall)
 {
     // evaluate expression
-    // esimplecall->expression_->accept(this);
+    // esimplecall->expression_->accept( this );
     // call function
     // ...
 }
@@ -584,7 +686,7 @@ void FSParseTree::visitEPostInc(EPostInc* epostinc)
     assembler += "\r\n";
     // load variable
     assembler += "fld [ebp+";
-    assembler.AppendInt(GetVariableOffset(epostinc->ident_));
+    assembler.AppendInt( GetVariableOffset( epostinc->ident_ ) );
     //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(epostinc->ident_, 0)));
     assembler += "]\r\n";
     // dupe
@@ -595,7 +697,7 @@ void FSParseTree::visitEPostInc(EPostInc* epostinc)
     assembler += "faddp\r\n";
     // store result
     assembler += "fst [ebp+";
-    assembler.AppendInt(GetVariableOffset(epostinc->ident_));
+    assembler.AppendInt( GetVariableOffset( epostinc->ident_ ) );
     assembler += "]\r\n";
     // clean stack so old value is on top
     assembler += "fstp st(0)\r\n";
@@ -617,7 +719,7 @@ void FSParseTree::visitEPostDec(EPostDec* epostdec)
     assembler += epostdec->ident_;
     assembler += "\r\n";
     assembler += "fld [ebp+";
-    assembler.AppendInt(GetVariableOffset(epostdec->ident_));
+    assembler.AppendInt( GetVariableOffset( epostdec->ident_ ) );
     assembler += "]\r\n";
     // dupe
     assembler += "fld st(0)\r\n";
@@ -626,7 +728,7 @@ void FSParseTree::visitEPostDec(EPostDec* epostdec)
     assembler += "fsubp\r\n";
     // store result
     assembler += "fst [ebp+";
-    assembler.AppendInt(GetVariableOffset(epostdec->ident_));
+    assembler.AppendInt( GetVariableOffset( epostdec->ident_ ) );
     assembler += "]\r\n";
     // clean stack so old value is on top
     assembler += "fstp st(0)\r\n";
@@ -646,7 +748,7 @@ void FSParseTree::visitEAbs(EAbs* eabs)
 
     assembler += "-- expression for abs\r\n";
 
-    eabs->expression_->accept(this);
+    eabs->expression_->accept( this );
 
     assembler += "-- abs\r\n";
     assembler += "fabs\r\n";
@@ -679,7 +781,7 @@ void FSParseTree::visitEPow(EPow* epow)
     */
 
     assembler += "-- expression 1\r\n";
-    epow->expression_1->accept(this);
+    epow->expression_1->accept( this );
     assembler += "-- end expression 1\r\n";
     pushDouble();
     /*
@@ -687,7 +789,7 @@ void FSParseTree::visitEPow(EPow* epow)
         ready for a binary operation
     */
     assembler += "-- expression 2\r\n";
-    epow->expression_2->accept(this);
+    epow->expression_2->accept( this );
     assembler += "-- end expression 2\r\n";
     popDouble();
     // from pow(x,y)...
@@ -741,7 +843,7 @@ void FSParseTree::visitESqrt(ESqrt* esqrt)
         sqrt the result and leave it in st(0) for the rest of the expression
     */
 
-    esqrt->expression_->accept(this);
+    esqrt->expression_->accept( this );
 
     assembler += "-- sqrt\r\n";
     assembler += "fsqrt\r\n";
@@ -772,13 +874,13 @@ void FSParseTree::visitEExp(EExp* eexp)
     /*
         evaluate expression
     */
-    eexp->expression_->accept(this);
+    eexp->expression_->accept( this );
     // st(0) = y
 
     // push e
     assembler += "-- load e\r\n";
     assembler += "fld [";
-    assembler.AppendHex(reinterpret_cast<unsigned int>(context->GetConstant(2.7182818284590452353602874713527)));
+    assembler.AppendHex( reinterpret_cast<unsigned int>( context->GetConstant( 2.7182818284590452353602874713527 ) ) );
     assembler += "]\r\n";    
     // from pow(x,y)...
     // st(1) = y
@@ -826,7 +928,7 @@ void FSParseTree::visitELog(ELog* elog)
     */
     assembler += "-- expression for natural logarithm\r\n";
 
-    elog->expression_->accept(this);
+    elog->expression_->accept( this );
 
     assembler += "-- natural logarithm\r\n";
     assembler += "fldln2\r\n";
@@ -851,7 +953,7 @@ void FSParseTree::visitELogD(ELogD* elogd)
     
     assembler += "-- expression for log 10\r\n";
     
-    elogd->expression_->accept(this);
+    elogd->expression_->accept( this );
     
     assembler += "-- log 10\r\n";
     assembler += "fldlg2\r\n";
@@ -876,7 +978,7 @@ void FSParseTree::visitESin(ESin* esin)
     */
     assembler += "-- expression for sin\r\n";
 
-    esin->expression_->accept(this);
+    esin->expression_->accept( this );
     
     assembler += "-- sin\r\n";
     
@@ -898,7 +1000,7 @@ void FSParseTree::visitECos(ECos* ecos)
 
     assembler += "-- expression for cos\r\n";
 
-    ecos->expression_->accept(this);
+    ecos->expression_->accept( this );
 
     assembler += "-- cos\r\n";
 
@@ -921,7 +1023,7 @@ void FSParseTree::visitETan(ETan* etan)
 
     assembler += "-- expression for tan\r\n";
 
-    etan->expression_->accept(this);
+    etan->expression_->accept( this );
     
     assembler += "-- tan\r\n";
 
@@ -945,7 +1047,7 @@ void FSParseTree::visitEAtan(EAtan* eatan)
 
     assembler += "-- expression for atan\r\n";
 
-    eatan->expression_->accept(this);
+    eatan->expression_->accept( this );
     
     assembler += "-- atan\r\n";
 
@@ -968,7 +1070,7 @@ void FSParseTree::visitEAtanT(EAtanT* eatant)
 
     assembler += "-- first expression for atan2\r\n";
 
-    eatant->expression_2->accept(this);
+    eatant->expression_2->accept( this );
     pushDouble();
 
     /*
@@ -978,7 +1080,7 @@ void FSParseTree::visitEAtanT(EAtanT* eatant)
 
     assembler += "-- second expression for atan2\r\n";
 
-    eatant->expression_1->accept(this);
+    eatant->expression_1->accept( this );
     popDouble();
 
     /*
@@ -1009,7 +1111,7 @@ void FSParseTree::visitEAsin(EAsin* easin)
     assembler += "-- expression for asin\r\n";
 
     // load x
-    easin->expression_->accept(this);
+    easin->expression_->accept( this );
 
     assembler += "-- asin\r\n";
 
@@ -1071,7 +1173,7 @@ void FSParseTree::visitEAcos(EAcos* eacos)
     assembler += "-- expression for acos\r\n";
 
     // load x
-    eacos->expression_->accept(this);
+    eacos->expression_->accept( this );
     
     assembler += "-- acos\r\n";
 
@@ -1132,7 +1234,7 @@ void FSParseTree::visitELnot(ELnot* elnot)
 
     assembler += "-- expression for logical not\r\n";
     
-    elnot->expression_->accept(this);
+    elnot->expression_->accept( this );
     
     assembler += "-- logical not\r\n";
     
@@ -1228,7 +1330,7 @@ void FSParseTree::visitENeg(ENeg* eneg)
 
     assembler += "-- expression for unary minus\r\n";
 
-    eneg->expression_->accept(this);
+    eneg->expression_->accept( this );
     
     assembler += "-- unary minus\r\n";
     
@@ -1268,7 +1370,7 @@ void FSParseTree::visitEMul(EMul* emul)
 
     assembler += "-- first expression for multiply\r\n";
     
-    emul->expression_2->accept(this);
+    emul->expression_2->accept( this );
     pushDouble();
     
     /*
@@ -1278,7 +1380,7 @@ void FSParseTree::visitEMul(EMul* emul)
 
     assembler += "-- second expression for multiply\r\n";
     
-    emul->expression_1->accept(this);
+    emul->expression_1->accept( this );
     popDouble();
 
     /*
@@ -1305,7 +1407,7 @@ void FSParseTree::visitEDiv(EDiv* ediv)
 
     assembler += "-- first expression for divide\r\n";
 
-    ediv->expression_2->accept(this);
+    ediv->expression_2->accept( this );
     pushDouble();
 
     /*
@@ -1315,7 +1417,7 @@ void FSParseTree::visitEDiv(EDiv* ediv)
     
     assembler += "-- second expression for divide\r\n";
 
-    ediv->expression_1->accept(this);
+    ediv->expression_1->accept( this );
     popDouble();
     
     /*
@@ -1342,7 +1444,7 @@ void FSParseTree::visitEMod(EMod* emod)
 
     assembler += "-- first parameter for remainder\r\n";
 
-    emod->expression_1->accept(this);
+    emod->expression_1->accept( this );
     pushDouble();
 
     /*
@@ -1352,7 +1454,7 @@ void FSParseTree::visitEMod(EMod* emod)
 
     assembler += "-- second parameter for remainder\r\n";
 
-    emod->expression_2->accept(this);
+    emod->expression_2->accept( this );
     popDouble();
 
     /*
@@ -1372,19 +1474,32 @@ void FSParseTree::visitEAdd(EAdd* eadd)
     /*
         evaluate first expression and push
     */
-    eadd->expression_2->accept(this);
+    
+    assembler += "-- first expression for addition\r\n";
+
+    eadd->expression_2->accept( this );
     pushDouble();
+
     /*
         evaluate second expression than pop previous result
         ready for a binary operation
     */
-    eadd->expression_1->accept(this);
+
+    assembler += "-- second expression for addition\r\n";
+
+    eadd->expression_1->accept( this );
     popDouble();
+    
     /*
         faddp does st(1) = st(0) + st(1) and pops
         leaving the result in st(0) ready for the next expression
     */
+
+    assembler += "-- addition\r\n";
+
     assembler += "faddp\r\n";
+
+    assembler += "-- end addition\r\n";
 }
 
 void FSParseTree::visitESub(ESub* esub)
@@ -1392,19 +1507,32 @@ void FSParseTree::visitESub(ESub* esub)
     /*
         evaluate first expression and push
     */
-    esub->expression_2->accept(this);
+
+    assembler += "-- first expression for subtraction\r\n";
+
+    esub->expression_2->accept( this );
     pushDouble();
+
     /*
         evaluate second expression than pop previous result
         ready for a binary operation
     */
-    esub->expression_1->accept(this);
+
+    assembler += "-- second expression for subtraction\r\n";
+
+    esub->expression_1->accept( this );
     popDouble();
+
     /*
         fsubp does st(1) = st(1) - st(0) and pops
         leaving the result in st(0) ready for the next expression
     */
+    
+    assembler += "-- subtraction\r\n";
+
     assembler += "fsubp\r\n";
+
+    assembler += "-- end subtraction\r\n";
 }
 
 void FSParseTree::visitELSh(ELSh* elsh)
@@ -1412,13 +1540,13 @@ void FSParseTree::visitELSh(ELSh* elsh)
     /*
         evaluate first expression and push
     */
-    elsh->expression_1->accept(this);
+    elsh->expression_1->accept( this );
     pushDouble();
     /*
         evaluate second expression than pop previous result
         ready for a binary operation
     */
-    elsh->expression_2->accept(this);
+    elsh->expression_2->accept( this );
     popDouble();
     /*
         fscale does st(1) = st(1) << st(0) and pops
@@ -1432,13 +1560,13 @@ void FSParseTree::visitERSh(ERSh* ersh)
     /*
         evaluate first expression and push
     */
-    ersh->expression_1->accept(this);
+    ersh->expression_1->accept( this );
     pushDouble();
     /*
         evaluate second expression than pop previous result
         ready for a binary operation
     */
-    ersh->expression_2->accept(this);
+    ersh->expression_2->accept( this );
     assembler += "fchs\r\n";
     popDouble();
     /*
@@ -1454,13 +1582,13 @@ void FSParseTree::visitELT(ELT* elt)
         evaluate first expression and push
     */
     assembler += "-- expressions for comparison\r\n";
-    elt->expression_1->accept(this);
+    elt->expression_1->accept( this );
     pushDouble();
     /*
         evaluate second expression then pop previous result
         ready for a binary operation
     */
-    elt->expression_2->accept(this);
+    elt->expression_2->accept( this );
     popDouble();
     assembler += "-- logical less than\r\n";
     assembler += "fcomi\r\n";
@@ -1480,13 +1608,13 @@ void FSParseTree::visitEGT(EGT* egt)
         evaluate first expression and push
     */
     assembler += "-- expressions for comparison\r\n";
-    egt->expression_2->accept(this);
+    egt->expression_2->accept( this );
     pushDouble();
     /*
         evaluate second expression then pop previous result
         ready for a binary operation
     */
-    egt->expression_1->accept(this);
+    egt->expression_1->accept( this );
     popDouble();
     assembler += "-- logical greater than\r\n";
     assembler += "fcomi\r\n";
@@ -1506,13 +1634,13 @@ void FSParseTree::visitELE(ELE* ele)
         evaluate first expression and push
     */
     assembler += "-- expressions for comparison\r\n";
-    ele->expression_1->accept(this);
+    ele->expression_1->accept( this );
     pushDouble();
     /*
         evaluate second expression then pop previous result
         ready for a binary operation
     */
-    ele->expression_2->accept(this);
+    ele->expression_2->accept( this );
     popDouble();
     assembler += "-- logical less or equal\r\n";
     assembler += "fcomi\r\n";
@@ -1532,13 +1660,13 @@ void FSParseTree::visitEGE(EGE* ege)
         evaluate first expression and push
     */
     assembler += "-- expressions for comparison\r\n";
-    ege->expression_2->accept(this);
+    ege->expression_2->accept( this );
     pushDouble();
     /*
         evaluate second expression then pop previous result
         ready for a binary operation
     */
-    ege->expression_1->accept(this);
+    ege->expression_1->accept( this );
     popDouble();
     assembler += "-- logical greater or equal\r\n";
     assembler += "fcomi\r\n";
@@ -1564,7 +1692,7 @@ void FSParseTree::visitEE(EE* ee)
     
     assembler += "-- first expression for comparison\r\n";
     
-    ee->expression_1->accept(this);
+    ee->expression_1->accept( this );
     pushDouble();
     
     /*
@@ -1574,7 +1702,7 @@ void FSParseTree::visitEE(EE* ee)
     
     assembler += "-- second expression for comparison\r\n";
 
-    ee->expression_2->accept(this);
+    ee->expression_2->accept( this );
     popDouble();
     
     assembler += "-- logical equal test\r\n";
@@ -1605,7 +1733,7 @@ void FSParseTree::visitENE(ENE* ene)
     
     assembler += "-- first expression for comparison\r\n";
     
-    ene->expression_1->accept(this);
+    ene->expression_1->accept( this );
     pushDouble();
     
     /*
@@ -1615,7 +1743,7 @@ void FSParseTree::visitENE(ENE* ene)
 
     assembler += "-- second expression for comparison\r\n";
 
-    ene->expression_2->accept(this);
+    ene->expression_2->accept( this );
     popDouble();
     
     assembler += "-- logical not equal test\r\n";
@@ -1675,7 +1803,7 @@ void FSParseTree::visitELand(ELand* eland)
         test if expression2 is equal to 0 and return 0 if it is, otherwise return expression1
     */
     
-    eland->expression_2->accept(this);
+    eland->expression_2->accept( this );
     
     assembler += "fldz\r\n";
     assembler += "fcomi\r\n";
@@ -1693,7 +1821,7 @@ void FSParseTree::visitELand(ELand* eland)
     assembler += "ffree st(0)\r\n";
     
     // ... otherwise evaluate the next expression
-    eland->expression_1->accept(this);
+    eland->expression_1->accept( this );
     
     assembler += lblEnd;
     assembler += ":\r\n";
@@ -1709,7 +1837,7 @@ void FSParseTree::visitELor(ELor* elor)
         expression1 && expression2
         test if expression1 is equal to 0 and return 1 if it is not, otherwise return expression2
     */
-    elor->expression_2->accept(this);
+    elor->expression_2->accept( this );
     assembler += "fldz\r\n";
     assembler += "fcomi\r\n";
     Simple::ANSIString lblEnd = GetRandomLabel();
@@ -1724,7 +1852,7 @@ void FSParseTree::visitELor(ELor* elor)
     // clean stack
     assembler += "ffree st(0)\r\n";
     // ... otherwise evaluate the next expression
-    elor->expression_1->accept(this);
+    elor->expression_1->accept( this );
     assembler += lblEnd;
     assembler += ":\r\n";
 }
@@ -1762,7 +1890,7 @@ void FSParseTree::visitEAss(EAss* eass)
         evaluate the expression
         store the result but don't pop, leave it in st(0) for the rest of the expression
     */
-    eass->expression_->accept(this);
+    eass->expression_->accept( this );
     assembler += "fst [ebp+";
     assembler.AppendInt(GetVariableOffset(eass->ident_));
     //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(eass->ident_, 0)));
@@ -1779,7 +1907,7 @@ void FSParseTree::visitEAddAss(EAddAss* eaddass)
         evaluate the expression, load the var then add it and store it back
         store the result but don't pop, leave it in st(0) for the rest of the expression
     */
-    eaddass->expression_->accept(this);
+    eaddass->expression_->accept( this );
     assembler += "fld [ebp+";
     assembler.AppendInt(GetVariableOffset(eaddass->ident_));
     //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(eaddass->ident_, 0)));
@@ -1801,7 +1929,7 @@ void FSParseTree::visitESubAss(ESubAss* esubass)
         evaluate the expression, load the var then subtract it and store it back
         store the result but don't pop, leave it in st(0) for the rest of the expression
     */
-    esubass->expression_->accept(this);
+    esubass->expression_->accept( this );
     assembler += "fld [ebp+";
     assembler.AppendInt(GetVariableOffset(esubass->ident_));
     //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(esubass->ident_, 0)));
@@ -1823,7 +1951,7 @@ void FSParseTree::visitEMulAss(EMulAss* emulass)
         evaluate the expression, load the var then multiply it and store it back
         store the result but don't pop, leave it in st(0) for the rest of the expression
     */
-    emulass->expression_->accept(this);
+    emulass->expression_->accept( this );
     assembler += "fld [ebp+";
     assembler.AppendInt(GetVariableOffset(emulass->ident_));
     //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(emulass->ident_, 0)));
@@ -1845,7 +1973,7 @@ void FSParseTree::visitEDivAss(EDivAss* edivass)
         evaluate the expression, load the var then divide it and store it back
         store the result but don't pop, leave it in st(0) for the rest of the expression
     */
-    edivass->expression_->accept(this);
+    edivass->expression_->accept( this );
     assembler += "fld [ebp+";
     assembler.AppendInt(GetVariableOffset(edivass->ident_));
     //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(edivass->ident_, 0)));
@@ -1867,7 +1995,7 @@ void FSParseTree::visitEModAss(EModAss* emodass)
         evaluate the expression, load the var then mod it and store it back
         store the result but don't pop, leave it in st(0) for the rest of the expression
     */
-    emodass->expression_->accept(this);
+    emodass->expression_->accept( this );
     assembler += "fld [ebp+";
     assembler.AppendInt(GetVariableOffset(emodass->ident_));
     //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(emodass->ident_, 0)));
@@ -1944,7 +2072,7 @@ void FSParseTree::visitListExpression(ListExpression* listexpression)
     while(listexpression)
     {
         // convert each expression to assembler and emit
-        listexpression->expression_->accept(this);
+        listexpression->expression_->accept( this );
 
         // iterate over the list
         listexpression = listexpression->listexpression_;
