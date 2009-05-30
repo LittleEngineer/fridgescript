@@ -29,16 +29,16 @@
 // this file's header
 #include "FSParseTree.h"
 
+// FridgeScript headers
 #include "Absyn.h"
-#include "FSAssemblerComment.h"
 #include "FSContext.h"
-#include "FSFunctionParseTree.h"
 #include "FSVariable.h"
 
+// C/C++ headers
 #include <string.h>
 #include <time.h>
 
-static FSAssemblerComment comment;
+FSAssemblerComment FSParseTree::comment = FSAssemblerComment();
 
 ///////////////////////////////////////////////
 // H E L P E R    F U N C T I O N S
@@ -660,11 +660,40 @@ void FSParseTree::visitESimpleCall(ESimpleCall* esimplecall)
 
 void FSParseTree::visitECall(ECall* ecall)
 {
-    // push parameters
+    FSFunction* fnInfo = fnTree.GetFunctionInfo( ecall->ident_ );
+
+    FSAssert( fnInfo != 0, "Bad function info returned by the function parse tree for \"%s\"", ecall->ident_ );
+
+    // TODO: push enough stuff on the stack for the function's locals
+
+    // evaluate parameters
+    // TODO: (optimisation) this should be put 
+    // off until they are referenced...
+    // at the moment all it does is throw away
+    // any which don't get used in the function
     ListExpression* e = ecall->listexpression_;
-    while(e)
+    unsigned int i = 0;
+    while( e )
     {
+        // if this maps to a variable used by the function ... 
+        if( fnInfo->GetOffsets()[i] != INVALID_VARIABLE_OFFSET )
+        {
+            assembler += "-- expression ";
+            assembler.AppendInt( i );
+            assembler += " for function call \"";
+            assembler += ecall->ident_;
+            assembler += "\"\r\n";
+            
+            // compile expression
+            e->expression_->accept( this );
+
+            // TODO: insert stuff into the functions local variable stack
+        }
+        // ... otherwise optimise this away to nothing
+
+        // iterate over the list
         e = e->listexpression_;
+        ++i;
     }
     // call function (function cleans stack)
 }
@@ -687,7 +716,6 @@ void FSParseTree::visitEPostInc(EPostInc* epostinc)
     // load variable
     assembler += "fld [ebp+";
     assembler.AppendInt( GetVariableOffset( epostinc->ident_ ) );
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(epostinc->ident_, 0)));
     assembler += "]\r\n";
     // dupe
     assembler += "fld st(0)\r\n";
