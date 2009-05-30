@@ -45,6 +45,8 @@ public:
     Simple::ANSIString GetName() const { return name; }
     Simple::ANSIString GetLabel() const { return label; }
     Simple::ANSIString GetAssembler() const { return assembler; }
+    Simple::Stack<unsigned int> GetOffsets() const { return varOffsets; }
+
     void SetAssembler(Simple::ANSIString sAssembler) { assembler = sAssembler; }
 };
 
@@ -72,6 +74,8 @@ public:
     void visitListParameter(ListParameter* listparameter);
 
     Simple::ANSIString GetAssembler() const;
+
+    FSFunction* GetFunctionInfo(const char* name) const;
 };
 
 #endif

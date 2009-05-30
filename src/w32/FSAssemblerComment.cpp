@@ -269,26 +269,44 @@ void FSAssemblerComment::visitENE(ENE* ene)
 
 void FSAssemblerComment::visitEBand(EBand* eband)
 {
+    eband->expression_1->accept( this );
+    comment += " & ";
+    eband->expression_2->accept( this );
 }
 
 void FSAssemblerComment::visitEBor(EBor* ebor)
 {
+    ebor->expression_1->accept( this );
+    comment += " | ";
+    ebor->expression_2->accept( this );
 }
 
 void FSAssemblerComment::visitEBxor(EBxor* ebxor)
 {
+    ebxor->expression_1->accept( this );
+    comment += " ^ ";
+    ebxor->expression_2->accept( this );
 }
 
 void FSAssemblerComment::visitELand(ELand* eland)
 {
+    eland->expression_1->accept( this );
+    comment += " && ";
+    eland->expression_2->accept( this );
 }
 
 void FSAssemblerComment::visitELor(ELor* elor)
 {
+    elor->expression_1->accept( this );
+    comment += " || ";
+    elor->expression_2->accept( this );
 }
 
 void FSAssemblerComment::visitELxor(ELxor* elxor)
 {
+    elxor->expression_1->accept( this );
+    comment += " ^^ ";
+    elxor->expression_2->accept( this );
 }
 
 void FSAssemblerComment::visitECon(ECon* econ)

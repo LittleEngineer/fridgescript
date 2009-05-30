@@ -15,11 +15,17 @@
     along with FridgeScript.  If not, see <http://www.gnu.org/licenses/>
 */
 
+// main header
 #include "FridgeScript.h"
 
+// this file's header
 #include "FSFunctionParseTree.h"
 
+// FridgeScript headers
 #include "FSParseTree.h"
+
+// C/C++ headers
+#include <string.h>
 
 ///////////////////////////////////////////////
 // H E L P E R    F U N C T I O N S
@@ -55,6 +61,19 @@ Simple::ANSIString FSFunctionParseTree::GetAssembler() const
     }
 
     return sResult;
+}
+
+FSFunction* FSFunctionParseTree::GetFunctionInfo(const char* name) const
+{
+    for( unsigned int i = 0; i < fnList.GetCount(); ++i )
+    {
+        if( !strcmp( fnList[i]->GetName().GetPointer(), name ) )
+        {
+            return fnList[i];
+        }
+    }
+
+    return 0;
 }
 
 ///////////////////////////////////////////////
@@ -126,8 +145,11 @@ void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
             // this parameter goes into [ebp+uOffset]
             fnStructure->AddParameterOffset( uOffset );
         }
-
-        // otherwise throw this parameter away
+        else
+        {
+            // otherwise throw this parameter away
+            fnStructure->AddParameterOffset( INVALID_VARIABLE_OFFSET );
+        }
         pList = pList->listparameter_;
     }
 

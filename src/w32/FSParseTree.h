@@ -18,6 +18,7 @@
 #ifndef __FSParseTree_h
 #define __FSParseTree_h
 
+#include "FSAssemblerComment.h"
 #include "FSFunctionParseTree.h"
 #include "FSVisitor.h"
 #include "FSVariablePicker.h"
@@ -39,6 +40,8 @@ private:
 
     FSVariablePicker    varPicker;
     FSFunctionParseTree fnTree;
+
+    static FSAssemblerComment comment;
 
     void pushDouble();
     void popDouble();
