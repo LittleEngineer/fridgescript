@@ -135,7 +135,7 @@ All other symbols are terminals.\\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression12}} & {\arrow}  &{\nonterminal{Double}}  \\
+{\nonterminal{Expression11}} & {\arrow}  &{\nonterminal{Double}}  \\
  & {\delimit}  &{\nonterminal{Integer}}  \\
  & {\delimit}  &{\nonterminal{Ident}}  \\
  & {\delimit}  &{\terminal{pi}}  \\
@@ -143,7 +143,7 @@ All other symbols are terminals.\\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression11}} & {\arrow}  &{\nonterminal{Ident}} {\terminal{(}} {\terminal{)}}  \\
+{\nonterminal{Expression10}} & {\arrow}  &{\nonterminal{Ident}} {\terminal{(}} {\terminal{)}}  \\
  & {\delimit}  &{\nonterminal{Ident}} {\terminal{(}} {\nonterminal{ListExpression}} {\terminal{)}}  \\
  & {\delimit}  &{\nonterminal{Ident}} {\terminal{{$+$}{$+$}}}  \\
  & {\delimit}  &{\nonterminal{Ident}} {\terminal{{$-$}{$-$}}}  \\
@@ -160,73 +160,73 @@ All other symbols are terminals.\\
  & {\delimit}  &{\terminal{atan2}} {\terminal{(}} {\nonterminal{Expression}} {\terminal{,}} {\nonterminal{Expression}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{asin}} {\terminal{(}} {\nonterminal{Expression}} {\terminal{)}}  \\
  & {\delimit}  &{\terminal{acos}} {\terminal{(}} {\nonterminal{Expression}} {\terminal{)}}  \\
- & {\delimit}  &{\nonterminal{Expression12}}  \\
-\end{tabular}\\
-
-\begin{tabular}{lll}
-{\nonterminal{Expression10}} & {\arrow}  &{\terminal{!}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\terminal{{$+$}{$+$}}} {\nonterminal{Ident}}  \\
- & {\delimit}  &{\terminal{{$-$}{$-$}}} {\nonterminal{Ident}}  \\
- & {\delimit}  &{\terminal{{$-$}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\terminal{\~{}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\terminal{{$+$}}} {\nonterminal{Expression}}  \\
  & {\delimit}  &{\nonterminal{Expression11}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression9}} & {\arrow}  &{\nonterminal{Expression}} {\terminal{*}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{/}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{\%}} {\nonterminal{Expression}}  \\
+{\nonterminal{Expression9}} & {\arrow}  &{\terminal{!}} {\nonterminal{Expression10}}  \\
+ & {\delimit}  &{\terminal{{$+$}{$+$}}} {\nonterminal{Ident}}  \\
+ & {\delimit}  &{\terminal{{$-$}{$-$}}} {\nonterminal{Ident}}  \\
+ & {\delimit}  &{\terminal{{$-$}}} {\nonterminal{Expression10}}  \\
+ & {\delimit}  &{\terminal{\~{}}} {\nonterminal{Expression10}}  \\
+ & {\delimit}  &{\terminal{{$+$}}} {\nonterminal{Expression10}}  \\
  & {\delimit}  &{\nonterminal{Expression10}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression8}} & {\arrow}  &{\nonterminal{Expression}} {\terminal{{$+$}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{{$-$}}} {\nonterminal{Expression}}  \\
+{\nonterminal{Expression8}} & {\arrow}  &{\nonterminal{Expression8}} {\terminal{*}} {\nonterminal{Expression9}}  \\
+ & {\delimit}  &{\nonterminal{Expression8}} {\terminal{/}} {\nonterminal{Expression9}}  \\
+ & {\delimit}  &{\nonterminal{Expression8}} {\terminal{\%}} {\nonterminal{Expression9}}  \\
  & {\delimit}  &{\nonterminal{Expression9}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression7}} & {\arrow}  &{\nonterminal{Expression}} {\terminal{{$<$}{$<$}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{{$>$}{$>$}}} {\nonterminal{Expression}}  \\
+{\nonterminal{Expression7}} & {\arrow}  &{\nonterminal{Expression7}} {\terminal{{$+$}}} {\nonterminal{Expression8}}  \\
+ & {\delimit}  &{\nonterminal{Expression7}} {\terminal{{$-$}}} {\nonterminal{Expression8}}  \\
  & {\delimit}  &{\nonterminal{Expression8}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression6}} & {\arrow}  &{\nonterminal{Expression}} {\terminal{{$<$}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{{$>$}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{{$<$}{$=$}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{{$>$}{$=$}}} {\nonterminal{Expression}}  \\
+{\nonterminal{Expression6}} & {\arrow}  &{\nonterminal{Expression6}} {\terminal{{$<$}{$<$}}} {\nonterminal{Expression7}}  \\
+ & {\delimit}  &{\nonterminal{Expression6}} {\terminal{{$>$}{$>$}}} {\nonterminal{Expression7}}  \\
  & {\delimit}  &{\nonterminal{Expression7}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression5}} & {\arrow}  &{\nonterminal{Expression}} {\terminal{{$=$}{$=$}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{!{$=$}}} {\nonterminal{Expression}}  \\
+{\nonterminal{Expression5}} & {\arrow}  &{\nonterminal{Expression6}} {\terminal{{$<$}}} {\nonterminal{Expression6}}  \\
+ & {\delimit}  &{\nonterminal{Expression6}} {\terminal{{$>$}}} {\nonterminal{Expression6}}  \\
+ & {\delimit}  &{\nonterminal{Expression6}} {\terminal{{$<$}{$=$}}} {\nonterminal{Expression6}}  \\
+ & {\delimit}  &{\nonterminal{Expression6}} {\terminal{{$>$}{$=$}}} {\nonterminal{Expression6}}  \\
  & {\delimit}  &{\nonterminal{Expression6}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression4}} & {\arrow}  &{\nonterminal{Expression}} {\terminal{\&}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{{$|$}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{\^}} {\nonterminal{Expression}}  \\
+{\nonterminal{Expression4}} & {\arrow}  &{\nonterminal{Expression5}} {\terminal{{$=$}{$=$}}} {\nonterminal{Expression5}}  \\
+ & {\delimit}  &{\nonterminal{Expression5}} {\terminal{!{$=$}}} {\nonterminal{Expression5}}  \\
  & {\delimit}  &{\nonterminal{Expression5}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression3}} & {\arrow}  &{\nonterminal{Expression}} {\terminal{\&\&}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{{$|$}{$|$}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression}} {\terminal{\^\^}} {\nonterminal{Expression}}  \\
+{\nonterminal{Expression3}} & {\arrow}  &{\nonterminal{Expression3}} {\terminal{\&}} {\nonterminal{Expression4}}  \\
+ & {\delimit}  &{\nonterminal{Expression3}} {\terminal{{$|$}}} {\nonterminal{Expression4}}  \\
+ & {\delimit}  &{\nonterminal{Expression3}} {\terminal{\^}} {\nonterminal{Expression4}}  \\
  & {\delimit}  &{\nonterminal{Expression4}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression2}} & {\arrow}  &{\nonterminal{Expression}} {\terminal{?}} {\nonterminal{Expression}} {\terminal{:}} {\nonterminal{Expression}}  \\
+{\nonterminal{Expression2}} & {\arrow}  &{\nonterminal{Expression3}} {\terminal{\&\&}} {\nonterminal{Expression3}}  \\
+ & {\delimit}  &{\nonterminal{Expression3}} {\terminal{{$|$}{$|$}}} {\nonterminal{Expression3}}  \\
+ & {\delimit}  &{\nonterminal{Expression3}} {\terminal{\^\^}} {\nonterminal{Expression3}}  \\
  & {\delimit}  &{\nonterminal{Expression3}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
-{\nonterminal{Expression1}} & {\arrow}  &{\nonterminal{Ident}} {\terminal{{$=$}}} {\nonterminal{Expression}}  \\
+{\nonterminal{Expression1}} & {\arrow}  &{\nonterminal{Expression2}} {\terminal{?}} {\nonterminal{Expression2}} {\terminal{:}} {\nonterminal{Expression2}}  \\
+ & {\delimit}  &{\nonterminal{Expression2}}  \\
+\end{tabular}\\
+
+\begin{tabular}{lll}
+{\nonterminal{Expression}} & {\arrow}  &{\nonterminal{Ident}} {\terminal{{$=$}}} {\nonterminal{Expression}}  \\
  & {\delimit}  &{\nonterminal{Ident}} {\terminal{{$+$}{$=$}}} {\nonterminal{Expression}}  \\
  & {\delimit}  &{\nonterminal{Ident}} {\terminal{{$-$}{$=$}}} {\nonterminal{Expression}}  \\
  & {\delimit}  &{\nonterminal{Ident}} {\terminal{*{$=$}}} {\nonterminal{Expression}}  \\
@@ -237,11 +237,7 @@ All other symbols are terminals.\\
  & {\delimit}  &{\nonterminal{Ident}} {\terminal{\^{$=$}}} {\nonterminal{Expression}}  \\
  & {\delimit}  &{\nonterminal{Ident}} {\terminal{{$<$}{$<$}{$=$}}} {\nonterminal{Expression}}  \\
  & {\delimit}  &{\nonterminal{Ident}} {\terminal{{$>$}{$>$}{$=$}}} {\nonterminal{Expression}}  \\
- & {\delimit}  &{\nonterminal{Expression2}}  \\
-\end{tabular}\\
-
-\begin{tabular}{lll}
-{\nonterminal{Expression}} & {\arrow}  &{\nonterminal{Expression1}}  \\
+ & {\delimit}  &{\nonterminal{Expression1}}  \\
 \end{tabular}\\
 
 \begin{tabular}{lll}
