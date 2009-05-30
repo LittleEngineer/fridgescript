@@ -268,7 +268,7 @@ void FSParseTree::visitSIf(SIf* sif)
 
     // ... otherwise do what the if contains
     assembler += "-- if statement contents\r\n";
-    sif->statement_->accept( this );
+    sif->liststatement_->accept( this );
     
     // end label
     assembler += lbl;
@@ -321,7 +321,7 @@ void FSParseTree::visitSIfElse(SIfElse* sifelse)
     // ... otherwise run the contents of the if block then jump to the end
     assembler += "-- if statement contents\r\n";
     
-    sifelse->statement_1->accept( this );
+    sifelse->liststatement_1->accept( this );
     
     assembler += "jmp ";
     Simple::ANSIString lblEnd = GetRandomLabel();
@@ -339,7 +339,7 @@ void FSParseTree::visitSIfElse(SIfElse* sifelse)
     assembler += lblElse;
     assembler += ":\r\n";
     
-    sifelse->statement_2->accept( this );
+    sifelse->liststatement_2->accept( this );
 
     // then the end label for the if block
     assembler += lblEnd;
@@ -392,7 +392,7 @@ void FSParseTree::visitSWhile(SWhile* swhile)
     assembler += "\r\n";
     // ... otherwise run the contents of the loop block then jump back to the start
     assembler += "-- while statement contents\r\n";
-    swhile->statement_->accept( this );
+    swhile->liststatement_->accept( this );
     assembler += "jmp ";
     assembler += lblStart;
     assembler += "\r\n";
@@ -428,7 +428,7 @@ void FSParseTree::visitSUntil(SUntil* suntil)
     assembler += lblStart;
     assembler += ":\r\n";
     // run the contents of the loop block then jump back to the start
-    suntil->statement_->accept( this );
+    suntil->liststatement_->accept( this );
     // evaluate expression
     suntil->expression_->accept( this );
     // compare st0 with zero
@@ -505,7 +505,7 @@ void FSParseTree::visitSFor(SFor* sfor)
     
     // ... otherwise run for block then the final loop expression
     assembler += "-- run for contents\r\n";
-    sfor->statement_->accept( this );
+    sfor->liststatement_->accept( this );
     
     assembler += "-- run for expression\r\n";
     sfor->listexpression_2->accept( this );
@@ -666,6 +666,8 @@ void FSParseTree::visitECall(ECall* ecall)
 
     // TODO: push enough stuff on the stack for the function's locals
 
+    // for( unsigned int i = 0; i < fnInfo->G
+
     // evaluate parameters
     // TODO: (optimisation) this should be put 
     // off until they are referenced...
@@ -695,7 +697,14 @@ void FSParseTree::visitECall(ECall* ecall)
         e = e->listexpression_;
         ++i;
     }
-    // call function (function cleans stack)
+
+    // call function
+    assembler += "call ";
+    assembler += ecall->ident_;
+    assembler += "\r\n";
+
+    // clean stack
+    // TODO: move this into function code to reduce size
 }
 
 ///////////////////////////////////////////////
@@ -2004,12 +2013,10 @@ void FSParseTree::visitEDivAss(EDivAss* edivass)
     edivass->expression_->accept( this );
     assembler += "fld [ebp+";
     assembler.AppendInt(GetVariableOffset(edivass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(edivass->ident_, 0)));
     assembler += "]\r\n";
     assembler += "fdivrp\r\n";
     assembler += "fst [ebp+";
     assembler.AppendInt(GetVariableOffset(edivass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(edivass->ident_, 0)));
     assembler += "]\r\n";
 }
 
@@ -2026,12 +2033,10 @@ void FSParseTree::visitEModAss(EModAss* emodass)
     emodass->expression_->accept( this );
     assembler += "fld [ebp+";
     assembler.AppendInt(GetVariableOffset(emodass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(emodass->ident_, 0)));
     assembler += "]\r\n";
     assembler += "fprem\r\n";
     assembler += "fst [ebp+";
     assembler.AppendInt(GetVariableOffset(emodass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(emodass->ident_, 0)));
     assembler += "]\r\n";
 }
 

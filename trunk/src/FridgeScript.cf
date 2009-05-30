@@ -34,11 +34,11 @@ separator nonempty Parameter "," ;
 SExp. 			Statement 		::= Expression ";" ;
 SScope. 		Statement 		::= "{" [Statement] "}" ;
 SRet. 			Statement 		::= "return" Expression ";" ;
-SIf.			Statement		::= "if" "(" Expression ")" "{" Statement "}" ;
-SIfElse.		Statement		::= "if" "(" Expression ")" "{" Statement "else" "{" Statement "}" ;
-SWhile.			Statement		::= "while" "(" Expression ")" "{" Statement "}" ;
-SUntil.			Statement		::= "until" "(" Expression ")" "{" Statement "}" ;
-SFor.			Statement		::= "for" "(" [Expression] ";" Expression ";" [Expression] ")" "{" Statement "}" ;
+SIf.			Statement		::= "if" "(" Expression ")" "{" [Statement] "}" ;
+SIfElse.		Statement		::= "if" "(" Expression ")" "{" [Statement] "}" "else" "{" [Statement] "}" ;
+SWhile.			Statement		::= "while" "(" Expression ")" "{" [Statement] "}" ;
+SUntil.			Statement		::= "until" "(" Expression ")" "{" [Statement] "}" ;
+SFor.			Statement		::= "for" "(" [Expression] ";" Expression ";" [Expression] ")" "{" [Statement] "}" ;
 SBreak.			Statement		::= "break" ";" ;
 SContinue.		Statement		::= "continue" ";" ;
 
@@ -47,7 +47,7 @@ ECInt.			Expression11	::= Integer ;
 EVar.			Expression11	::= Ident ;
 EPi.			Expression11	::= "pi" ;
 
-ESimpleCall.	Expression10	::= Ident "("")" ;
+ESimpleCall.	Expression10	::= Ident "(" ")" ;
 ECall.			Expression10	::= Ident "(" [Expression] ")" ;
 EPostInc.		Expression10	::= Ident "++" ;
 EPostDec.		Expression10	::= Ident "--" ;

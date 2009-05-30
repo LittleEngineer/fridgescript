@@ -119,7 +119,7 @@ void Skeleton::visitSIf(SIf* sif)
   /* Code For SIf Goes Here */
 
   sif->expression_->accept(this);
-  sif->statement_->accept(this);
+  if (sif->liststatement_) {sif->liststatement_->accept(this);}
 }
 
 void Skeleton::visitSIfElse(SIfElse* sifelse)
@@ -127,8 +127,8 @@ void Skeleton::visitSIfElse(SIfElse* sifelse)
   /* Code For SIfElse Goes Here */
 
   sifelse->expression_->accept(this);
-  sifelse->statement_1->accept(this);
-  sifelse->statement_2->accept(this);
+  if (sifelse->liststatement_1) {sifelse->liststatement_1->accept(this);}
+  if (sifelse->liststatement_2) {sifelse->liststatement_2->accept(this);}
 }
 
 void Skeleton::visitSWhile(SWhile* swhile)
@@ -136,7 +136,7 @@ void Skeleton::visitSWhile(SWhile* swhile)
   /* Code For SWhile Goes Here */
 
   swhile->expression_->accept(this);
-  swhile->statement_->accept(this);
+  if (swhile->liststatement_) {swhile->liststatement_->accept(this);}
 }
 
 void Skeleton::visitSUntil(SUntil* suntil)
@@ -144,7 +144,7 @@ void Skeleton::visitSUntil(SUntil* suntil)
   /* Code For SUntil Goes Here */
 
   suntil->expression_->accept(this);
-  suntil->statement_->accept(this);
+  if (suntil->liststatement_) {suntil->liststatement_->accept(this);}
 }
 
 void Skeleton::visitSFor(SFor* sfor)
@@ -154,7 +154,7 @@ void Skeleton::visitSFor(SFor* sfor)
   if (sfor->listexpression_1) {sfor->listexpression_1->accept(this);}
   sfor->expression_->accept(this);
   if (sfor->listexpression_2) {sfor->listexpression_2->accept(this);}
-  sfor->statement_->accept(this);
+  if (sfor->liststatement_) {sfor->liststatement_->accept(this);}
 }
 
 void Skeleton::visitSBreak(SBreak* sbreak)

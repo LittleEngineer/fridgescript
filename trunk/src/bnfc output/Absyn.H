@@ -423,11 +423,11 @@ class SIf : public Statement
 {
  public:
   Expression *expression_;
-  Statement *statement_;
+  ListStatement *liststatement_;
 
   SIf(const SIf &);
   SIf &operator=(const SIf &);
-  SIf(Expression *p1, Statement *p2);
+  SIf(Expression *p1, ListStatement *p2);
   ~SIf();
   virtual void accept(Visitor *v);
   virtual  SIf  *clone() const;
@@ -438,11 +438,11 @@ class SIfElse : public Statement
 {
  public:
   Expression *expression_;
-  Statement *statement_1, *statement_2;
+  ListStatement *liststatement_1, *liststatement_2;
 
   SIfElse(const SIfElse &);
   SIfElse &operator=(const SIfElse &);
-  SIfElse(Expression *p1, Statement *p2, Statement *p3);
+  SIfElse(Expression *p1, ListStatement *p2, ListStatement *p3);
   ~SIfElse();
   virtual void accept(Visitor *v);
   virtual  SIfElse  *clone() const;
@@ -453,11 +453,11 @@ class SWhile : public Statement
 {
  public:
   Expression *expression_;
-  Statement *statement_;
+  ListStatement *liststatement_;
 
   SWhile(const SWhile &);
   SWhile &operator=(const SWhile &);
-  SWhile(Expression *p1, Statement *p2);
+  SWhile(Expression *p1, ListStatement *p2);
   ~SWhile();
   virtual void accept(Visitor *v);
   virtual  SWhile  *clone() const;
@@ -468,11 +468,11 @@ class SUntil : public Statement
 {
  public:
   Expression *expression_;
-  Statement *statement_;
+  ListStatement *liststatement_;
 
   SUntil(const SUntil &);
   SUntil &operator=(const SUntil &);
-  SUntil(Expression *p1, Statement *p2);
+  SUntil(Expression *p1, ListStatement *p2);
   ~SUntil();
   virtual void accept(Visitor *v);
   virtual  SUntil  *clone() const;
@@ -484,11 +484,11 @@ class SFor : public Statement
  public:
   ListExpression *listexpression_1, *listexpression_2;
   Expression *expression_;
-  Statement *statement_;
+  ListStatement *liststatement_;
 
   SFor(const SFor &);
   SFor &operator=(const SFor &);
-  SFor(ListExpression *p1, Expression *p2, ListExpression *p3, Statement *p4);
+  SFor(ListExpression *p1, Expression *p2, ListExpression *p3, ListStatement *p4);
   ~SFor();
   virtual void accept(Visitor *v);
   virtual  SFor  *clone() const;

@@ -277,7 +277,24 @@ void FSAssembler::visitOJnz(OJnz* oJnz)
     }
 }
 
-void FSAssembler::visitOCall(OCall* oCall) {}
+void FSAssembler::visitOCall(OCall* oCall)
+{
+    FSOperandVisitor operand = FSOperandVisitor( FSOperandVisitor::FSOVType::JMP );
+
+    out.Push( 0xE8 );
+    
+    // inspect the operand
+    oCall->operand_->accept( &operand );
+    
+    // the address now starts at the next stack position
+    AddLabelReference( operand.GetLastLabel().GetPointer(), out.GetCount() );
+
+    // emit the operand bytes
+    for( unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i )
+    {
+        out.Push( operand.GetBytes()[i] );
+    }
+}
 
 void FSAssembler::visitORet(ORet* oRet)
 {
