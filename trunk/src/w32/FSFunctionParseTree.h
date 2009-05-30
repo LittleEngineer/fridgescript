@@ -35,8 +35,9 @@ private:
     Simple::ANSIString  label;
 
     Simple::Stack<unsigned int> varOffsets;
+    unsigned int varCount;
 public:
-    FSFunction(const char* const identifier, const char* const asmLabel) : name(identifier), label(asmLabel), assembler(), varOffsets() {}
+    FSFunction(const char* const identifier, const char* const asmLabel) : name( identifier ), label( asmLabel ), assembler(), varOffsets(), varCount( 0 ) {}
     ~FSFunction() {}
 
     void AddParameterOffset(const unsigned int& offset);
@@ -46,8 +47,10 @@ public:
     Simple::ANSIString GetLabel() const { return label; }
     Simple::ANSIString GetAssembler() const { return assembler; }
     Simple::Stack<unsigned int> GetOffsets() const { return varOffsets; }
+    unsigned int GetVarCount() const { return varCount; }
 
     void SetAssembler(Simple::ANSIString sAssembler) { assembler = sAssembler; }
+    void SetVarCount(const unsigned int& count) { varCount = count; }
 };
 
 ///////////////////////////////////////////////

@@ -128,8 +128,11 @@ void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
     // for the moment the label used in assembler can be the function name, it would be nice to prefix it with something though
     FSFunction* fnStructure = new FSFunction( dtfunc->ident_, dtfunc->ident_ );
 
-    // set the assembler code
+    // set the assembler code ...
     fnStructure->SetAssembler( fp->GetAssemblerString() );
+
+    // ... and the size of the stack to allocate
+    fnStructure->SetVarCount( fp->GetVariableStackPointer()->GetCount() );
 
     // check which parameters are actually used in the function
     // this is both optimisation and simplification
