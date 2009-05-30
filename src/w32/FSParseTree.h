@@ -45,6 +45,8 @@ private:
 
     void pushDouble();
     void popDouble();
+    void discardDouble();
+
     Simple::ANSIString GetRandomLabel();
 public:
     FSParseTree(FSContext* c) : context(c), varPicker(c), fnTree(c) {}

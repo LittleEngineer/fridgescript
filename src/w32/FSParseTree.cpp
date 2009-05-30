@@ -67,6 +67,17 @@ void FSParseTree::popDouble()
 }
 
 ///////////////////////////////////////////////
+// Appends some assembler to remove a double
+// precision float off of the stack into st(0)
+///////////////////////////////////////////////
+
+void FSParseTree::discardDouble()
+{
+    // add esp, 8 would be MUCH better than two pops
+    assembler += "pop eax\r\npop eax\r\n";
+}
+
+///////////////////////////////////////////////
 // Generate a random label for jmp, call etc.
 ///////////////////////////////////////////////
 
@@ -665,8 +676,12 @@ void FSParseTree::visitECall(ECall* ecall)
     FSAssert( fnInfo != 0, "Bad function info returned by the function parse tree for \"%s\"", ecall->ident_ );
 
     // TODO: push enough stuff on the stack for the function's locals
-
-    // for( unsigned int i = 0; i < fnInfo->G
+    // this is a bit of a crappy method, would be better to init to QNaNs
+    // also, it would be better to use add/sub
+    for( unsigned int i = 0; i < fnInfo->GetVarCount(); ++i )
+    {
+        pushDouble();
+    }
 
     // evaluate parameters
     // TODO: (optimisation) this should be put 
@@ -698,6 +713,8 @@ void FSParseTree::visitECall(ECall* ecall)
         ++i;
     }
 
+    // TODO:: set ebp
+
     // call function
     assembler += "call ";
     assembler += ecall->ident_;
@@ -705,6 +722,11 @@ void FSParseTree::visitECall(ECall* ecall)
 
     // clean stack
     // TODO: move this into function code to reduce size
+    // this is a bit of a crappy method, would be better to use add/sub
+    for( unsigned int i = 0; i < fnInfo->GetVarCount(); ++i )
+    {
+        discardDouble();
+    }
 }
 
 ///////////////////////////////////////////////
