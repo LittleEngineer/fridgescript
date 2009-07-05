@@ -29,7 +29,7 @@
 #ifdef _DEBUG
     #define FSAssert(condition, message, ...) if( _FSAssert( condition, __FILE__, __LINE__, message, __VA_ARGS__ ) ) { __asm int 3 }
 #else
-    #define JFSAssert(condition, ...) ;
+    #define FSAssert(condition, ...) ;
 #endif
 
 #define ASSERT_MAX_TITLE_LENGTH          512
