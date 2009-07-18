@@ -15,7 +15,7 @@
     along with FridgeScript.  If not, see <http://www.gnu.org/licenses/>
 */
 
-#include "FridgeScript.h"
+#include <Core/FridgeScript.h>
 
 #include "FSCompiledCode.h"
 #include "FSVariable.h"

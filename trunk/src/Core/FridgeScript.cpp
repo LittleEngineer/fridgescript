@@ -16,7 +16,7 @@
 */
 
 // main header
-#include "FridgeScript.h"
+#include <Core/FridgeScript.h>
 
 // FridgeScript headers
 #include "FSContext.h"

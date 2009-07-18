@@ -24,7 +24,7 @@
 */
 
 // main header
-#include "FridgeScript.h"
+#include <Core/FridgeScript.h>
 
 // this file's header
 #include "FSParseTree.h"
