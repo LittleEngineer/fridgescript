@@ -17,7 +17,7 @@
 
 #include <Core/FridgeScript.h>
 
-#include "FSContext.h"
+#include <Core/FSContext.h>
 
 #include <malloc.h>
 #include <string.h>

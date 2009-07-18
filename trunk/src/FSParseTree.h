@@ -20,7 +20,7 @@
 
 #include "FSAssemblerComment.h"
 #include "FSFunctionParseTree.h"
-#include "FSVisitor.h"
+#include <Core/FSVisitor.h>
 #include "FSVariablePicker.h"
 #include "SimpleStructures.h"
 

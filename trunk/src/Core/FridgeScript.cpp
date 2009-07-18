@@ -19,7 +19,7 @@
 #include <Core/FridgeScript.h>
 
 // FridgeScript headers
-#include "FSContext.h"
+#include <Core/FSContext.h>
 #include "FSParseTree.h"
 #include "FSVariable.h"
 

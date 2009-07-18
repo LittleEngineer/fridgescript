@@ -18,7 +18,7 @@
 #ifndef __FSVariablePicker_h
 #define __FSVariablePicker_h
 
-#include "FSVisitor.h"
+#include <Core/FSVisitor.h>
 
 #include "Absyn.h"
 #include "SimpleStructures.h"

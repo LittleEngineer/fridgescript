@@ -18,8 +18,8 @@
 #ifndef __FSAssemblerComment_h
 #define __FSAssemblerComment_h
 
-#include "FSContext.h"
-#include "FSVisitor.h"
+#include <Core/FSContext.h>
+#include <Core/FSVisitor.h>
 
 #include "SimpleStructures.h"
 
