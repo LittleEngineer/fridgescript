@@ -1,3 +1,0 @@
-There is a Visual C++ 2008 project included in the src\w32\FSAssembler folder which can be used with Visual C++ Express 2008.
-
-Many of the files included are output from bnfc, flex and bison. Rather than put you through the inconvenience of building these yourself they are included in the source, although the relevant source files are also included in case you want to do want to build them yourself.

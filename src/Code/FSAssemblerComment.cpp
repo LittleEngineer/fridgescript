@@ -16,10 +16,10 @@
 */
 
 // main header
-#include "FridgeScript.h"
+#include <Core/FridgeScript.h>
 
 // this file's header
-#include "FSAssemblerComment.h"
+#include <Code/FSAssemblerComment.h>
 
 void FSAssemblerComment::visitEPi(EPi* epi)
 {

@@ -16,7 +16,7 @@
 */
 
 // main header
-#include "FridgeScript.h"
+#include <Core/FridgeScript.h>
 
 // this file's header
 #include "FSVariablePicker.h"
