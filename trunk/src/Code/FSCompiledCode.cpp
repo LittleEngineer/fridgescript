@@ -17,8 +17,8 @@
 
 #include <Core/FridgeScript.h>
 
-#include "FSCompiledCode.h"
-#include "FSVariable.h"
+#include <Core/FSCompiledCode.h>
+#include <Variable/FSVariable.h>
 
 void FSCompiledCode::operator ()()
 {

@@ -31,8 +31,8 @@
 
 #include <windows.h>
 
-#include "FSVariable.h"
-#include "SimpleStructures.h"
+#include <Variable/FSVariable.h>
+#include <Core/SimpleStructures.h>
 
 ///////////////////////////////////////////////
 // FSCompiledCode : Container for compiled code

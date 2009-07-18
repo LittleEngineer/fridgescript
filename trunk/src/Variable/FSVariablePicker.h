@@ -21,7 +21,7 @@
 #include <Core/FSVisitor.h>
 
 #include "Absyn.h"
-#include "SimpleStructures.h"
+#include <Core/SimpleStructures.h>
 
 class FSContext;
 class FSVariable;

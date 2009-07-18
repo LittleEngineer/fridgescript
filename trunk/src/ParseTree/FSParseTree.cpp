@@ -27,12 +27,12 @@
 #include <Core/FridgeScript.h>
 
 // this file's header
-#include "FSParseTree.h"
+#include <ParseTree/FSParseTree.h>
 
 // FridgeScript headers
 #include "Absyn.h"
 #include <Core/FSContext.h>
-#include "FSVariable.h"
+#include <Variable/FSVariable.h>
 
 // C/C++ headers
 #include <string.h>

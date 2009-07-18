@@ -26,13 +26,13 @@
 #include "Absyn.h"
 #include "Parser.H"
 
-#include "BadPtr.h"
-#include "FSAssembler.h"
-#include "FSCompiledCode.h"
-#include "FSParseTree.h"
-#include "FSVariable.h"
-#include "FSVariablePicker.h"
-#include "SimpleStructures.h"
+#include <Core/BadPtr.h>
+#include <Core/FSAssembler.h>
+#include <Core/FSCompiledCode.h>
+#include <ParseTree/FSParseTree.h>
+#include <Variable/FSVariable.h>
+#include <Variable/FSVariablePicker.h>
+#include <Core/SimpleStructures.h>
 
 FSContext::~FSContext()
 {

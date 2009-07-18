@@ -19,7 +19,7 @@
 #include <Core/FridgeScript.h>
 
 // this file's header
-#include "FSVariable.h"
+#include <Variable/FSVariable.h>
 
 #include <string.h>
 
