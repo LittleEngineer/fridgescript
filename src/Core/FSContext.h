@@ -18,7 +18,7 @@
 #ifndef __FSContext_h
 #define __FSContext_h
 
-#include "SimpleStructures.h"
+#include <Core/SimpleStructures.h>
 
 class FSVariable;
 class FSCompiledCode;

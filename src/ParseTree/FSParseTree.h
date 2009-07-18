@@ -18,11 +18,11 @@
 #ifndef __FSParseTree_h
 #define __FSParseTree_h
 
-#include "FSAssemblerComment.h"
-#include "FSFunctionParseTree.h"
+#include <Code/FSAssemblerComment.h>
+#include <ParseTree/FSFunctionParseTree.h>
 #include <Core/FSVisitor.h>
-#include "FSVariablePicker.h"
-#include "SimpleStructures.h"
+#include <Variable/FSVariablePicker.h>
+#include <Core/SimpleStructures.h>
 
 class FSContext;
 

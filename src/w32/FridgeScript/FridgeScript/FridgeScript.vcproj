@@ -268,19 +268,19 @@
 				Name="Variable"
 				>
 				<File
-					RelativePath="..\..\..\FSVariable.cpp"
+					RelativePath="..\..\..\Variable\FSVariable.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\FSVariable.h"
+					RelativePath="..\..\..\Variable\FSVariable.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\FSVariablePicker.cpp"
+					RelativePath="..\..\..\Variable\FSVariablePicker.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\FSVariablePicker.h"
+					RelativePath="..\..\..\Variable\FSVariablePicker.h"
 					>
 				</File>
 			</Filter>
@@ -288,19 +288,19 @@
 				Name="ParseTree"
 				>
 				<File
-					RelativePath="..\..\..\FSFunctionParseTree.cpp"
+					RelativePath="..\..\..\ParseTree\FSFunctionParseTree.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\FSFunctionParseTree.h"
+					RelativePath="..\..\..\ParseTree\FSFunctionParseTree.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\FSParseTree.cpp"
+					RelativePath="..\..\..\ParseTree\FSParseTree.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\FSParseTree.h"
+					RelativePath="..\..\..\ParseTree\FSParseTree.h"
 					>
 				</File>
 			</Filter>

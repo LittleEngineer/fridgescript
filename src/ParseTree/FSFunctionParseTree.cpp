@@ -19,10 +19,10 @@
 #include <Core/FridgeScript.h>
 
 // this file's header
-#include "FSFunctionParseTree.h"
+#include <ParseTree/FSFunctionParseTree.h>
 
 // FridgeScript headers
-#include "FSParseTree.h"
+#include <ParseTree/FSParseTree.h>
 
 // C/C++ headers
 #include <string.h>

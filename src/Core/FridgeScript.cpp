@@ -20,8 +20,8 @@
 
 // FridgeScript headers
 #include <Core/FSContext.h>
-#include "FSParseTree.h"
-#include "FSVariable.h"
+#include <ParseTree/FSParseTree.h>
+#include <Variable/FSVariable.h>
 
 // C/C++ headers
 #include <string.h>

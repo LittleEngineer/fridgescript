@@ -21,7 +21,7 @@
 #include <Core/FSContext.h>
 #include <Core/FSVisitor.h>
 
-#include "SimpleStructures.h"
+#include <Core/SimpleStructures.h>
 
 ///////////////////////////////////////////////
 // FSAssemblerComment : Creates a string that

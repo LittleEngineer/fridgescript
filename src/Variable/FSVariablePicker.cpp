@@ -19,10 +19,10 @@
 #include <Core/FridgeScript.h>
 
 // this file's header
-#include "FSVariablePicker.h"
+#include <Variable/FSVariablePicker.h>
 
 // FridgeScript headers
-#include "FSVariable.h"
+#include <Variable/FSVariable.h>
 
 // C/C++ headers
 #include <string.h>
