@@ -1,0 +1,116 @@
+{-
+    This file is part of FridgeScript.
+
+    FridgeScript is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Lesser General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    Foobar is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Lesser General Public License for more details.
+
+    You should have received a copy of the GNU Lesser General Public License
+    along with FridgeScript.  If not, see <http://www.gnu.org/licenses/>
+-}
+
+comment "//" ;
+comment "/*" "*/" ;
+
+entrypoints Program ;
+
+Main. 			Program 		::= [Block] ;
+BFunc.			Block			::= [Function] ;
+BStmt.			Block			::= [Statement] ;
+DTFunc.			Function 		::= Ident "(" [Parameter] ")" "{" [Block] "}" ;
+DTParam. 		Parameter 		::= Ident ;
+
+terminator Block "" ;
+terminator nonempty Function "" ;
+terminator nonempty Statement "" ;
+separator nonempty Parameter "," ;
+
+SExp. 			Statement 		::= Expression ";" ;
+SScope. 		Statement 		::= "{" [Statement] "}" ;
+SRet. 			Statement 		::= "return" Expression ";" ;
+SIf.			Statement		::= "if" "(" Expression ")" "{" [Statement] "}" ;
+SIfElse.		Statement		::= "if" "(" Expression ")" "{" [Statement] "}" "else" "{" [Statement] "}" ;
+SWhile.			Statement		::= "while" "(" Expression ")" "{" [Statement] "}" ;
+SUntil.			Statement		::= "until" "(" Expression ")" "{" [Statement] "}" ;
+SFor.			Statement		::= "for" "(" [Expression] ";" Expression ";" [Expression] ")" "{" [Statement] "}" ;
+SBreak.			Statement		::= "break" ";" ;
+SContinue.		Statement		::= "continue" ";" ;
+
+ECDbl.			Expression11	::= Double ;
+ECInt.			Expression11	::= Integer ;
+EVar.			Expression11	::= Ident ;
+EPi.			Expression11	::= "pi" ;
+
+ESimpleCall.	Expression10	::= Ident "(" ")" ;
+ECall.			Expression10	::= Ident "(" [Expression] ")" ;
+EPostInc.		Expression10	::= Ident "++" ;
+EPostDec.		Expression10	::= Ident "--" ;
+EAbs.			Expression10	::= "abs" "(" Expression ")" ;
+EPow.			Expression10	::= "pow" "(" Expression "," Expression ")" ;
+ESqrt.			Expression10	::= "sqrt" "(" Expression ")" ;
+EExp.			Expression10	::= "exp" "(" Expression ")" ;
+ELog.			Expression10	::= "log" "(" Expression ")" ;
+ELogD.			Expression10	::= "log10" "(" Expression ")" ;
+ESin.			Expression10	::= "sin" "(" Expression ")" ;
+ECos.			Expression10	::= "cos" "(" Expression ")" ;
+ETan.			Expression10	::= "tan" "(" Expression ")" ;
+EAtan.			Expression10	::= "atan" "(" Expression ")" ;
+EAtanT.			Expression10	::= "atan2" "(" Expression "," Expression ")" ;
+EAsin.			Expression10	::= "asin" "(" Expression ")" ;
+EAcos.			Expression10	::= "acos" "(" Expression ")" ;
+
+ELnot.			Expression9		::= "!" Expression10 ;
+EPreInc.		Expression9		::= "++" Ident ;
+EPreDec.		Expression9		::= "--" Ident ;
+ENeg.			Expression9		::= "-" Expression10 ;
+EBnot.			Expression9		::= "~" Expression10 ;
+EPos.			Expression9		::= "+" Expression10 ;
+
+EMul.			Expression8		::= Expression8 "*" Expression9 ;
+EDiv.			Expression8		::= Expression8 "/" Expression9 ;
+EMod.			Expression8		::= Expression8 "%" Expression9 ;
+
+EAdd.			Expression7		::= Expression7 "+" Expression8 ;
+ESub.			Expression7		::= Expression7 "-" Expression8 ;
+
+ELSh.			Expression6		::= Expression6 "<<" Expression7 ;
+ERSh.			Expression6		::= Expression6 ">>" Expression7 ;
+
+ELT.			Expression5		::= Expression6 "<" Expression6 ;
+EGT.			Expression5		::= Expression6 ">" Expression6 ;
+ELE.			Expression5		::= Expression6 "<=" Expression6 ;
+EGE.			Expression5		::= Expression6 ">=" Expression6 ;
+
+EE.				Expression4		::= Expression5 "==" Expression5 ;
+ENE.			Expression4		::= Expression5 "!=" Expression5 ;
+
+EBand.			Expression3		::= Expression3 "&" Expression4 ;
+EBor.			Expression3		::= Expression3 "|" Expression4 ;
+EBxor.			Expression3		::= Expression3 "^" Expression4 ;
+
+ELand.			Expression2		::= Expression3 "&&" Expression3 ;
+ELor.			Expression2		::= Expression3 "||" Expression3 ;
+ELxor.			Expression2		::= Expression3 "^^" Expression3 ;
+
+ECon.  			Expression1  	::= Expression2 "?" Expression2 ":" Expression2 ;
+
+EAss. 			Expression		::= Ident "=" Expression ;
+EAddAss.		Expression		::= Ident "+=" Expression ;
+ESubAss.		Expression		::= Ident "-=" Expression ;
+EMulAss.		Expression		::= Ident "*=" Expression ;
+EDivAss.		Expression		::= Ident "/=" Expression ;
+EModAss.		Expression		::= Ident "%=" Expression ;
+EAndAss.		Expression		::= Ident "&=" Expression ;
+EOrAss.			Expression		::= Ident "|=" Expression ;
+EXorAss.		Expression		::= Ident "^=" Expression ;
+ELShAss.		Expression		::= Ident "<<=" Expression ;
+ERShAss.		Expression		::= Ident ">>=" Expression ;
+
+coercions Expression 11 ;
+separator nonempty Expression "," ;
