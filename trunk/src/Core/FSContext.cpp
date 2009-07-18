@@ -28,7 +28,7 @@
 
 #include <Core/BadPtr.h>
 #include <Core/FSAssembler.h>
-#include <Core/FSCompiledCode.h>
+#include <Code/FSCompiledCode.h>
 #include <ParseTree/FSParseTree.h>
 #include <Variable/FSVariable.h>
 #include <Variable/FSVariablePicker.h>

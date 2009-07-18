@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\..\bnfc output&quot;;..\..\..\include;&quot;..\..\..\&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\bnfc output&quot;;..\..\..\include;&quot;..\..\..\&quot;;&quot;..\..\..\w32&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;FRIDGESCRIPT_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -236,6 +236,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\..\Core\FSExecutableAlloc.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\..\Core\FSVisitor.h"
 					>
 				</File>
@@ -328,6 +332,22 @@
 		<Filter
 			Name="Win32"
 			>
+			<Filter
+				Name="Core"
+				>
+				<File
+					RelativePath="..\..\Core\Platform_FridgeScript.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Core\Platform_FSExecutableAlloc.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Core\Platform_FSExecutableAlloc.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>

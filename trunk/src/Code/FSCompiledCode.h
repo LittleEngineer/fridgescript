@@ -29,10 +29,9 @@
 #ifndef __FSCompiledCode_h
 #define __FSCompiledCode_h
 
-#include <windows.h>
-
-#include <Variable/FSVariable.h>
+#include <Core/FSExecutableAlloc.h>
 #include <Core/SimpleStructures.h>
+#include <Variable/FSVariable.h>
 
 ///////////////////////////////////////////////
 // FSCompiledCode : Container for compiled code
@@ -51,14 +50,14 @@ private:
 public:
     FSCompiledCode(const unsigned char* const& source, const unsigned int& size) : vars(), consts()
     {
-        bytes = static_cast<unsigned char*>(VirtualAlloc(0, size, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE));
+        bytes = FSExecutableAlloc( 0, size );
         for(unsigned int i = 0; i < size; ++i) bytes[i] = source[i];
         length = size;
     }
 
     ~FSCompiledCode()
     {
-        VirtualFree(bytes, length, MEM_RELEASE);
+        FSExecutableFree( bytes, length );
         // clean up the variable pointers here
         // this is probably very bad C++ as they are new-ed millions of years ago by the parse tree...
         for(unsigned int i = 0; i < vars.GetCount(); ++i) delete vars[i];

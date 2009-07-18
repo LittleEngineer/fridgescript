@@ -23,12 +23,11 @@
 #include <ParseTree/FSParseTree.h>
 #include <Variable/FSVariable.h>
 
+// Platform headers
+#include <Core/Platform_FridgeScript.h>
+
 // C/C++ headers
 #include <string.h>
-
-#define _export extern "C" unsigned int __declspec(dllexport) __stdcall
-#define _exportptr extern "C" double __declspec(dllexport)* __stdcall
-#define _exportval extern "C" double __declspec(dllexport) __stdcall
 
 const unsigned int ptrMash = 0xABCD1234;
 const unsigned int codeMash = 0x1234ABCD;
