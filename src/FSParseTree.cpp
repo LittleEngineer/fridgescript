@@ -31,7 +31,7 @@
 
 // FridgeScript headers
 #include "Absyn.h"
-#include "FSContext.h"
+#include <Core/FSContext.h>
 #include "FSVariable.h"
 
 // C/C++ headers
