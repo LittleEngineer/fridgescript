@@ -31,6 +31,12 @@ void FSCompiledCode::operator ()()
     unsigned int i;
     void(__stdcall *f)() = reinterpret_cast<void(__stdcall *)()>(bytes);
 
+    // set control word for 32-bit precision
+    unsigned short usCW;
+    __asm fstcw [usCW];
+    usCW &= ~0x300; // clear bits 8 and 9
+    __asm fldcw [usCW];
+
     for(i = 0; i < vars.GetCount(); ++i)
     {
         crap[i] = vars[i]->_auto;
