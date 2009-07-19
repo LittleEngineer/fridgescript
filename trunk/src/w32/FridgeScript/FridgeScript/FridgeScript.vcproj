@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;..\..\..\bnfc output&quot;;..\..\..\include;&quot;..\..\..\&quot;;&quot;..\..\..\w32&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\bnfc output&quot;;..\..\..\include;&quot;..\..\..\Independent&quot;;&quot;..\..\..\w32&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;FRIDGESCRIPT_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -116,7 +116,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="&quot;..\..\..\bnfc output&quot;;&quot;..\..\..\include&quot;"
+				AdditionalIncludeDirectories="&quot;..\..\..\bnfc output&quot;;..\..\..\include;&quot;..\..\..\Independent&quot;;&quot;..\..\..\w32&quot;"
 				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;FRIDGESCRIPT_EXPORTS"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -176,7 +176,7 @@
 				Name="Grammar"
 				>
 				<File
-					RelativePath="..\..\..\FridgeScript.cf"
+					RelativePath="..\..\..\Independent\FridgeScript.cf"
 					>
 				</File>
 			</Filter>
@@ -204,47 +204,47 @@
 					</FileConfiguration>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\BadPtr.h"
+					RelativePath="..\..\..\Independent\Core\BadPtr.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\FridgeScript.cpp"
+					RelativePath="..\..\..\Independent\Core\FridgeScript.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\FridgeScript.h"
+					RelativePath="..\..\..\Independent\Core\FridgeScript.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\FSAssembler.h"
+					RelativePath="..\..\..\Independent\Core\FSAssembler.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\FSAssert.cpp"
+					RelativePath="..\..\..\Independent\Core\FSAssert.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\FSAssert.h"
+					RelativePath="..\..\..\Independent\Core\FSAssert.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\FSContext.cpp"
+					RelativePath="..\..\..\Independent\Core\FSContext.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\FSContext.h"
+					RelativePath="..\..\..\Independent\Core\FSContext.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\FSExecutableAlloc.h"
+					RelativePath="..\..\..\Independent\Core\FSExecutableAlloc.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\FSVisitor.h"
+					RelativePath="..\..\..\Independent\Core\FSVisitor.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Core\SimpleStructures.h"
+					RelativePath="..\..\..\Independent\Core\SimpleStructures.h"
 					>
 				</File>
 			</Filter>
@@ -252,19 +252,19 @@
 				Name="Code"
 				>
 				<File
-					RelativePath="..\..\..\Code\FSAssemblerComment.cpp"
+					RelativePath="..\..\..\Independent\Code\FSAssemblerComment.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Code\FSAssemblerComment.h"
+					RelativePath="..\..\..\Independent\Code\FSAssemblerComment.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Code\FSCompiledCode.cpp"
+					RelativePath="..\..\..\Independent\Code\FSCompiledCode.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Code\FSCompiledCode.h"
+					RelativePath="..\..\..\Independent\Code\FSCompiledCode.h"
 					>
 				</File>
 			</Filter>
@@ -272,19 +272,19 @@
 				Name="Variable"
 				>
 				<File
-					RelativePath="..\..\..\Variable\FSVariable.cpp"
+					RelativePath="..\..\..\Independent\Variable\FSVariable.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Variable\FSVariable.h"
+					RelativePath="..\..\..\Independent\Variable\FSVariable.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Variable\FSVariablePicker.cpp"
+					RelativePath="..\..\..\Independent\Variable\FSVariablePicker.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\Variable\FSVariablePicker.h"
+					RelativePath="..\..\..\Independent\Variable\FSVariablePicker.h"
 					>
 				</File>
 			</Filter>
@@ -292,19 +292,19 @@
 				Name="ParseTree"
 				>
 				<File
-					RelativePath="..\..\..\ParseTree\FSFunctionParseTree.cpp"
+					RelativePath="..\..\..\Independent\ParseTree\FSFunctionParseTree.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\ParseTree\FSFunctionParseTree.h"
+					RelativePath="..\..\..\Independent\ParseTree\FSFunctionParseTree.h"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\ParseTree\FSParseTree.cpp"
+					RelativePath="..\..\..\Independent\ParseTree\FSParseTree.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\..\ParseTree\FSParseTree.h"
+					RelativePath="..\..\..\Independent\ParseTree\FSParseTree.h"
 					>
 				</File>
 			</Filter>
@@ -312,7 +312,7 @@
 				Name="Lexer"
 				>
 				<File
-					RelativePath="..\..\..\lexhax.cpp"
+					RelativePath="..\..\..\Independent\lexhax.cpp"
 					>
 				</File>
 			</Filter>
