@@ -348,6 +348,14 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="Code"
+				>
+				<File
+					RelativePath="..\..\Code\Platform_FSCompiledCode.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 	</Files>
 	<Globals>
