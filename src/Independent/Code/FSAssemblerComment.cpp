@@ -28,7 +28,7 @@ void FSAssemblerComment::visitEPi(EPi* epi)
 
 void FSAssemblerComment::visitECDbl(ECDbl* ecdbl)
 {
-    comment += "<double constant>";
+    comment += "<float constant>";
 }
 
 void FSAssemblerComment::visitECInt(ECInt* ecint)

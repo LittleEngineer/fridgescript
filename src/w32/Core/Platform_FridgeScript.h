@@ -23,7 +23,7 @@
 #define __FS_PLATFORM_FRIDGESCRIPT_H_
 
 #define _export extern "C" unsigned int __declspec(dllexport) __stdcall
-#define _exportptr extern "C" double __declspec(dllexport)* __stdcall
-#define _exportval extern "C" double __declspec(dllexport) __stdcall
+#define _exportptr extern "C" float __declspec(dllexport)* __stdcall
+#define _exportval extern "C" float __declspec(dllexport) __stdcall
 
 #endif

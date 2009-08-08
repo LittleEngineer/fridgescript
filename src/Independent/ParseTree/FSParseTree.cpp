@@ -17,7 +17,7 @@
 
 /*
     return values go on st0
-    instead of using the heap, the stack is used to store the doubles
+    instead of using the heap, the stack is used to store the floats
     parameters are passed in on the stack in whatever order the compiler likes
     function calls are not yet implemented
     constants currently use the heap and are bug prone
@@ -45,36 +45,33 @@ FSAssemblerComment FSParseTree::comment = FSAssemblerComment();
 ///////////////////////////////////////////////
 
 ///////////////////////////////////////////////
-// Appends some assembler code to push a double
+// Appends some assembler code to push a float
 // precision float onto the stack from st(0)
 ///////////////////////////////////////////////
 
 void FSParseTree::pushDouble()
 {
-    // sub esp, 8 would be MUCH better than two pushes
-    assembler += "push eax\r\npush eax\r\nfstp [esp]\r\n";
+    assembler += "push eax\r\nfstp [esp]\r\n";
 }
 
 ///////////////////////////////////////////////
-// Appends some assembler code to pop a double
+// Appends some assembler code to pop a float
 // precision float off of the stack into st(0)
 ///////////////////////////////////////////////
 
 void FSParseTree::popDouble()
 {
-    // add esp, 8 would be MUCH better than two pops
-    assembler += "fld [esp]\r\npop eax\r\npop eax\r\n";
+    assembler += "fld [esp]\r\npop eax\r\n";
 }
 
 ///////////////////////////////////////////////
-// Appends some assembler to remove a double
+// Appends some assembler to remove a float
 // precision float off of the stack into st(0)
 ///////////////////////////////////////////////
 
 void FSParseTree::discardDouble()
 {
-    // add esp, 8 would be MUCH better than two pops
-    assembler += "pop eax\r\npop eax\r\n";
+    assembler += "pop eax\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -584,7 +581,7 @@ void FSParseTree::visitECDbl(ECDbl* ecdbl)
     {
         assembler += "-- load constant\r\n";
         assembler += "fld [";
-        assembler.AppendHex( reinterpret_cast<unsigned int>( context->GetConstant( ecdbl->double_ ) ) );
+        assembler.AppendHex( reinterpret_cast<unsigned int>( context->GetConstant( static_cast< float >( ecdbl->double_ ) ) ) );
         assembler += "]\r\n";
     }
 }
@@ -615,7 +612,7 @@ void FSParseTree::visitECInt(ECInt* ecint)
         assembler.AppendInt( ecint->integer_ );
         assembler += "\r\n";
         assembler += "fld [";
-        assembler.AppendHex( reinterpret_cast<unsigned int>( context->GetConstant( static_cast<double>( ecint->integer_) ) ) );
+        assembler.AppendHex( reinterpret_cast<unsigned int>( context->GetConstant( static_cast< float >( ecint->integer_) ) ) );
         assembler += "]\r\n";
     }
 }
@@ -939,7 +936,7 @@ void FSParseTree::visitEExp(EExp* eexp)
     // push e
     assembler += "-- load e\r\n";
     assembler += "fld [";
-    assembler.AppendHex( reinterpret_cast<unsigned int>( context->GetConstant( 2.7182818284590452353602874713527 ) ) );
+    assembler.AppendHex( reinterpret_cast<unsigned int>( context->GetConstant( 2.7182818284590452353602874713527f ) ) );
     assembler += "]\r\n";    
     // from pow(x,y)...
     // st(1) = y

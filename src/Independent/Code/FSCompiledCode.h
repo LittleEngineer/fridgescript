@@ -46,7 +46,7 @@ private:
     unsigned int    length;
 
     Simple::Stack<FSVariable*> vars;
-    Simple::Stack<double> consts;
+    Simple::Stack<float> consts;
 public:
     FSCompiledCode(const unsigned char* const& source, const unsigned int& size) : vars(), consts()
     {
@@ -66,9 +66,9 @@ public:
     void operator ()();
 
     Simple::Stack<FSVariable*>* GetVariables() { return &vars; }
-    Simple::Stack<double>* GetConstants() { return &consts; }
+    Simple::Stack<float>* GetConstants() { return &consts; }
     void SetupVariableStack(Simple::Stack<FSVariable*>* v);
-    void SetupConstantStack(Simple::Stack<double>* v);
+    void SetupConstantStack(Simple::Stack<float>* v);
 };
 
 #endif

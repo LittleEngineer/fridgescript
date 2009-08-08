@@ -99,7 +99,7 @@ Simple::Stack<FSVariable*>* FSContext::GetVariables(const unsigned int& id)
     return code[id - 1]->GetVariables();
 }
 
-double* FSContext::GetConstant(const double& value)
+float* FSContext::GetConstant(const float& value)
 {
     for(unsigned int i = 0; i < constants.GetCount(); ++i)
     {

@@ -22,7 +22,7 @@ class FSVariable
 {
 public:
     char*   name;
-    double  _auto;
+    float  _auto;
 
     FSVariable(const char* const& id);
     ~FSVariable();
