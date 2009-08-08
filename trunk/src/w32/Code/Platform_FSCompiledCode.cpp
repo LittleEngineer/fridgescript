@@ -26,8 +26,8 @@ void FSCompiledCode::operator ()()
     
     // need to set up the stack etc...
     // this is a really crappy solution
-    static double crap[4096];
-    double* p = &(crap[0]);
+    static float crap[4096];
+    float* p = &(crap[0]);
     unsigned int i;
     void(__stdcall *f)() = reinterpret_cast<void(__stdcall *)()>(bytes);
 
@@ -48,9 +48,8 @@ void FSCompiledCode::operator ()()
         mov ecx, i
 lbl1:
         // copy stuff
-        push dword ptr [eax+4]
         push dword ptr [eax]
-        add eax, 8
+        add eax, 4
         loop lbl1
 
         // store the pointer ready for copy back
@@ -70,9 +69,8 @@ lbl1:
         mov ecx, i
 lbl2:
         // copy stuff
-        sub eax, 8
+        sub eax, 4
         pop dword ptr [eax]
-        pop dword ptr [eax+4]
         loop lbl2
     }
 

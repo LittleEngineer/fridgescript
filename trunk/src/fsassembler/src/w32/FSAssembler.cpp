@@ -504,7 +504,7 @@ void FSAssembler::visitOFcmovu(OFcmovu* ofcmovu)
 void FSAssembler::visitOFld(OFld* ofld)
 {
     FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::FLD);
-    out.Push(0xDD);
+    out.Push(0xD9);
     ofld->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)
     {
@@ -574,7 +574,7 @@ void FSAssembler::visitOFldlgt(OFldlgt* ofldlgt)
 void FSAssembler::visitOFst(OFst* ofst)
 {
     FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::FST);
-    out.Push(0xDD);
+    out.Push(0xD9);
     ofst->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)
     {
@@ -596,7 +596,7 @@ void FSAssembler::visitOFist(OFist* ofist)
 void FSAssembler::visitOFstp(OFstp* ofstp)
 {
     FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::FSTP);
-    out.Push(0xDD);
+    out.Push(0xD9);
     ofstp->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)
     {

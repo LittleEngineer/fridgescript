@@ -47,9 +47,10 @@
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
+				WarnAsError="true"
 				DebugInformationFormat="4"
-				DisableSpecificWarnings="4996;4065;4530;4731;4273"
+				DisableSpecificWarnings="4996;4065;4530;4731;4273;4100"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -121,9 +122,10 @@
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
 				UsePrecompiledHeader="0"
-				WarningLevel="3"
+				WarningLevel="4"
+				WarnAsError="true"
 				DebugInformationFormat="3"
-				DisableSpecificWarnings="4996;4065;4530;4731;4273"
+				DisableSpecificWarnings="4996;4065;4530;4731;4273;4100"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"
@@ -191,6 +193,7 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							WarningLevel="3"
 							CompileAs="2"
 						/>
 					</FileConfiguration>
@@ -199,6 +202,7 @@
 						>
 						<Tool
 							Name="VCCLCompilerTool"
+							WarningLevel="3"
 							CompileAs="2"
 						/>
 					</FileConfiguration>
@@ -314,6 +318,22 @@
 				<File
 					RelativePath="..\..\..\Independent\lexhax.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							WarningLevel="3"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							WarningLevel="3"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -322,6 +342,22 @@
 				<File
 					RelativePath="..\..\..\bnfc output\parse.cpp"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							WarningLevel="3"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							WarningLevel="3"
+						/>
+					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\..\bnfc output\parse.hpp"

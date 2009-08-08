@@ -97,7 +97,7 @@ _exportval FSGetVariableValue(unsigned int varHandle)
 // FSSetVariableValue : Set value from handle
 ///////////////////////////////////////////////
 
-_exportval FSSetVariableValue(unsigned int varHandle, double value)
+_exportval FSSetVariableValue(unsigned int varHandle, float value)
 {
     FSAssert( ( varHandle ^ varMash ) != 0, "Trying to use null variable" );
 

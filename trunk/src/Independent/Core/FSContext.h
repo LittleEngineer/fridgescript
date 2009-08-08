@@ -28,7 +28,7 @@ class FSContext
 private:
     FSCompiledCode**        code;
     unsigned int            numCode;
-    Simple::Stack<double>   constants;
+    Simple::Stack<float>   constants;
 public:
     FSContext() : code(0), numCode(0) { }
     ~FSContext();
@@ -39,7 +39,7 @@ public:
 
     // this needs to go!
     // its buggy if more than one piece of code is compiled against a context
-    double* GetConstant(const double& value);
+    float* GetConstant(const float& value);
 };
 
 #endif

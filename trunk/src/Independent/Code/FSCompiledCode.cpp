@@ -28,7 +28,7 @@ void FSCompiledCode::SetupVariableStack(Simple::Stack<FSVariable*>* v)
     }
 }
 
-void FSCompiledCode::SetupConstantStack(Simple::Stack<double>* v)
+void FSCompiledCode::SetupConstantStack(Simple::Stack<float>* v)
 {
     for(unsigned int i = 0; i < v->GetCount(); ++i)
     {

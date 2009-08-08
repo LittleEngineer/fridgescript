@@ -199,7 +199,7 @@ namespace Simple
             char add[] = "0x00000000";
             for(unsigned int i = 0; i < 8; ++i)
             {
-                unsigned int tmp = ((val >> (i << 2)) & 0xF);
+                char tmp = static_cast< char >( ( val >> ( i << 2 ) ) & 0xF );
                 add[9 - i] = (tmp < 10) ? '0' + tmp : '7' + tmp;
             }
 
