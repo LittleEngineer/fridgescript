@@ -211,8 +211,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Fixing files..."
-				CommandLine="cscript ..\replace.vbs &quot;..\..\..\bnfc output\lex.yy.c&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; }&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; return 0; }&quot;"
+				Description=""
+				CommandLine=""
 				ExecutionBucket="17"
 			/>
 			<Tool
@@ -393,8 +393,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
-				Description="Fixing files..."
-				CommandLine="cscript ..\replace.vbs &quot;..\..\..\bnfc output\lex.yy.c&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; }&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; return 0; }&quot;"
+				Description=""
+				CommandLine=""
 			/>
 		</Configuration>
 	</Configurations>

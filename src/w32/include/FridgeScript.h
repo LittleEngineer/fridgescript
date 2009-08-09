@@ -2,15 +2,15 @@
 #define __FridgeScript_h
 
 #define _import extern "C" unsigned int __declspec(dllimport) __stdcall
-#define _importptr extern "C" double __declspec(dllimport)* __stdcall
-#define _importval extern "C" double __declspec(dllimport) __stdcall
+#define _importptr extern "C" float __declspec(dllimport)* __stdcall
+#define _importval extern "C" float __declspec(dllimport) __stdcall
 
 _import FSCreateContext();
 _import FSDestroyContext(unsigned int context);
 
 _import FSGetVariableHandle(unsigned int context, unsigned int codeHandle, char* name);
 _importval FSGetVariableValue(unsigned int varHandle);
-_importval FSSetVariableValue(unsigned int varHandle, double value);
+_importval FSSetVariableValue(unsigned int varHandle, float value);
 
 _import FSCompile(unsigned int context, char* code);
 _import FSExecute(unsigned int context, unsigned int codeHandle);

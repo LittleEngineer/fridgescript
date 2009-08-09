@@ -88,7 +88,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying external header..."
-				CommandLine="copy $(InputDir)FridgeScript.h ..\include\FridgeScript.h"
+				CommandLine="copy $(InputDir)FridgeScript.h ..\w32\include\FridgeScript.h"
 			/>
 		</Configuration>
 		<Configuration
@@ -166,7 +166,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying external header..."
-				CommandLine="copy $(InputDir)FridgeScript.h ..\include\FridgeScript.h"
+				CommandLine="copy $(InputDir)FridgeScript.h ..\w32\include\FridgeScript.h"
 			/>
 		</Configuration>
 		<Configuration
@@ -234,6 +234,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Copying external header..."
+				CommandLine="copy $(InputDir)FridgeScript.h ..\w32\include\FridgeScript.h"
 			/>
 		</Configuration>
 		<Configuration
@@ -311,7 +313,7 @@
 			<Tool
 				Name="VCPostBuildEventTool"
 				Description="Copying external header..."
-				CommandLine="copy $(InputDir)FridgeScript.h ..\include\FridgeScript.h"
+				CommandLine="copy $(InputDir)FridgeScript.h ..\w32\include\FridgeScript.h"
 			/>
 		</Configuration>
 	</Configurations>
