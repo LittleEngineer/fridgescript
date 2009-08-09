@@ -31,9 +31,10 @@ struct APIEntry
     };
 
     char m_szName[64];
-    unsigned int m_uNumParams;
+    u_int m_uNumParams;
+    void* m_pIndirectCaller;
 
-    APIEntry() : m_pCallback( 0 ), m_uNumParams( 0 ) { m_szName[0] = 0; }
+    APIEntry() : m_pCallback( NULL ), m_uNumParams( 0 ), m_pIndirectCaller( NULL ) { m_szName[0] = 0; }
     APIEntry( const char* const szName, const void* const pCallback, const u_int uNumParams );
 
     APIEntry& operator =( const APIEntry& xEntry );
@@ -44,8 +45,8 @@ class APIList
     
 public:
 
-    APIList() : m_xAPIEntries() {}
-    virtual ~APIList() {}
+    APIList() : m_xAPIEntries(), m_xIndirectReferences() {}
+    virtual ~APIList();
 
     void RegisterFunction( const char* const szName, float ( FRIDGE_API * pfnCallback0f )() );
     void RegisterFunction( const char* const szName, float ( FRIDGE_API * pfnCallback1f )( float ) );
@@ -60,5 +61,6 @@ public:
 protected:
 
     Simple::Array< APIEntry > m_xAPIEntries;
+    Simple::Array< void** > m_xIndirectReferences;
 
 };

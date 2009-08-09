@@ -55,14 +55,18 @@ class FSOperandVisitor : public FSAssemblerVisitor
 private:
     Reg lastRegister;
     Simple::ANSIString lastLabel;
+    bool m_bLastWasHexConstant;
+    unsigned int m_uLastHex;
 
 public:
     FSOVType otype;
 
-    FSOperandVisitor(FSOVType t) : otype(t), FSAssemblerVisitor() {}
+    FSOperandVisitor(FSOVType t) : otype(t), m_bLastWasHexConstant( false ), m_uLastHex( 0 ), FSAssemblerVisitor() {}
     ~FSOperandVisitor() {}
 
     Simple::ANSIString GetLastLabel() const { return lastLabel; }
+    unsigned int GetLastHex() const { return m_uLastHex; }
+    bool WasLastHexConstant() const { return m_bLastWasHexConstant; }
 
     void visitREax(REax* reax);
     void visitREcx(REcx* recx);

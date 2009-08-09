@@ -18,26 +18,35 @@
 #ifndef __FSContext_h
 #define __FSContext_h
 
+#include <API/APIList.h>
+
 class FSVariable;
 class FSCompiledCode;
 
-class FSContext
+class FSContext : public APIList
 {
-private:
-    FSCompiledCode**        code;
-    unsigned int            numCode;
-    Simple::Stack<float>   constants;
-public:
-    FSContext() : code(0), numCode(0) { }
-    ~FSContext();
 
-    Simple::Stack<FSVariable*>* GetVariables(const unsigned int& id);
-    unsigned int CompileCode(const char* const& source);
-    void ExecuteCode(const unsigned int& id);
+    typedef APIList PARENT;
+
+public:
+
+    FSContext() : PARENT(), code(0), numCode(0) { }
+    virtual ~FSContext();
+
+    Simple::Stack<FSVariable*>* GetVariables( const unsigned int& id );
+    unsigned int CompileCode( const char* const& source );
+    void ExecuteCode( const unsigned int& id );
 
     // this needs to go!
     // its buggy if more than one piece of code is compiled against a context
-    float* GetConstant(const float& value);
+    float* GetConstant( const float& value );
+
+protected:
+
+    FSCompiledCode**        code;
+    unsigned int            numCode;
+    Simple::Stack<float>    constants;
+
 };
 
 #endif

@@ -653,10 +653,19 @@ void FSParseTree::visitEPi(EPi *epi)
 
 void FSParseTree::visitESimpleCall(ESimpleCall* esimplecall)
 {
-    // evaluate expression
-    // esimplecall->expression_->accept( this );
     // call function
-    // ...
+    // check if its an API function
+    APIEntry* pxEntry = context->FindEntry( esimplecall->ident_ );
+    if( pxEntry )
+    {
+        // call the API function
+        assembler += "-- call parameterless API function\r\n";
+        assembler += "call [";
+        assembler.AppendHex( reinterpret_cast< u_int > ( pxEntry->m_pIndirectCaller ) );
+        assembler += "]\r\n";
+    }
+
+    // TODO: look for own parameterless functions
 }
 
 ///////////////////////////////////////////////
