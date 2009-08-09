@@ -14,6 +14,9 @@
 		/>
 	</Platforms>
 	<ToolFiles>
+		<ToolFile
+			RelativePath=".\Grammar Tools.rules"
+		/>
 	</ToolFiles>
 	<Configurations>
 		<Configuration
@@ -24,10 +27,220 @@
 			CharacterSet="1"
 			>
 			<Tool
+				Name="BNFC"
+				ExecutionBucket="1"
+				ODirectory="&quot;..\..\..\bnfc output&quot;"
+			/>
+			<Tool
+				Name="Flex"
+				ExecutionBucket="2"
+				IODirectory="&quot;..\..\..\bnfc output&quot;"
+			/>
+			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Fixing files..."
+				CommandLine="cscript ..\replace.vbs &quot;..\..\..\bnfc output\lex.yy.c&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; }&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; return 0; }&quot;"
+				ExecutionBucket="3"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+				ExecutionBucket="4"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="0"
+				AdditionalIncludeDirectories="&quot;..\..\..\bnfc output&quot;;..\..\..\include;&quot;..\..\..\Independent&quot;;&quot;..\..\..\w32&quot;"
+				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;FRIDGESCRIPT_EXPORTS"
+				MinimalRebuild="true"
+				BasicRuntimeChecks="3"
+				RuntimeLibrary="3"
+				UsePrecompiledHeader="0"
+				WarningLevel="4"
+				WarnAsError="true"
+				DebugInformationFormat="4"
+				DisableSpecificWarnings="4996;4065;4530;4731;4273;4100"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				ExecutionBucket="11"
+				LinkIncremental="2"
+				GenerateManifest="false"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+				ExecutionBucket="12"
+			/>
+			<Tool
+				Name="VCManifestTool"
+				ExecutionBucket="13"
+				EmbedManifest="false"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+				ExecutionBucket="14"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+				ExecutionBucket="15"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+				ExecutionBucket="16"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				CommandLine=""
+				ExecutionBucket="17"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Release|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			WholeProgramOptimization="1"
+			>
+			<Tool
+				Name="BNFC"
+				ExecutionBucket="1"
+				ODirectory="&quot;..\..\..\bnfc output&quot;"
+			/>
+			<Tool
+				Name="Flex"
+				ExecutionBucket="2"
+				IODirectory="&quot;..\..\..\bnfc output&quot;"
+			/>
+			<Tool
+				Name="VCPreBuildEventTool"
+				Description="Fixing files..."
+				CommandLine="cscript ..\replace.vbs &quot;..\..\..\bnfc output\lex.yy.c&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; }&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; return 0; }&quot;"
+				ExecutionBucket="3"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+				ExecutionBucket="4"
+			/>
+			<Tool
+				Name="VCXMLDataGeneratorTool"
+			/>
+			<Tool
+				Name="VCWebServiceProxyGeneratorTool"
+			/>
+			<Tool
+				Name="VCMIDLTool"
+			/>
+			<Tool
+				Name="VCCLCompilerTool"
+				Optimization="2"
+				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="&quot;..\..\..\bnfc output&quot;;..\..\..\include;&quot;..\..\..\Independent&quot;;&quot;..\..\..\w32&quot;"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;FRIDGESCRIPT_EXPORTS"
+				RuntimeLibrary="2"
+				EnableFunctionLevelLinking="true"
+				UsePrecompiledHeader="0"
+				WarningLevel="4"
+				WarnAsError="true"
+				DebugInformationFormat="3"
+				DisableSpecificWarnings="4996;4065;4530;4731;4273;4100"
+			/>
+			<Tool
+				Name="VCManagedResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCResourceCompilerTool"
+			/>
+			<Tool
+				Name="VCPreLinkEventTool"
+			/>
+			<Tool
+				Name="VCLinkerTool"
+				ExecutionBucket="11"
+				LinkIncremental="1"
+				GenerateManifest="false"
+				GenerateDebugInformation="true"
+				SubSystem="2"
+				OptimizeReferences="2"
+				EnableCOMDATFolding="2"
+				TargetMachine="1"
+			/>
+			<Tool
+				Name="VCALinkTool"
+				ExecutionBucket="12"
+			/>
+			<Tool
+				Name="VCManifestTool"
+				ExecutionBucket="13"
+				EmbedManifest="false"
+			/>
+			<Tool
+				Name="VCXDCMakeTool"
+				ExecutionBucket="14"
+			/>
+			<Tool
+				Name="VCBscMakeTool"
+				ExecutionBucket="15"
+			/>
+			<Tool
+				Name="VCFxCopTool"
+				ExecutionBucket="16"
+			/>
+			<Tool
+				Name="VCPostBuildEventTool"
+				Description="Fixing files..."
+				CommandLine="cscript ..\replace.vbs &quot;..\..\..\bnfc output\lex.yy.c&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; }&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; return 0; }&quot;"
+				ExecutionBucket="17"
+			/>
+			<Tool
+				Name="VCAppVerifierTool"
+			/>
+		</Configuration>
+		<Configuration
+			Name="Debug (Ignore Grammar)|Win32"
+			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
+			IntermediateDirectory="$(ConfigurationName)"
+			ConfigurationType="2"
+			CharacterSet="1"
+			>
+			<Tool
+				Name="VCPreBuildEventTool"
+				Description="Fixing files..."
+				CommandLine="cscript ..\replace.vbs &quot;..\..\..\bnfc output\lex.yy.c&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; }&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; return 0; }&quot;"
+			/>
+			<Tool
+				Name="BNFC"
+				ODirectory="&quot;..\..\..\bnfc output&quot;"
+			/>
+			<Tool
+				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="Flex"
+				IODirectory="&quot;..\..\..\bnfc output&quot;"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -64,6 +277,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="2"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				TargetMachine="1"
@@ -73,6 +287,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -88,10 +303,11 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				CommandLine=""
 			/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
+			Name="Release (Ignore Grammar)|Win32"
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="2"
@@ -100,9 +316,19 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				Description="Fixing files..."
+				CommandLine="cscript ..\replace.vbs &quot;..\..\..\bnfc output\lex.yy.c&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; }&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; return 0; }&quot;"
+			/>
+			<Tool
+				Name="BNFC"
+				ODirectory="&quot;..\..\..\bnfc output&quot;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
+			/>
+			<Tool
+				Name="Flex"
+				IODirectory="&quot;..\..\..\bnfc output&quot;"
 			/>
 			<Tool
 				Name="VCXMLDataGeneratorTool"
@@ -139,6 +365,7 @@
 			<Tool
 				Name="VCLinkerTool"
 				LinkIncremental="1"
+				GenerateManifest="false"
 				GenerateDebugInformation="true"
 				SubSystem="2"
 				OptimizeReferences="2"
@@ -150,6 +377,7 @@
 			/>
 			<Tool
 				Name="VCManifestTool"
+				EmbedManifest="false"
 			/>
 			<Tool
 				Name="VCXDCMakeTool"
@@ -165,6 +393,8 @@
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
+				Description="Fixing files..."
+				CommandLine="cscript ..\replace.vbs &quot;..\..\..\bnfc output\lex.yy.c&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; }&quot; &quot;int initialize_lexer(FILE *inp) { yyin = inp; BEGIN YYINITIAL; return 0; }&quot;"
 			/>
 		</Configuration>
 	</Configurations>
@@ -180,6 +410,36 @@
 				<File
 					RelativePath="..\..\..\Independent\FridgeScript.cf"
 					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="BNFC"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="BNFC"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug (Ignore Grammar)|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="BNFC"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release (Ignore Grammar)|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="BNFC"
+						/>
+					</FileConfiguration>
 				</File>
 			</Filter>
 			<Filter
@@ -199,6 +459,24 @@
 					</FileConfiguration>
 					<FileConfiguration
 						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							WarningLevel="3"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug (Ignore Grammar)|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							WarningLevel="3"
+							CompileAs="2"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release (Ignore Grammar)|Win32"
 						>
 						<Tool
 							Name="VCCLCompilerTool"
@@ -316,6 +594,33 @@
 				Name="Lexer"
 				>
 				<File
+					RelativePath="..\..\..\bnfc output\FridgeScript.l"
+					>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="Flex"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug (Ignore Grammar)|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="Flex"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release (Ignore Grammar)|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="Flex"
+						/>
+					</FileConfiguration>
+				</File>
+				<File
 					RelativePath="..\..\..\Independent\lexhax.cpp"
 					>
 					<FileConfiguration
@@ -324,6 +629,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							WarningLevel="3"
+							DisableSpecificWarnings="4127;4244;4505;4100;4127;4244"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -332,6 +638,25 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							WarningLevel="3"
+							DisableSpecificWarnings="4127;4244;4505;4100;4127;4244"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug (Ignore Grammar)|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							WarningLevel="3"
+							DisableSpecificWarnings="4127;4244;4505;4100;4127;4244"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release (Ignore Grammar)|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							WarningLevel="3"
+							DisableSpecificWarnings="4127;4244;4505;4100;4127;4244"
 						/>
 					</FileConfiguration>
 				</File>
@@ -339,6 +664,52 @@
 			<Filter
 				Name="Parser"
 				>
+				<File
+					RelativePath="..\..\..\bnfc output\FridgeScript.y"
+					>
+					<FileConfiguration
+						Name="Debug|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Generating parser.."
+							CommandLine="cd &quot;..\..\..\bnfc output&quot;&#x0D;&#x0A;bison -d -t -r state,solved -o parse.cpp FridgeScript.y&#x0D;&#x0A;"
+							Outputs="&quot;..\..\..\bnfc output\parse.cpp&quot;"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release|Win32"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Generating parser.."
+							CommandLine="cd &quot;..\..\..\bnfc output&quot;&#x0D;&#x0A;bison -d -t -r state,solved -o parse.cpp FridgeScript.y&#x0D;&#x0A;"
+							Outputs="&quot;..\..\..\bnfc output\parse.cpp&quot;"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug (Ignore Grammar)|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Generating parser.."
+							CommandLine="cd &quot;..\..\..\bnfc output&quot;&#x0D;&#x0A;bison -d -t -r state,solved -o parse.cpp FridgeScript.y&#x0D;&#x0A;"
+							Outputs="&quot;..\..\..\bnfc output\parse.cpp&quot;"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release (Ignore Grammar)|Win32"
+						ExcludedFromBuild="true"
+						>
+						<Tool
+							Name="VCCustomBuildTool"
+							Description="Generating parser.."
+							CommandLine="cd &quot;..\..\..\bnfc output&quot;&#x0D;&#x0A;bison -d -t -r state,solved -o parse.cpp FridgeScript.y&#x0D;&#x0A;"
+							Outputs="&quot;..\..\..\bnfc output\parse.cpp&quot;"
+						/>
+					</FileConfiguration>
+				</File>
 				<File
 					RelativePath="..\..\..\bnfc output\parse.cpp"
 					>
@@ -348,6 +719,7 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							WarningLevel="3"
+							DisableSpecificWarnings="4127;4505;4701;4611;4706"
 						/>
 					</FileConfiguration>
 					<FileConfiguration
@@ -356,11 +728,42 @@
 						<Tool
 							Name="VCCLCompilerTool"
 							WarningLevel="3"
+							DisableSpecificWarnings="4127;4505;4701;4611;4706"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Debug (Ignore Grammar)|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							WarningLevel="3"
+							DisableSpecificWarnings="4127;4505;4701;4611;4706"
+						/>
+					</FileConfiguration>
+					<FileConfiguration
+						Name="Release (Ignore Grammar)|Win32"
+						>
+						<Tool
+							Name="VCCLCompilerTool"
+							WarningLevel="3"
+							DisableSpecificWarnings="4127;4505;4701;4611;4706"
 						/>
 					</FileConfiguration>
 				</File>
 				<File
 					RelativePath="..\..\..\bnfc output\parse.hpp"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="API"
+				>
+				<File
+					RelativePath="..\..\..\Independent\API\APIList.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\..\Independent\API\APIList.h"
 					>
 				</File>
 			</Filter>
@@ -393,6 +796,10 @@
 				</File>
 			</Filter>
 		</Filter>
+		<File
+			RelativePath="..\..\..\..\buildnotes.txt"
+			>
+		</File>
 	</Files>
 	<Globals>
 	</Globals>

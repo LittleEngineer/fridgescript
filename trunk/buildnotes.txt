@@ -1,7 +1,19 @@
-There is a Visual C++ 2008 project and solution included in the src\w32\FridgeScript folder which can be used with Visual C++ Express 2008.
+SE - 08.08.09
 
-Many of the files included are output from bnfc, flex and bison. Rather than put you through the inconvenience of building these yourself they are included in the source, although the relevant source files are also included in case you want to do want to build them yourself.
+BUILD NOTES (WIN32)
+===================
 
-Also included is an unspecified version of FSAssembler, this has been included in the Visual Studio solution file as a dependency.
+There are build configurations which ignore the grammar files if you don't have BNFC, Flex and Bison.
 
-Futher to this there are also C# examples provided in the src\C# examples folder which can be used with Visual C# Express 2008.
+1) Get BNFC, Flex and Bison and add their paths to your VC executable files search paths
+2) Add the FridgeScript project directory to your VC build rule search paths
+2) Build it
+3) Include the external FridgeScript.h file in a C++ project and include the library and your set to go...
+
+The build configurations ignoring the grammar files are faster to build, since they won't regenerate
+the grammar, lexer, parser and syntax tree. Use them unless you are making changes to the grammar files.
+
+BUILD NOTES (OTHER)
+===================
+
+1) Port it...

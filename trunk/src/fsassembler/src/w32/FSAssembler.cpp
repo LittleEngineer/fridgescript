@@ -182,7 +182,7 @@ void FSAssembler::visitOLbl(OLbl* oLbl)
 
 void FSAssembler::visitOJmp(OJmp* oJmp)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::JMP);
+    FSOperandVisitor operand = FSOperandVisitor(JMP);
     out.Push(0xE9);
     oJmp->operand_->accept(&operand);
     // the address now starts at the next stack position
@@ -195,7 +195,7 @@ void FSAssembler::visitOJmp(OJmp* oJmp)
 
 void FSAssembler::visitOJb(OJb* oJb)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::JMP);
+    FSOperandVisitor operand = FSOperandVisitor(JMP);
     out.Push(0x0F);
     out.Push(0x82);
     oJb->operand_->accept(&operand);
@@ -209,7 +209,7 @@ void FSAssembler::visitOJb(OJb* oJb)
 
 void FSAssembler::visitOJbe(OJbe* oJbe)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::JMP);
+    FSOperandVisitor operand = FSOperandVisitor(JMP);
     out.Push(0x0F);
     out.Push(0x86);
     oJbe->operand_->accept(&operand);
@@ -223,7 +223,7 @@ void FSAssembler::visitOJbe(OJbe* oJbe)
 
 void FSAssembler::visitOJe(OJe* oJe)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::JMP);
+    FSOperandVisitor operand = FSOperandVisitor(JMP);
     out.Push(0x0F);
     out.Push(0x84);
     oJe->operand_->accept(&operand);
@@ -237,7 +237,7 @@ void FSAssembler::visitOJe(OJe* oJe)
 
 void FSAssembler::visitOJne(OJne* oJne)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::JMP);
+    FSOperandVisitor operand = FSOperandVisitor(JMP);
     out.Push(0x0F);
     out.Push(0x85);
     oJne->operand_->accept(&operand);
@@ -251,7 +251,7 @@ void FSAssembler::visitOJne(OJne* oJne)
 
 void FSAssembler::visitOJz(OJz* oJz)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::JMP);
+    FSOperandVisitor operand = FSOperandVisitor(JMP);
     out.Push(0x0F);
     out.Push(0x84);
     oJz->operand_->accept(&operand);
@@ -265,7 +265,7 @@ void FSAssembler::visitOJz(OJz* oJz)
 
 void FSAssembler::visitOJnz(OJnz* oJnz)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::JMP);
+    FSOperandVisitor operand = FSOperandVisitor(JMP);
     out.Push(0x0F);
     out.Push(0x85);
     oJnz->operand_->accept(&operand);
@@ -279,7 +279,7 @@ void FSAssembler::visitOJnz(OJnz* oJnz)
 
 void FSAssembler::visitOCall(OCall* oCall)
 {
-    FSOperandVisitor operand = FSOperandVisitor( FSOperandVisitor::FSOVType::JMP );
+    FSOperandVisitor operand = FSOperandVisitor( JMP );
 
     out.Push( 0xE8 );
     
@@ -303,7 +303,7 @@ void FSAssembler::visitORet(ORet* oRet)
  
 void FSAssembler::visitOPush(OPush* opush)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::PUSH);
+    FSOperandVisitor operand = FSOperandVisitor(PUSH);
     opush->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)
     {
@@ -313,7 +313,7 @@ void FSAssembler::visitOPush(OPush* opush)
 
 void FSAssembler::visitOPop(OPop* opop)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::POP);
+    FSOperandVisitor operand = FSOperandVisitor(POP);
     opop->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)
     {
@@ -503,7 +503,7 @@ void FSAssembler::visitOFcmovu(OFcmovu* ofcmovu)
 
 void FSAssembler::visitOFld(OFld* ofld)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::FLD);
+    FSOperandVisitor operand = FSOperandVisitor(FLD);
     out.Push(0xD9);
     ofld->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)
@@ -514,7 +514,7 @@ void FSAssembler::visitOFld(OFld* ofld)
 
 void FSAssembler::visitOFild(OFild* ofild)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::FILD);
+    FSOperandVisitor operand = FSOperandVisitor(FILD);
     out.Push(0xDB);
     ofild->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)
@@ -573,7 +573,7 @@ void FSAssembler::visitOFldlgt(OFldlgt* ofldlgt)
 
 void FSAssembler::visitOFst(OFst* ofst)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::FST);
+    FSOperandVisitor operand = FSOperandVisitor(FST);
     out.Push(0xD9);
     ofst->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)
@@ -584,7 +584,7 @@ void FSAssembler::visitOFst(OFst* ofst)
 
 void FSAssembler::visitOFist(OFist* ofist)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::FIST);
+    FSOperandVisitor operand = FSOperandVisitor(FIST);
     out.Push(0xDB);
     ofist->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)
@@ -595,7 +595,7 @@ void FSAssembler::visitOFist(OFist* ofist)
 
 void FSAssembler::visitOFstp(OFstp* ofstp)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::FSTP);
+    FSOperandVisitor operand = FSOperandVisitor(FSTP);
     out.Push(0xD9);
     ofstp->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)
@@ -606,7 +606,7 @@ void FSAssembler::visitOFstp(OFstp* ofstp)
 
 void FSAssembler::visitOFistp(OFistp* ofistp)
 {
-    FSOperandVisitor operand = FSOperandVisitor(FSOperandVisitor::FSOVType::FISTP);
+    FSOperandVisitor operand = FSOperandVisitor(FISTP);
     out.Push(0xDB);
     ofistp->operand_->accept(&operand);
     for(unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i)

@@ -47,8 +47,9 @@ static char sAssertMessage[ASSERT_MAX_MESSAGE_LENGTH];
 
 bool _FSAssert(const bool& bCondition, const char* sFileName, const int& uLineNumber, const char* sFormatString, ...)
 {
+#ifdef _DEBUG
     if( !bCondition )
-    {   	
+    {
         int iTitleLength = _scprintf( "Assertion failed in file \"%S\" line %d", sFileName, uLineNumber ) + 1;
         
         va_list xArgumentList;
@@ -79,9 +80,8 @@ bool _FSAssert(const bool& bCondition, const char* sFileName, const int& uLineNu
         scanf( "%c", &cChoice );
         
         if(cChoice == 'y') return true;
-        
-        return false;
     }
+#endif
 
     // assertion was satisfied, so don't break
     return false;

@@ -15,6 +15,7 @@
     along with FridgeScript.  If not, see <http://www.gnu.org/licenses/>
 */
 
+// main header
 #include <Core/FridgeScript.h>
 
 #include <Code/FSCompiledCode.h>
@@ -22,7 +23,7 @@
 
 void FSCompiledCode::SetupVariableStack(Simple::Stack<FSVariable*>* v)
 {
-    for(unsigned int i = 0; i < v->GetCount(); ++i)
+    for(u_int i = 0; i < v->GetCount(); ++i)
     {
         vars.Push((*v)[i]);
     }
@@ -30,7 +31,7 @@ void FSCompiledCode::SetupVariableStack(Simple::Stack<FSVariable*>* v)
 
 void FSCompiledCode::SetupConstantStack(Simple::Stack<float>* v)
 {
-    for(unsigned int i = 0; i < v->GetCount(); ++i)
+    for(u_int i = 0; i < v->GetCount(); ++i)
     {
         consts.Push((*v)[i]);
     }
