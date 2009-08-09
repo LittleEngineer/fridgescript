@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<VisualStudioToolFile
+	Name="Grammar Tools"
+	Version="8.00"
+	>
+	<Rules>
+		<CustomBuildRule
+			Name="BNFC"
+			DisplayName="BNFC"
+			CommandLine="cd [ODirectory]&#x0D;&#x0A;copy $(InputPath)&#x0D;&#x0A;bnfc-2.4b.exe -cpp $(InputFileName)&#x0D;&#x0A;&#x0D;&#x0A;"
+			Outputs="absyn.c"
+			FileExtensions="*.cf"
+			ExecutionDescription="Generating code from grammar..."
+			>
+			<Properties>
+				<StringProperty
+					Name="ODirectory"
+					DisplayName="Output Directory"
+					PropertyPageName="Input/Output"
+					Category="Output Files"
+					Description="Output directory for .cf file and code output"
+					Switch="[value]"
+					Delimited="true"
+				/>
+			</Properties>
+		</CustomBuildRule>
+		<CustomBuildRule
+			Name="Flex"
+			DisplayName="Flex"
+			CommandLine="cd [IODirectory]&#x0D;&#x0A;flex $(InputFileName)&#x0D;&#x0A;"
+			Outputs="lex.yy.c"
+			FileExtensions="*.l"
+			ExecutionDescription="Generating lexer..."
+			>
+			<Properties>
+				<StringProperty
+					Name="IODirectory"
+					DisplayName="Input/Output Directory"
+					Category="Output Files"
+					Description="Directory to use for input and output files"
+					Switch="[value]"
+				/>
+			</Properties>
+		</CustomBuildRule>
+	</Rules>
+</VisualStudioToolFile>

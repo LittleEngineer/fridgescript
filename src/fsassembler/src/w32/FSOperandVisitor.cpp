@@ -241,13 +241,13 @@ void FSOperandVisitor::visitORelAddP(ORelAddP* oreladdp)
     switch(otype)
     {
     case FLD:
-        out.Push(0x40 + lastRegister);
+        out.Push(0x40 + static_cast< unsigned char >( lastRegister ) );
         break;
     case FST:
-        out.Push(0x50 + lastRegister);
+        out.Push(0x50 + static_cast< unsigned char >( lastRegister ) );
         break;
     case FSTP:
-        out.Push(0x58 + lastRegister);
+        out.Push(0x58 + static_cast< unsigned char >( lastRegister ) );
         break;
     }
 
@@ -282,13 +282,13 @@ void FSOperandVisitor::visitORelAddS(ORelAddS* oreladds)
     switch(otype)
     {
     case FLD:
-        out.Push(0x40 + lastRegister);
+        out.Push(0x40 + static_cast< unsigned char >( lastRegister ) );
         break;
     case FST:
-        out.Push(0x50 + lastRegister);
+        out.Push(0x50 + static_cast< unsigned char >( lastRegister ) );
         break;
     case FSTP:
-        out.Push(0x58 + lastRegister);
+        out.Push(0x58 + static_cast< unsigned char >( lastRegister ) );
         break;
     }
 

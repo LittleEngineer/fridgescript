@@ -15,6 +15,7 @@
     along with FridgeScript.  If not, see <http://www.gnu.org/licenses/>
 */
 
+// main header
 #include <Core/FridgeScript.h>
 
 #include <Core/FSContext.h>
@@ -70,11 +71,11 @@ unsigned int FSContext::CompileCode(const char* const& source)
     // send the resulting string to an assembler
     const char* const foo = parseTree.GetAssemblerString();
 #ifdef _DEBUG
-    printf("%s\r\n", foo);
+    printf( "%s\r\n", foo );
 #endif
 
     unsigned int length = 0;
-    unsigned char* bytes = FSAssemble(parseTree.GetAssemblerString(), length);
+    unsigned char* bytes = FSAssemble( foo, length );
     
     if(!bytes) return 0;
 

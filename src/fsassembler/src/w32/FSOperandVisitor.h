@@ -25,35 +25,39 @@
 // FSOperandVisitor : Assembles operands
 ///////////////////////////////////////////////
 
+enum Reg
+{
+    EAX = 0,
+    ECX = 1,
+    EDX = 2,
+    EBX = 3,
+    ESP = 4,
+    EBP = 5,
+    ESI = 6,
+    EDI = 7
+};
+
+enum FSOVType
+{
+    JMP,
+    PUSH,
+    POP,
+    FILD,
+    FIST,
+    FISTP,
+    FLD,
+    FST,
+    FSTP
+};
+
 class FSOperandVisitor : public FSAssemblerVisitor
 {
 private:
-    enum Reg
-    {
-        EAX = 0,
-        ECX = 1,
-        EDX = 2,
-        EBX = 3,
-        ESP = 4,
-        EBP = 5,
-        ESI = 6,
-        EDI = 7
-    } lastRegister;
+    Reg lastRegister;
     Simple::ANSIString lastLabel;
 
 public:
-    enum FSOVType
-    {
-        JMP,
-        PUSH,
-        POP,
-        FILD,
-        FIST,
-        FISTP,
-        FLD,
-        FST,
-        FSTP
-    } otype;
+    FSOVType otype;
 
     FSOperandVisitor(FSOVType t) : otype(t), FSAssemblerVisitor() {}
     ~FSOperandVisitor() {}
