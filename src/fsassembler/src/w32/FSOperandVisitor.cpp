@@ -105,6 +105,8 @@ void FSOperandVisitor::visitREdi(REdi* redi)
 
 void FSOperandVisitor::visitOReg(OReg* oreg)
 {
+    m_bLastWasHexConstant = false;
+
     oreg->register_->accept(this);
     
     switch(otype)
@@ -127,7 +129,11 @@ void FSOperandVisitor::visitOReg(OReg* oreg)
 
 void FSOperandVisitor::visitOHex(OHex* ohex)
 {
-    unsigned int c = ConvertHex(ohex->hexconstant_);
+    m_bLastWasHexConstant = true;
+
+    m_uLastHex = ConvertHex( ohex->hexconstant_ );
+    unsigned int c = m_uLastHex;
+
     switch(otype)
     {
     default:
@@ -151,6 +157,8 @@ void FSOperandVisitor::visitOHex(OHex* ohex)
 
 void FSOperandVisitor::visitOLab(OLab* olab)
 {
+    m_bLastWasHexConstant = false;
+
     // add a 32-bit zero to the output
     out.Push(0x00); out.Push(0x00); out.Push(0x00); out.Push(0x00);
     // take note of the label reference that needs to be added here
@@ -163,6 +171,8 @@ void FSOperandVisitor::visitOLab(OLab* olab)
 
 void FSOperandVisitor::visitOLitAdd(OLitAdd* olitadd)
 {
+    m_bLastWasHexConstant = true;
+
     switch(otype)
     {
     case FLD:
@@ -175,11 +185,12 @@ void FSOperandVisitor::visitOLitAdd(OLitAdd* olitadd)
         out.Push(0x1D);
         break;
     default:
-        // error...
-        return;
+        // other
+        break;
     }
     
-    unsigned int c = ConvertHex(olitadd->hexconstant_);
+    m_uLastHex = ConvertHex( olitadd->hexconstant_ );
+    unsigned int c = m_uLastHex;
     out.Push(c & 0xFF);
     c >>= 8;
     out.Push(c & 0xFF);

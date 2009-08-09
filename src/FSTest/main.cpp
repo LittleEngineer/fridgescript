@@ -22,9 +22,14 @@ char test[] =
 "}\r\n"
 "while( a < 10 )\r\n"
 "{\r\n"
-"    a = a * 2 + 3;\r\n"
+"    a = a * func() + 3;\r\n"
 "}\r\n"
 ;
+
+static float FRIDGE_API func()
+{
+    return 2.0f;
+}
 
 float cppTest()
 {
@@ -45,7 +50,7 @@ float cppTest()
 
     while( a < 10.0f )
     {
-        a = a * 2.0f + 3.0f;
+        a = a * func() + 3.0f;
     }
 
     return a;
@@ -54,6 +59,8 @@ float cppTest()
 int main(int iParameterCount, char** pszParameters)
 {
     unsigned int SC = FSCreateContext();
+
+    FSRegisterAPI0f( SC, "func", func );
     
     float a = 0.5f;
 
@@ -64,7 +71,7 @@ int main(int iParameterCount, char** pszParameters)
     unsigned int hA = FSGetVariableHandle( SC, CH, "a" );
     FSSetVariableValue( hA, a );
 
-    if( CH ) FSExecute( SC, CH) ;
+    if( CH ) FSExecute( SC, CH ) ;
 
     a = FSGetVariableValue( hA );
     

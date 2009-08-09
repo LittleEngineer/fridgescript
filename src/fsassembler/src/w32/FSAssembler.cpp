@@ -280,14 +280,24 @@ void FSAssembler::visitOJnz(OJnz* oJnz)
 void FSAssembler::visitOCall(OCall* oCall)
 {
     FSOperandVisitor operand = FSOperandVisitor( JMP );
-
-    out.Push( 0xE8 );
     
     // inspect the operand
     oCall->operand_->accept( &operand );
-    
-    // the address now starts at the next stack position
-    AddLabelReference( operand.GetLastLabel().GetPointer(), out.GetCount() );
+
+    if( !operand.WasLastHexConstant() )
+    {
+        // call label
+        out.Push( 0xE8 );
+
+        // the address now starts at the next stack position
+        AddLabelReference( operand.GetLastLabel().GetPointer(), out.GetCount() );
+    }
+    else
+    {
+        // call by address of indirect reference
+        out.Push( 0xFF );
+        out.Push( 0x15 );
+    }
 
     // emit the operand bytes
     for( unsigned int i = 0; i < operand.GetBytes().GetCount(); ++i )

@@ -392,12 +392,12 @@ namespace Simple
 		
 		T& Start()
 		{
-			return &(data[0]);
+			return data[0];
 		}
 		
 		T& End()
 		{
-			return &(data[count - 1]);
+			return data[count - 1];
 		}
 		
 		void Clear()

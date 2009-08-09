@@ -27,8 +27,17 @@
 APIEntry::APIEntry( const char* const szName, const void* const pCallback, const u_int uNumParams )
 : m_pCallback( pCallback )
 , m_uNumParams( uNumParams )
+, m_pIndirectCaller( NULL )
 {
     strcpy_s( m_szName, 64, szName );
+}
+
+APIList::~APIList()
+{
+    for( u_int u = 0; u < m_xAPIEntries.GetCount(); ++u )
+    {
+        delete m_xIndirectReferences[ u ];
+    }
 }
 
 APIEntry& APIEntry::operator =( const APIEntry& xEntry )
@@ -43,26 +52,36 @@ APIEntry& APIEntry::operator =( const APIEntry& xEntry )
 void APIList::RegisterFunction( const char* const szName, float ( FRIDGE_API * pfnCallback0f)() )
 {
     m_xAPIEntries.Append( APIEntry( szName, pfnCallback0f, 0 ) );
+    m_xIndirectReferences.Append( new void*( pfnCallback0f ) );
+    m_xAPIEntries.End().m_pIndirectCaller = m_xIndirectReferences.End();
 }
 
 void APIList::RegisterFunction( const char* const szName, float ( FRIDGE_API * pfnCallback1f )( float ) )
 {
     m_xAPIEntries.Append( APIEntry( szName, pfnCallback1f, 1 ) );
+    m_xIndirectReferences.Append( new void*( pfnCallback1f ) );
+    m_xAPIEntries.End().m_pIndirectCaller = m_xIndirectReferences.End();
 }
 
 void APIList::RegisterFunction( const char* const szName, float ( FRIDGE_API * pfnCallback2f )( float, float ) )
 {
     m_xAPIEntries.Append( APIEntry( szName, pfnCallback2f, 2 ) );
+    m_xIndirectReferences.Append( new void*( pfnCallback2f ) );
+    m_xAPIEntries.End().m_pIndirectCaller = m_xIndirectReferences.End();
 }
 
 void APIList::RegisterFunction( const char* const szName, float ( FRIDGE_API * pfnCallback3f )( float, float, float ) )
 {
     m_xAPIEntries.Append( APIEntry( szName, pfnCallback3f, 3 ) );
+    m_xIndirectReferences.Append( new void*( pfnCallback3f ) );
+    m_xAPIEntries.End().m_pIndirectCaller = m_xIndirectReferences.End();
 }
 
 void APIList::RegisterFunction( const char* const szName, float ( FRIDGE_API * pfnCallback4f )( float, float, float, float ) )
 {
     m_xAPIEntries.Append( APIEntry( szName, pfnCallback4f, 4 ) );
+    m_xIndirectReferences.Append( new void*( pfnCallback4f ) );
+    m_xAPIEntries.End().m_pIndirectCaller = m_xIndirectReferences.End();
 }
 
 APIEntry* APIList::FindEntry( const char* const szName )
