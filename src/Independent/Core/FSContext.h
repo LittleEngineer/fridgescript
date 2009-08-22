@@ -37,15 +37,13 @@ public:
     unsigned int CompileCode( const char* const& source );
     void ExecuteCode( const unsigned int& id );
 
-    // this needs to go!
-    // its buggy if more than one piece of code is compiled against a context
     float* GetConstant( const float& value );
 
 protected:
 
-    FSCompiledCode**        code;
-    unsigned int            numCode;
-    Simple::Stack<float>    constants;
+    FSCompiledCode**            code;
+    unsigned int                numCode;
+    Simple::Stack< float* >     constants;
 
 };
 
