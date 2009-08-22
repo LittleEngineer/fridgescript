@@ -44,6 +44,11 @@ FSContext::~FSContext()
     }
     free(code);
     code = BadPtr<FSCompiledCode*>();
+
+    for( u_int i = 0; i < constants.GetCount(); ++i )
+    {
+        delete constants[i];
+    }
 }
 
 unsigned int FSContext::CompileCode(const char* const& source)
@@ -102,10 +107,10 @@ Simple::Stack<FSVariable*>* FSContext::GetVariables(const unsigned int& id)
 
 float* FSContext::GetConstant(const float& value)
 {
-    for(unsigned int i = 0; i < constants.GetCount(); ++i)
+    for( u_int i = 0; i < constants.GetCount(); ++i )
     {
-        if(constants[i] == value) return &(constants[i]);
+        if( *( constants[i] ) == value ) return constants[i];
     }
 
-    return constants.Push(value);
+    return *( constants.Push( new float( value ) ) );
 }
