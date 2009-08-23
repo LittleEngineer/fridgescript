@@ -107,7 +107,7 @@ _exportval FSSetVariableValue( u_int varHandle, float value )
 }
 
 ///////////////////////////////////////////////
-// FSSetVariableValue : Set value from handle
+// FSRegisterAPI0f : Register an API function
 ///////////////////////////////////////////////
 
 _export FSRegisterAPI0f( u_int context, char* name, float ( FRIDGE_API * pfnCallback0f )() )
@@ -119,6 +119,42 @@ _export FSRegisterAPI0f( u_int context, char* name, float ( FRIDGE_API * pfnCall
     if( pxContext )
     {
         pxContext->RegisterFunction( name, pfnCallback0f );
+    }
+
+    return 0;
+}
+
+///////////////////////////////////////////////
+// FSRegisterAPI1f : Register an API function
+///////////////////////////////////////////////
+
+_export FSRegisterAPI1f( u_int context, char* name, float ( FRIDGE_API * pfnCallback1f )( float ) )
+{
+    FSAssert( ( context ^ ptrMash ) != 0, "Trying to use null context" );
+
+    FSContext* pxContext = reinterpret_cast< FSContext* >( context ^ ptrMash );
+
+    if( pxContext )
+    {
+        pxContext->RegisterFunction( name, pfnCallback1f );
+    }
+
+    return 0;
+}
+
+///////////////////////////////////////////////
+// FSRegisterAPI2f : Register an API function
+///////////////////////////////////////////////
+
+_export FSRegisterAPI2f( u_int context, char* name, float ( FRIDGE_API * pfnCallback2f )( float, float ) )
+{
+    FSAssert( ( context ^ ptrMash ) != 0, "Trying to use null context" );
+
+    FSContext* pxContext = reinterpret_cast< FSContext* >( context ^ ptrMash );
+
+    if( pxContext )
+    {
+        pxContext->RegisterFunction( name, pfnCallback2f );
     }
 
     return 0;

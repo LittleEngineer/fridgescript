@@ -4,65 +4,26 @@
 #include <stdio.h>
 
 char test[] =
-"function(x, y)\r\n"
-"{\r\n"
-"    return x - y;\r\n"
-"}\r\n"
-"\r\n"
-"for( i = 0, j = 1; i < 10; ++i, j *= 2 )\r\n"
-"{\r\n"
-"    a = i - j;\r\n"
-"}\r\n"
-"\r\n"
-"a = abs( a );\r\n"
-"a = sin( a * pi + 2 );\r\n"
-"until( a > 3 )\r\n"
-"{\r\n"
-"    ++a;\r\n"
-"}\r\n"
-"while( a < 10 )\r\n"
-"{\r\n"
-"    a = a * func() + 3;\r\n"
-"}\r\n"
+"a = func( 2.0, 3.0 );\r\n"
 ;
 
-static float FRIDGE_API func()
+static float FRIDGE_API func( float x, float y )
 {
-    return 2.0f;
+    return x / y;
 }
 
 float cppTest()
 {
-    float a, i, j;
-
-    for( i = 0, j = 1; i < 10.0f; ++i, j *= 2.0f )
-    {
-        a = i - j;
-    }
-
-    a = abs( a );
-    a = sin( a * 3.14159265358979323f + 2.0f );
-
-    while( a <= 3.0f )
-    {
-        ++a;
-    }
-
-    while( a < 10.0f )
-    {
-        a = a * func() + 3.0f;
-    }
-
-    return a;
+	return func( 2.0f, 3.0f );
 }
 
 int main(int iParameterCount, char** pszParameters)
 {
     unsigned int SC = FSCreateContext();
 
-    FSRegisterAPI0f( SC, "func", func );
+    FSRegisterAPI2f( SC, "func", func );
     
-    float a = 0.5f;
+    float a = 2;
 
     unsigned int CH = FSCompile(SC, test);
 

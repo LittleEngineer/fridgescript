@@ -15,6 +15,8 @@ _importval FSGetVariableValue( unsigned int varHandle );
 _importval FSSetVariableValue( unsigned int varHandle, float value );
 
 _import FSRegisterAPI0f( unsigned int context, char* name, float ( FRIDGE_API * pfnCallback0f )() );
+_import FSRegisterAPI1f( unsigned int context, char* name, float ( FRIDGE_API * pfnCallback1f )( float ) );
+_import FSRegisterAPI2f( unsigned int context, char* name, float ( FRIDGE_API * pfnCallback2f )( float, float ) );
 
 _import FSCompile( unsigned int context, char* code );
 _import FSExecute( unsigned int context, unsigned int codeHandle );
