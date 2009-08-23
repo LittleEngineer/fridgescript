@@ -4,26 +4,26 @@
 #include <stdio.h>
 
 char test[] =
-"a = func( 2.0, 3.0 );\r\n"
+"a = func( 2.0, 3.0, 1.0, 4.0 );\r\n"
 ;
 
-static float FRIDGE_API func( float x, float y )
+static float FRIDGE_API func( float x, float y, float a, float b )
 {
-    return x / y;
+    return x / y + a / b;
 }
 
 float cppTest()
 {
-	return func( 2.0f, 3.0f );
+	return func( 2.0f, 3.0f, 1.0f, 4.0f );
 }
 
 int main(int iParameterCount, char** pszParameters)
 {
     unsigned int SC = FSCreateContext();
 
-    FSRegisterAPI2f( SC, "func", func );
+    FSRegisterAPI4f( SC, "func", func );
     
-    float a = 2;
+    float a = 0.0f;
 
     unsigned int CH = FSCompile(SC, test);
 
