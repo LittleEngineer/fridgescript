@@ -14,28 +14,28 @@ e.g.
 
 {{{
 // ok
-for( i = 0; i < limit; ++i )
+loop for( i = 0; i < limit; ++i )
 {
     // ...
 }
 
 
 // not ok
-for( ; i < limit; ++i )
+loop for( ; i < limit; ++i )
 {
     // ...
 }
 
 
 // ok
-for( i = 0, j = 1; i < limit; ++i, j *= 2 )
+loop for( i = 0, j = 1; i < limit; ++i, j *= 2 )
 {
     // ...
 }
 
 
 // not ok
-for( i = 0, j = 1; i < limit, j < otherLimit; ++i, j *= 2 )
+loop for( i = 0, j = 1; i < limit, j < otherLimit; ++i, j *= 2 )
 {
     // ...
 }
