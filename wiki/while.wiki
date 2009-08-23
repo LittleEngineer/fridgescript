@@ -15,7 +15,7 @@ While loops run until their condition, defined by an [Expression expression], ev
 {{{
 i = 0;
 
-while( i < 10 )
+loop while( i < 10 )
 {
     ++i;
     j = i + 1;
