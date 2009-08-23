@@ -48,9 +48,8 @@ DTParam. 		Parameter 		::= Ident ;
 
 {-
 	restrictions for the lists used above
-	Blocks have no tokens of their own to show their endings
 	Function and Statement lists must be nonempty
-	Parameter lists are seperated by commas and must be nonempty
+	Parameters in lists are seperated by commas and the list must be nonempty
 -}
 
 terminator Block "" ;

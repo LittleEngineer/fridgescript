@@ -84,6 +84,13 @@ void APIList::RegisterFunction( const char* const szName, float ( FRIDGE_API * p
     m_xAPIEntries.End().m_pIndirectCaller = m_xIndirectReferences.End();
 }
 
+void APIList::RegisterFunction( const char* const szName, void* pCallback, u_int uNumParams )
+{
+    m_xAPIEntries.Append( APIEntry( szName, pCallback, uNumParams ) );
+    m_xIndirectReferences.Append( new void*( pCallback ) );
+    m_xAPIEntries.End().m_pIndirectCaller = m_xIndirectReferences.End();
+}
+
 APIEntry* APIList::FindEntry( const char* const szName )
 {
     for( u_int u = 0; u < m_xAPIEntries.GetCount(); ++u )

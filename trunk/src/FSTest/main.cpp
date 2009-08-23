@@ -4,24 +4,24 @@
 #include <stdio.h>
 
 char test[] =
-"a = func( 2.0, 3.0, 1.0, 4.0 );\r\n"
+"a = func( 2.0, 3.0, 1.0, 4.0, 5.0, 6.0 );\r\n"
 ;
 
-static float FRIDGE_API func( float x, float y, float a, float b )
+static float FRIDGE_API func( float x, float y, float a, float b, float s, float t )
 {
-    return x / y + a / b;
+    return x / y + a / b + s / t;
 }
 
 float cppTest()
 {
-	return func( 2.0f, 3.0f, 1.0f, 4.0f );
+	return func( 2.0f, 3.0f, 1.0f, 4.0f, 5.0f, 6.0f );
 }
 
 int main(int iParameterCount, char** pszParameters)
 {
     unsigned int SC = FSCreateContext();
 
-    FSRegisterAPI4f( SC, "func", func );
+    FSRegisterAPI( SC, "func", func, 6 );
     
     float a = 0.0f;
 
