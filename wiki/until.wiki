@@ -15,7 +15,7 @@ Until loops run until their condition, defined by an [Expression expression], ev
 {{{
 i = 0;
 
-until( i >= 10 )
+loop until( i >= 10 )
 {
     ++i;
     j = i + 1;
