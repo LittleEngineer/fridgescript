@@ -197,6 +197,24 @@ _export FSRegisterAPI4f( u_int context, char* name, float ( FRIDGE_API * pfnCall
 }
 
 ///////////////////////////////////////////////
+// FSRegisterAPI : Register an API function
+///////////////////////////////////////////////
+
+_export FSRegisterAPI( u_int context, char* name, void* pCallback, u_int uParameterCount )
+{
+    FSAssert( ( context ^ ptrMash ) != 0, "Trying to use null context" );
+
+    FSContext* pxContext = reinterpret_cast< FSContext* >( context ^ ptrMash );
+
+    if( pxContext )
+    {
+        pxContext->RegisterFunction( name, pCallback, uParameterCount );
+    }
+
+    return 0;
+}
+
+///////////////////////////////////////////////
 // FSCompile : Compiles code from ANSI string
 //             returning a handle that can be
 //             used to execute it later

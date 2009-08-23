@@ -53,7 +53,7 @@ public:
     void RegisterFunction( const char* const szName, float ( FRIDGE_API * pfnCallback2f )( float, float ) );
     void RegisterFunction( const char* const szName, float ( FRIDGE_API * pfnCallback3f )( float, float, float ) );
     void RegisterFunction( const char* const szName, float ( FRIDGE_API * pfnCallback4f )( float, float, float, float ) );
-    // void RegisterFunction( const char* const szName, void* pCallback, u_int uNumParams );
+    void RegisterFunction( const char* const szName, void* pCallback, u_int uNumParams );
 
     APIEntry* FindEntry( const char* const szName );
     const APIEntry* FindEntry( const char* const szName ) const;

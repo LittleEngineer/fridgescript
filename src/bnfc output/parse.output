@@ -1,4 +1,4 @@
-Terminals unused in grammar
+Terminals which are not used
 
    _ERROR_
 
@@ -232,8 +232,8 @@ Statement (80)
 Expression11 (81)
     on left: 24 25 26 27 28, on right: 46
 Expression10 (82)
-    on left: 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46,
-    on right: 47 50 51 52 53
+    on left: 29 30 31 32 33 34 35 36 37 38 39 40 41 42 43 44 45 46
+   , on right: 47 50 51 52 53
 Expression9 (83)
     on left: 47 48 49 50 51 52 53, on right: 54 55 56 57
 Expression8 (84)
