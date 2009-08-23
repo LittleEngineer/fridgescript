@@ -368,8 +368,6 @@ void FSParseTree::visitSIfElse( SIfElse* sifelse )
 
 void FSParseTree::visitSLoop( SLoop* sloop )
 {
-    // TODO
-
     comment.Reset();
     assembler += "{-\r\n  ";
     assembler += "loop( ";
