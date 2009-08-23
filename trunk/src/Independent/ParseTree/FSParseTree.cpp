@@ -369,6 +369,62 @@ void FSParseTree::visitSIfElse( SIfElse* sifelse )
 void FSParseTree::visitSLoop( SLoop* sloop )
 {
     // TODO
+
+    comment.Reset();
+    assembler += "{-\r\n  ";
+    assembler += "loop( ";
+    sloop->expression_->accept( &comment );
+    assembler += comment.GetComment();
+    assembler += " )\r\n";
+    assembler += "  {\r\n";
+    assembler += "-}\r\n";
+
+    // evaluate expression
+    assembler += "-- loop statement expression\r\n";
+    sloop->expression_->accept( this );
+
+    // keep the result for later
+    pushFloat();
+
+    Simple::ANSIString lblStart = GetRandomLabel();
+    Simple::ANSIString lblEnd = GetRandomLabel();
+    assembler += lblStart;
+    assembler += ":\r\n";
+
+    // loop
+    assembler += "-- loop statement test\r\n";
+    assembler += "fld [esp]\r\n";
+    assembler += "fldz\r\n";
+    assembler += "fcomi\r\n";
+    assembler += "-- clean stack\r\n";
+    assembler += "ffree st(0)\r\n";
+    assembler += "ffree st(1)\r\n";
+    assembler += "-- loop exit if zero\r\n";
+    assembler += "jz ";
+    assembler += lblEnd;
+    assembler += "\r\n";
+
+    // run the loop contents
+    assembler += "-- loop statement contents\r\n";
+    sloop->liststatement_->accept( this );
+
+    assembler += "-- loop\r\n";
+    assembler += "fld [esp]\r\n";
+    assembler += "fld1\r\n";
+    assembler += "fsubp\r\n";
+    assembler += "fstp [esp]\r\n";
+    assembler += "jmp ";
+    assembler += lblStart;
+    assembler += "\r\n";
+    assembler += lblEnd;
+    assembler += ":\r\n";
+
+    // get rid of the test value
+    discardFloat();
+
+    assembler += "{-\r\n";
+    assembler += "  }\r\n";
+    assembler += "-}\r\n";
 }
 
 ///////////////////////////////////////////////
@@ -383,7 +439,7 @@ void FSParseTree::visitSWhile( SWhile* swhile )
 
     comment.Reset();
     assembler += "{-\r\n  ";
-    assembler += "while( ";
+    assembler += "loop while( ";
     swhile->expression_->accept( &comment );
     assembler += comment.GetComment();
     assembler += " )\r\n";
@@ -436,7 +492,7 @@ void FSParseTree::visitSUntil( SUntil* suntil )
 
     comment.Reset();
     assembler += "{-\r\n  ";
-    assembler += "until( ";
+    assembler += "loop until( ";
     suntil->expression_->accept( &comment );
     assembler += comment.GetComment();
     assembler += " )\r\n";
@@ -481,7 +537,7 @@ void FSParseTree::visitSFor( SFor* sfor )
 
     comment.Reset();
     assembler += "{-\r\n  ";
-    assembler += "for( ";
+    assembler += "loop for( ";
     sfor->listexpression_1->accept( &comment );
     assembler += comment.GetComment();
     assembler += "; ";
@@ -736,17 +792,10 @@ void FSParseTree::visitECall( ECall* ecall )
 			assembler.AppendHex( reinterpret_cast< u_int > ( pxEntry->m_pIndirectCaller ) );
 			assembler += "]\r\n";
 
-			// callee cleans stack
-			/*
-			for( u_int u = 0; u < uExpressionCount; ++u )
-			{
-				popFloat();
-			}
-			*/
-
 			return;
 		}
 	}
+
     FSFunction* fnInfo = fnTree.GetFunctionInfo( ecall->ident_ );
 
     FSAssert( fnInfo != 0, "Bad function info returned by the function parse tree for \"%s\"", ecall->ident_ );

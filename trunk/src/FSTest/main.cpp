@@ -5,7 +5,7 @@
 
 char test[] =
 "a = func( 2.0, 3.0, 1.0, 4.0, 5.0, 6.0 );\r\n"
-"loop while( a < 10 )\r\n"
+"loop ( 5 )\r\n"
 "{\r\n"
 "  ++a;\r\n"
 "}\r\n"
@@ -20,7 +20,7 @@ float cppTest()
 {
 	float a = func( 2.0f, 3.0f, 1.0f, 4.0f, 5.0f, 6.0f );
 
-    while( a < 10 )
+    for( unsigned int u = 0; u < 5; ++u )
     {
         ++a;
     }
