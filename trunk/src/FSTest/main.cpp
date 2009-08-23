@@ -5,6 +5,10 @@
 
 char test[] =
 "a = func( 2.0, 3.0, 1.0, 4.0, 5.0, 6.0 );\r\n"
+"loop while( a < 10 )\r\n"
+"{\r\n"
+"  ++a;\r\n"
+"}\r\n"
 ;
 
 static float FRIDGE_API func( float x, float y, float a, float b, float s, float t )
@@ -14,10 +18,17 @@ static float FRIDGE_API func( float x, float y, float a, float b, float s, float
 
 float cppTest()
 {
-	return func( 2.0f, 3.0f, 1.0f, 4.0f, 5.0f, 6.0f );
+	float a = func( 2.0f, 3.0f, 1.0f, 4.0f, 5.0f, 6.0f );
+
+    while( a < 10 )
+    {
+        ++a;
+    }
+
+    return a;
 }
 
-int main(int iParameterCount, char** pszParameters)
+int main( int iParameterCount, char** pszParameters )
 {
     unsigned int SC = FSCreateContext();
 
@@ -25,7 +36,7 @@ int main(int iParameterCount, char** pszParameters)
     
     float a = 0.0f;
 
-    unsigned int CH = FSCompile(SC, test);
+    unsigned int CH = FSCompile( SC, test) ;
 
     if( !CH ) goto end;
 

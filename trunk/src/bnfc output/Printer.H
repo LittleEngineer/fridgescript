@@ -46,6 +46,7 @@ class PrintAbsyn : public Visitor
   void visitSRet(SRet *p);
   void visitSIf(SIf *p);
   void visitSIfElse(SIfElse *p);
+  void visitSLoop(SLoop *p);
   void visitSWhile(SWhile *p);
   void visitSUntil(SUntil *p);
   void visitSFor(SFor *p);
@@ -198,6 +199,7 @@ class ShowAbsyn : public Visitor
   void visitSRet(SRet *p);
   void visitSIf(SIf *p);
   void visitSIfElse(SIfElse *p);
+  void visitSLoop(SLoop *p);
   void visitSWhile(SWhile *p);
   void visitSUntil(SUntil *p);
   void visitSFor(SFor *p);

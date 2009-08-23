@@ -49,11 +49,10 @@ The reserved words used in FridgeScript are the following: \\
 {\reserved{abs}} &{\reserved{acos}} &{\reserved{asin}} \\
 {\reserved{atan}} &{\reserved{atan2}} &{\reserved{break}} \\
 {\reserved{continue}} &{\reserved{cos}} &{\reserved{else}} \\
-{\reserved{exp}} &{\reserved{for}} &{\reserved{if}} \\
-{\reserved{log}} &{\reserved{log10}} &{\reserved{pi}} \\
+{\reserved{exp}} &{\reserved{if}} &{\reserved{log}} \\
+{\reserved{log10}} &{\reserved{loop}} &{\reserved{pi}} \\
 {\reserved{pow}} &{\reserved{return}} &{\reserved{sin}} \\
-{\reserved{sqrt}} &{\reserved{tan}} &{\reserved{until}} \\
-{\reserved{while}} & & \\
+{\reserved{sqrt}} &{\reserved{tan}} & \\
 \end{tabular}\\
 
 The symbols used in FridgeScript are the following: \\
@@ -61,6 +60,7 @@ The symbols used in FridgeScript are the following: \\
 \begin{tabular}{lll}
 {\symb{(}} &{\symb{)}} &{\symb{\{}} \\
 {\symb{\}}} &{\symb{,}} &{\symb{;}} \\
+{\symb{loop while}} &{\symb{loop until}} &{\symb{loop for}} \\
 {\symb{{$+$}{$+$}}} &{\symb{{$-$}{$-$}}} &{\symb{!}} \\
 {\symb{{$-$}}} &{\symb{\~{}}} &{\symb{{$+$}}} \\
 {\symb{*}} &{\symb{/}} &{\symb{\%}} \\
@@ -127,9 +127,10 @@ All other symbols are terminals.\\
  & {\delimit}  &{\terminal{return}} {\nonterminal{Expression}} {\terminal{;}}  \\
  & {\delimit}  &{\terminal{if}} {\terminal{(}} {\nonterminal{Expression}} {\terminal{)}} {\terminal{\{}} {\nonterminal{ListStatement}} {\terminal{\}}}  \\
  & {\delimit}  &{\terminal{if}} {\terminal{(}} {\nonterminal{Expression}} {\terminal{)}} {\terminal{\{}} {\nonterminal{ListStatement}} {\terminal{\}}} {\terminal{else}} {\terminal{\{}} {\nonterminal{ListStatement}} {\terminal{\}}}  \\
- & {\delimit}  &{\terminal{while}} {\terminal{(}} {\nonterminal{Expression}} {\terminal{)}} {\terminal{\{}} {\nonterminal{ListStatement}} {\terminal{\}}}  \\
- & {\delimit}  &{\terminal{until}} {\terminal{(}} {\nonterminal{Expression}} {\terminal{)}} {\terminal{\{}} {\nonterminal{ListStatement}} {\terminal{\}}}  \\
- & {\delimit}  &{\terminal{for}} {\terminal{(}} {\nonterminal{ListExpression}} {\terminal{;}} {\nonterminal{Expression}} {\terminal{;}} {\nonterminal{ListExpression}} {\terminal{)}} {\terminal{\{}} {\nonterminal{ListStatement}} {\terminal{\}}}  \\
+ & {\delimit}  &{\terminal{loop}} {\terminal{(}} {\nonterminal{Expression}} {\terminal{)}} {\terminal{\{}} {\nonterminal{ListStatement}} {\terminal{\}}}  \\
+ & {\delimit}  &{\terminal{loop while}} {\terminal{(}} {\nonterminal{Expression}} {\terminal{)}} {\terminal{\{}} {\nonterminal{ListStatement}} {\terminal{\}}}  \\
+ & {\delimit}  &{\terminal{loop until}} {\terminal{(}} {\nonterminal{Expression}} {\terminal{)}} {\terminal{\{}} {\nonterminal{ListStatement}} {\terminal{\}}}  \\
+ & {\delimit}  &{\terminal{loop for}} {\terminal{(}} {\nonterminal{ListExpression}} {\terminal{;}} {\nonterminal{Expression}} {\terminal{;}} {\nonterminal{ListExpression}} {\terminal{)}} {\terminal{\{}} {\nonterminal{ListStatement}} {\terminal{\}}}  \\
  & {\delimit}  &{\terminal{break}} {\terminal{;}}  \\
  & {\delimit}  &{\terminal{continue}} {\terminal{;}}  \\
 \end{tabular}\\

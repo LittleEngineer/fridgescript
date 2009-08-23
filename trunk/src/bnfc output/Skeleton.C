@@ -131,6 +131,14 @@ void Skeleton::visitSIfElse(SIfElse* sifelse)
   if (sifelse->liststatement_2) {sifelse->liststatement_2->accept(this);}
 }
 
+void Skeleton::visitSLoop(SLoop* sloop)
+{
+  /* Code For SLoop Goes Here */
+
+  sloop->expression_->accept(this);
+  if (sloop->liststatement_) {sloop->liststatement_->accept(this);}
+}
+
 void Skeleton::visitSWhile(SWhile* swhile)
 {
   /* Code For SWhile Goes Here */

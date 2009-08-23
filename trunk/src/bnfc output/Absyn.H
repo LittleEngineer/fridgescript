@@ -27,6 +27,7 @@ class SScope;
 class SRet;
 class SIf;
 class SIfElse;
+class SLoop;
 class SWhile;
 class SUntil;
 class SFor;
@@ -119,6 +120,7 @@ class Visitor
   virtual void visitSRet(SRet *p) = 0;
   virtual void visitSIf(SIf *p) = 0;
   virtual void visitSIfElse(SIfElse *p) = 0;
+  virtual void visitSLoop(SLoop *p) = 0;
   virtual void visitSWhile(SWhile *p) = 0;
   virtual void visitSUntil(SUntil *p) = 0;
   virtual void visitSFor(SFor *p) = 0;
@@ -447,6 +449,21 @@ class SIfElse : public Statement
   virtual void accept(Visitor *v);
   virtual  SIfElse  *clone() const;
   void swap(SIfElse &);
+};
+
+class SLoop : public Statement
+{
+ public:
+  Expression *expression_;
+  ListStatement *liststatement_;
+
+  SLoop(const SLoop &);
+  SLoop &operator=(const SLoop &);
+  SLoop(Expression *p1, ListStatement *p2);
+  ~SLoop();
+  virtual void accept(Visitor *v);
+  virtual  SLoop  *clone() const;
+  void swap(SLoop &);
 };
 
 class SWhile : public Statement

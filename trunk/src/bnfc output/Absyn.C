@@ -452,6 +452,30 @@ SIfElse *SIfElse::clone() const {
   return new SIfElse(*this);
 }
 
+/********************   SLoop    ********************/
+SLoop::SLoop(Expression *p1, ListStatement *p2) { expression_ = p1; liststatement_ = p2; }
+SLoop::SLoop(const SLoop & other) {   expression_ = other.expression_->clone();
+  liststatement_ = other.liststatement_->clone();
+
+}
+SLoop &SLoop::operator=(const SLoop & other) {
+  SLoop tmp(other);
+  swap(tmp);
+  return *this;
+}
+void SLoop::swap(SLoop & other) {
+  std::swap(expression_, other.expression_);
+  std::swap(liststatement_, other.liststatement_);
+
+}
+
+SLoop::~SLoop() { delete(expression_); delete(liststatement_); }
+
+void SLoop::accept(Visitor *v) { v->visitSLoop(this); }
+SLoop *SLoop::clone() const {
+  return new SLoop(*this);
+}
+
 /********************   SWhile    ********************/
 SWhile::SWhile(Expression *p1, ListStatement *p2) { expression_ = p1; liststatement_ = p2; }
 SWhile::SWhile(const SWhile & other) {   expression_ = other.expression_->clone();

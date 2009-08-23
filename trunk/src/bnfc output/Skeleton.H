@@ -23,6 +23,7 @@ class Skeleton : public Visitor
   void visitSRet(SRet* sret);
   void visitSIf(SIf* sif);
   void visitSIfElse(SIfElse* sifelse);
+  void visitSLoop(SLoop* sloop);
   void visitSWhile(SWhile* swhile);
   void visitSUntil(SUntil* suntil);
   void visitSFor(SFor* sfor);

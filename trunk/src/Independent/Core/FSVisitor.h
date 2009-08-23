@@ -45,6 +45,7 @@ public:
     virtual void visitSRet(SRet* sret) {}
     virtual void visitSIf(SIf* sif) {}
     virtual void visitSIfElse(SIfElse* sifelse) {}
+    virtual void visitSLoop(SLoop* sloop) {}
     virtual void visitSWhile(SWhile* swhile) {}
     virtual void visitSUntil(SUntil* suntil) {}
     virtual void visitSFor(SFor* sfor) {}
