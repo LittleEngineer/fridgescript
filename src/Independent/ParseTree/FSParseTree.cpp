@@ -49,7 +49,7 @@ FSAssemblerComment FSParseTree::comment = FSAssemblerComment();
 // precision float onto the stack from st(0)
 ///////////////////////////////////////////////
 
-void FSParseTree::pushDouble()
+void FSParseTree::pushFloat()
 {
     assembler += "push eax\r\nfstp [esp]\r\n";
 }
@@ -59,7 +59,7 @@ void FSParseTree::pushDouble()
 // precision float off of the stack into st(0)
 ///////////////////////////////////////////////
 
-void FSParseTree::popDouble()
+void FSParseTree::popFloat()
 {
     assembler += "fld [esp]\r\npop eax\r\n";
 }
@@ -656,7 +656,7 @@ void FSParseTree::visitESimpleCall(ESimpleCall* esimplecall)
     // call function
     // check if its an API function
     APIEntry* pxEntry = context->FindEntry( esimplecall->ident_ );
-    if( pxEntry )
+    if( pxEntry && ( pxEntry->m_uNumParams == 0 ) )
     {
         // call the API function
         assembler += "-- call parameterless API function\r\n";
@@ -677,6 +677,63 @@ void FSParseTree::visitESimpleCall(ESimpleCall* esimplecall)
 
 void FSParseTree::visitECall(ECall* ecall)
 {
+    // call function
+    // check if its an API function
+	APIEntry* pxEntry = context->FindEntry( ecall->ident_ );
+
+	if( pxEntry )
+	{
+		// count the number of expressions we need to evaluate
+		ListExpression* pxExpressionList = ecall->listexpression_;
+		u_int uExpressionCount = 0;
+		while( pxExpressionList )
+		{
+			pxExpressionList = pxExpressionList->listexpression_;
+			++uExpressionCount;
+		}
+
+		// check it is correct
+		if( pxEntry->m_uNumParams == uExpressionCount )
+		{
+			// put parameters onto the stack
+			// for this we need the reversed list...
+			pxExpressionList = ecall->listexpression_->reverse();
+			int iPos = 1;
+			while( pxExpressionList )
+			{
+				assembler += "-- expression ";
+				assembler.AppendInt( iPos );
+				assembler += " for API function call \"";
+				assembler += ecall->ident_;
+				assembler += "\"\r\n";
+	            
+				// compile expression
+				pxExpressionList->expression_->accept( this );
+
+				// put its result on the stack
+				pushFloat();
+
+				pxExpressionList = pxExpressionList->listexpression_;
+				++iPos;
+			}
+
+			// call the API function
+			assembler += "-- call API function\r\n";
+			assembler += "call [";
+			assembler.AppendHex( reinterpret_cast< u_int > ( pxEntry->m_pIndirectCaller ) );
+			assembler += "]\r\n";
+
+			// clean stack?
+			/*
+			for( u_int u = 0; u < uExpressionCount; ++u )
+			{
+				popFloat();
+			}
+			*/
+
+			return;
+		}
+	}
     FSFunction* fnInfo = fnTree.GetFunctionInfo( ecall->ident_ );
 
     FSAssert( fnInfo != 0, "Bad function info returned by the function parse tree for \"%s\"", ecall->ident_ );
@@ -686,7 +743,7 @@ void FSParseTree::visitECall(ECall* ecall)
     // also, it would be better to use add/sub
     for( unsigned int i = 0; i < fnInfo->GetVarCount(); ++i )
     {
-        pushDouble();
+        pushFloat();
     }
 
     // evaluate parameters
@@ -848,7 +905,7 @@ void FSParseTree::visitEPow(EPow* epow)
     assembler += "-- expression 1\r\n";
     epow->expression_1->accept( this );
     assembler += "-- end expression 1\r\n";
-    pushDouble();
+    pushFloat();
     /*
         evaluate first expression then pop previous result
         ready for a binary operation
@@ -856,7 +913,7 @@ void FSParseTree::visitEPow(EPow* epow)
     assembler += "-- expression 2\r\n";
     epow->expression_2->accept( this );
     assembler += "-- end expression 2\r\n";
-    popDouble();
+    popFloat();
     // from pow(x,y)...
     // st(1) = y
     // st(0) = x
@@ -1136,7 +1193,7 @@ void FSParseTree::visitEAtanT(EAtanT* eatant)
     assembler += "-- first expression for atan2\r\n";
 
     eatant->expression_2->accept( this );
-    pushDouble();
+    pushFloat();
 
     /*
         evaluate second expression than pop previous result
@@ -1146,7 +1203,7 @@ void FSParseTree::visitEAtanT(EAtanT* eatant)
     assembler += "-- second expression for atan2\r\n";
 
     eatant->expression_1->accept( this );
-    popDouble();
+    popFloat();
 
     /*
         fpatan does st(0) = atan(st(1)/st(0)) and pops
@@ -1436,7 +1493,7 @@ void FSParseTree::visitEMul(EMul* emul)
     assembler += "-- first expression for multiply\r\n";
     
     emul->expression_2->accept( this );
-    pushDouble();
+    pushFloat();
     
     /*
         evaluate second expression than pop previous result
@@ -1446,7 +1503,7 @@ void FSParseTree::visitEMul(EMul* emul)
     assembler += "-- second expression for multiply\r\n";
     
     emul->expression_1->accept( this );
-    popDouble();
+    popFloat();
 
     /*
         fmulp does st(1) = st(0) * st(1) and pops
@@ -1473,7 +1530,7 @@ void FSParseTree::visitEDiv(EDiv* ediv)
     assembler += "-- first expression for divide\r\n";
 
     ediv->expression_2->accept( this );
-    pushDouble();
+    pushFloat();
 
     /*
         evaluate second expression than pop previous result
@@ -1483,7 +1540,7 @@ void FSParseTree::visitEDiv(EDiv* ediv)
     assembler += "-- second expression for divide\r\n";
 
     ediv->expression_1->accept( this );
-    popDouble();
+    popFloat();
     
     /*
         fdivp does st(1) = st(1) / st(0) and pops
@@ -1510,7 +1567,7 @@ void FSParseTree::visitEMod(EMod* emod)
     assembler += "-- first parameter for remainder\r\n";
 
     emod->expression_1->accept( this );
-    pushDouble();
+    pushFloat();
 
     /*
         evaluate first expression than pop previous result
@@ -1520,7 +1577,7 @@ void FSParseTree::visitEMod(EMod* emod)
     assembler += "-- second parameter for remainder\r\n";
 
     emod->expression_2->accept( this );
-    popDouble();
+    popFloat();
 
     /*
         fprem does st(1) = st(1) % st(0) and pops
@@ -1543,7 +1600,7 @@ void FSParseTree::visitEAdd(EAdd* eadd)
     assembler += "-- first expression for addition\r\n";
 
     eadd->expression_2->accept( this );
-    pushDouble();
+    pushFloat();
 
     /*
         evaluate second expression than pop previous result
@@ -1553,7 +1610,7 @@ void FSParseTree::visitEAdd(EAdd* eadd)
     assembler += "-- second expression for addition\r\n";
 
     eadd->expression_1->accept( this );
-    popDouble();
+    popFloat();
     
     /*
         faddp does st(1) = st(0) + st(1) and pops
@@ -1576,7 +1633,7 @@ void FSParseTree::visitESub(ESub* esub)
     assembler += "-- first expression for subtraction\r\n";
 
     esub->expression_2->accept( this );
-    pushDouble();
+    pushFloat();
 
     /*
         evaluate second expression than pop previous result
@@ -1586,7 +1643,7 @@ void FSParseTree::visitESub(ESub* esub)
     assembler += "-- second expression for subtraction\r\n";
 
     esub->expression_1->accept( this );
-    popDouble();
+    popFloat();
 
     /*
         fsubp does st(1) = st(1) - st(0) and pops
@@ -1606,13 +1663,13 @@ void FSParseTree::visitELSh(ELSh* elsh)
         evaluate first expression and push
     */
     elsh->expression_1->accept( this );
-    pushDouble();
+    pushFloat();
     /*
         evaluate second expression than pop previous result
         ready for a binary operation
     */
     elsh->expression_2->accept( this );
-    popDouble();
+    popFloat();
     /*
         fscale does st(1) = st(1) << st(0) and pops
         leaving the result in st(0) ready for the next expression
@@ -1626,14 +1683,14 @@ void FSParseTree::visitERSh(ERSh* ersh)
         evaluate first expression and push
     */
     ersh->expression_1->accept( this );
-    pushDouble();
+    pushFloat();
     /*
         evaluate second expression than pop previous result
         ready for a binary operation
     */
     ersh->expression_2->accept( this );
     assembler += "fchs\r\n";
-    popDouble();
+    popFloat();
     /*
         fscale does st(1) = st(1) << st(0) and pops
         leaving the result in st(0) ready for the next expression
@@ -1648,13 +1705,13 @@ void FSParseTree::visitELT(ELT* elt)
     */
     assembler += "-- expressions for comparison\r\n";
     elt->expression_1->accept( this );
-    pushDouble();
+    pushFloat();
     /*
         evaluate second expression then pop previous result
         ready for a binary operation
     */
     elt->expression_2->accept( this );
-    popDouble();
+    popFloat();
     assembler += "-- logical less than\r\n";
     assembler += "fcomi\r\n";
     assembler += "fld1\r\n";
@@ -1674,13 +1731,13 @@ void FSParseTree::visitEGT(EGT* egt)
     */
     assembler += "-- expressions for comparison\r\n";
     egt->expression_2->accept( this );
-    pushDouble();
+    pushFloat();
     /*
         evaluate second expression then pop previous result
         ready for a binary operation
     */
     egt->expression_1->accept( this );
-    popDouble();
+    popFloat();
     assembler += "-- logical greater than\r\n";
     assembler += "fcomi\r\n";
     assembler += "fld1\r\n";
@@ -1700,13 +1757,13 @@ void FSParseTree::visitELE(ELE* ele)
     */
     assembler += "-- expressions for comparison\r\n";
     ele->expression_1->accept( this );
-    pushDouble();
+    pushFloat();
     /*
         evaluate second expression then pop previous result
         ready for a binary operation
     */
     ele->expression_2->accept( this );
-    popDouble();
+    popFloat();
     assembler += "-- logical less or equal\r\n";
     assembler += "fcomi\r\n";
     assembler += "fld1\r\n";
@@ -1726,13 +1783,13 @@ void FSParseTree::visitEGE(EGE* ege)
     */
     assembler += "-- expressions for comparison\r\n";
     ege->expression_2->accept( this );
-    pushDouble();
+    pushFloat();
     /*
         evaluate second expression then pop previous result
         ready for a binary operation
     */
     ege->expression_1->accept( this );
-    popDouble();
+    popFloat();
     assembler += "-- logical greater or equal\r\n";
     assembler += "fcomi\r\n";
     assembler += "fld1\r\n";
@@ -1758,7 +1815,7 @@ void FSParseTree::visitEE(EE* ee)
     assembler += "-- first expression for comparison\r\n";
     
     ee->expression_1->accept( this );
-    pushDouble();
+    pushFloat();
     
     /*
         evaluate second expression then pop previous result
@@ -1768,7 +1825,7 @@ void FSParseTree::visitEE(EE* ee)
     assembler += "-- second expression for comparison\r\n";
 
     ee->expression_2->accept( this );
-    popDouble();
+    popFloat();
     
     assembler += "-- logical equal test\r\n";
     
@@ -1799,7 +1856,7 @@ void FSParseTree::visitENE(ENE* ene)
     assembler += "-- first expression for comparison\r\n";
     
     ene->expression_1->accept( this );
-    pushDouble();
+    pushFloat();
     
     /*
         evaluate second expression then pop previous result
@@ -1809,7 +1866,7 @@ void FSParseTree::visitENE(ENE* ene)
     assembler += "-- second expression for comparison\r\n";
 
     ene->expression_2->accept( this );
-    popDouble();
+    popFloat();
     
     assembler += "-- logical not equal test\r\n";
     

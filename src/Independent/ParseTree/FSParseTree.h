@@ -43,8 +43,8 @@ private:
 
     static FSAssemblerComment comment;
 
-    void pushDouble();
-    void popDouble();
+    void pushFloat();
+    void popFloat();
     void discardDouble();
 
     Simple::ANSIString GetRandomLabel();
