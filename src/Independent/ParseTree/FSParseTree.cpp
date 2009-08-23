@@ -69,7 +69,7 @@ void FSParseTree::popFloat()
 // precision float off of the stack into st(0)
 ///////////////////////////////////////////////
 
-void FSParseTree::discardDouble()
+void FSParseTree::discardFloat()
 {
     assembler += "pop eax\r\n";
 }
@@ -83,15 +83,15 @@ Simple::ANSIString FSParseTree::GetRandomLabel()
     Simple::ANSIString ret;
     ret += "lbl";
     static int seed = 0;
-    for(unsigned int i = 0; i < 15; ++i)
+    for( unsigned int i = 0; i < 15; ++i )
     {
-        switch((i + time(0)) & 0x1)
+        switch(( i + time(0)) & 0x1)
         {
         case 0:
-            ret += static_cast<char>((static_cast<unsigned int>(time(0) + seed) % 10) + '0');
+            ret += static_cast<char>(( static_cast<unsigned int>( time(0) + seed ) % 10) + '0');
             break;
         case 1:
-            ret += static_cast<char>((static_cast<unsigned int>(time(0) + seed) & 0xF) + 'A');
+            ret += static_cast<char>(( static_cast<unsigned int>( time(0) + seed ) & 0xF ) + 'A');
             break;
         }
         seed += 37;
@@ -103,17 +103,17 @@ Simple::ANSIString FSParseTree::GetRandomLabel()
 // Get the offset of a local variable from ebp
 ///////////////////////////////////////////////
 
-unsigned int FSParseTree::GetVariableOffset(const char* const& name)
+unsigned int FSParseTree::GetVariableOffset( const char* const& name )
 {
-    for(unsigned int i = 0; i < GetVariableStackPointer()->GetCount(); ++i)
+    for( unsigned int i = 0; i < GetVariableStackPointer()->GetCount(); ++i )
     {
-        if(!strcmp((*GetVariableStackPointer())[i]->name, name))
+        if(!strcmp((*GetVariableStackPointer())[i]->name, name ))
         {
-            return 8*(GetVariableStackPointer()->GetCount() - i - 1);
+            return 8*( GetVariableStackPointer()->GetCount() - i - 1);
         }
     }
 
-    FSAssert ( false, "Failed to locate variable for identifier %s, function will return INVALID_VARIABLE_OFFSET (0x%X)", name, INVALID_VARIABLE_OFFSET );
+    FSAssert ( false, "Failed to locate variable for identifier %s, function will return INVALID_VARIABLE_OFFSET (0x%X )", name, INVALID_VARIABLE_OFFSET );
     
     return INVALID_VARIABLE_OFFSET;
 }
@@ -126,7 +126,7 @@ unsigned int FSParseTree::GetVariableOffset(const char* const& name)
 // Main : The whole program
 ///////////////////////////////////////////////
 
-void FSParseTree::visitMain(Main* main)
+void FSParseTree::visitMain( Main* main )
 {
     // first parse the variables
     // this must be done first so that the variable references can be resolved in a single pass
@@ -138,7 +138,7 @@ void FSParseTree::visitMain(Main* main)
     main->accept( &fnTree );
 
     // now we should have the complete tree of functions and references for every variable
-    // this allows for single pass generation of code (ignoring any optimisations we may decide to add later)
+    // this allows for single pass generation of code ( ignoring any optimisations we may decide to add later )
     main->listblock_->accept( this );
 
     // all of the assembler code has been emitted, just one thing left to do...
@@ -151,7 +151,7 @@ void FSParseTree::visitMain(Main* main)
 // BStmt : A list of statements
 ///////////////////////////////////////////////
 
-void FSParseTree::visitBStmt(BStmt* bstmt)
+void FSParseTree::visitBStmt( BStmt* bstmt )
 {
     bstmt->liststatement_->accept( this );
 }
@@ -161,7 +161,7 @@ void FSParseTree::visitBStmt(BStmt* bstmt)
 // e.g. statement lists, function defines, etc.
 ///////////////////////////////////////////////
 
-void FSParseTree::visitListBlock(ListBlock* listblock)
+void FSParseTree::visitListBlock( ListBlock* listblock )
 {
     while( listblock )
     {
@@ -175,7 +175,7 @@ void FSParseTree::visitListBlock(ListBlock* listblock)
 // e.g. if, for, expressions, etc.
 ///////////////////////////////////////////////
 
-void FSParseTree::visitListStatement(ListStatement* liststatement)
+void FSParseTree::visitListStatement( ListStatement* liststatement )
 {
     while( liststatement )
     {
@@ -189,13 +189,13 @@ void FSParseTree::visitListStatement(ListStatement* liststatement)
 // e.g. a = b + c;
 ///////////////////////////////////////////////
 
-void FSParseTree::visitSExp(SExp* sexp)
+void FSParseTree::visitSExp( SExp* sexp )
 {
     assembler += "-- expression statement\r\n";
 
     comment.Reset();
     assembler += "{-\r\n  ";
-    sexp->expression_->accept(&comment);
+    sexp->expression_->accept( &comment );
     assembler += comment.GetComment();
     assembler += ";\r\n-}\r\n";
 
@@ -210,7 +210,7 @@ void FSParseTree::visitSExp(SExp* sexp)
 // doesn't create a variable scope like C++
 ///////////////////////////////////////////////
 
-void FSParseTree::visitSScope(SScope* sscope)
+void FSParseTree::visitSScope( SScope* sscope )
 {
     sscope->liststatement_->accept( this );
 }
@@ -220,13 +220,13 @@ void FSParseTree::visitSScope(SScope* sscope)
 // leaves a result in st(0)
 ///////////////////////////////////////////////
 
-void FSParseTree::visitSRet(SRet* sret)
+void FSParseTree::visitSRet( SRet* sret )
 {
     assembler += "-- return statement\r\n";
 
     comment.Reset();
     assembler += "{-\r\n  ";
-    sret->expression_->accept(&comment);
+    sret->expression_->accept( &comment );
     assembler += "return ";
     assembler += comment.GetComment();
     assembler += ";\r\n-}\r\n";
@@ -242,12 +242,12 @@ void FSParseTree::visitSRet(SRet* sret)
 // runs code depending on a test
 ///////////////////////////////////////////////
 
-void FSParseTree::visitSIf(SIf* sif)
+void FSParseTree::visitSIf( SIf* sif )
 {
     comment.Reset();
     assembler += "{-\r\n  ";
     assembler += "if( ";
-    sif->expression_->accept(&comment);
+    sif->expression_->accept( &comment );
     assembler += comment.GetComment();
     assembler += " )\r\n";
     assembler += "  {\r\n";
@@ -294,12 +294,12 @@ void FSParseTree::visitSIf(SIf* sif)
 // runs code depending on a test
 ///////////////////////////////////////////////
 
-void FSParseTree::visitSIfElse(SIfElse* sifelse)
+void FSParseTree::visitSIfElse( SIfElse* sifelse )
 {
     comment.Reset();
     assembler += "{-\r\n  ";
     assembler += "if( ";
-    sifelse->expression_->accept(&comment);
+    sifelse->expression_->accept( &comment );
     assembler += comment.GetComment();
     assembler += " )\r\n";
     assembler += "  {\r\n";
@@ -361,19 +361,30 @@ void FSParseTree::visitSIfElse(SIfElse* sifelse)
 }
 
 ///////////////////////////////////////////////
+// SLoop : The loop statement
+// does a test then runs code and repeats the
+// specified number of times
+///////////////////////////////////////////////
+
+void FSParseTree::visitSLoop( SLoop* sloop )
+{
+    // TODO
+}
+
+///////////////////////////////////////////////
 // SWhile : The while statement
 // does a test then runs code and repeats until
 // the test fails
 ///////////////////////////////////////////////
 
-void FSParseTree::visitSWhile(SWhile* swhile)
+void FSParseTree::visitSWhile( SWhile* swhile )
 {
     assembler += "-- while statement\r\n";
 
     comment.Reset();
     assembler += "{-\r\n  ";
     assembler += "while( ";
-    swhile->expression_->accept(&comment);
+    swhile->expression_->accept( &comment );
     assembler += comment.GetComment();
     assembler += " )\r\n";
     assembler += "  {\r\n";
@@ -419,14 +430,14 @@ void FSParseTree::visitSWhile(SWhile* swhile)
 // the test succeeds
 ///////////////////////////////////////////////
 
-void FSParseTree::visitSUntil(SUntil* suntil)
+void FSParseTree::visitSUntil( SUntil* suntil )
 {
     assembler += "-- until statement\r\n";
 
     comment.Reset();
     assembler += "{-\r\n  ";
     assembler += "until( ";
-    suntil->expression_->accept(&comment);
+    suntil->expression_->accept( &comment );
     assembler += comment.GetComment();
     assembler += " )\r\n";
     assembler += "  {\r\n";
@@ -464,22 +475,22 @@ void FSParseTree::visitSUntil(SUntil* suntil)
 // then runs c and repeats
 ///////////////////////////////////////////////
 
-void FSParseTree::visitSFor(SFor* sfor)
+void FSParseTree::visitSFor( SFor* sfor )
 {
     assembler += "-- for statement\r\n";
 
     comment.Reset();
     assembler += "{-\r\n  ";
     assembler += "for( ";
-    sfor->listexpression_1->accept(&comment);
+    sfor->listexpression_1->accept( &comment );
     assembler += comment.GetComment();
     assembler += "; ";
     comment.Reset();
-    sfor->expression_->accept(&comment);
+    sfor->expression_->accept( &comment );
     assembler += comment.GetComment();
     assembler += "; ";
     comment.Reset();
-    sfor->listexpression_2->accept(&comment);
+    sfor->listexpression_2->accept( &comment );
     assembler += comment.GetComment();
     assembler += " )\r\n  {\r\n-}\r\n";
 
@@ -542,8 +553,9 @@ void FSParseTree::visitSFor(SFor* sfor)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitSBreak(SBreak* sbreak)
+void FSParseTree::visitSBreak( SBreak* sbreak )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
@@ -553,25 +565,26 @@ void FSParseTree::visitSBreak(SBreak* sbreak)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitSContinue(SContinue* scontinue)
+void FSParseTree::visitSContinue( SContinue* scontinue )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
 // ECDbl : Double constant for expressions
 ///////////////////////////////////////////////
 
-void FSParseTree::visitECDbl(ECDbl* ecdbl)
+void FSParseTree::visitECDbl( ECDbl* ecdbl )
 {
     // ecdbl->double_ contains the constant as a double
     // fld ...
-    if(ecdbl->double_ == 0.0)
+    if( ecdbl->double_ == 0.0)
     {
         // fldz
         assembler += "-- load zero\r\n";
         assembler += "fldz\r\n";
     }
-    else if(ecdbl->double_ == 1.0)
+    else if( ecdbl->double_ == 1.0)
     {
         // fld1
         assembler += "-- load one\r\n";
@@ -590,17 +603,17 @@ void FSParseTree::visitECDbl(ECDbl* ecdbl)
 // ECInt : Integer constant for expressions
 ///////////////////////////////////////////////
 
-void FSParseTree::visitECInt(ECInt* ecint)
+void FSParseTree::visitECInt( ECInt* ecint )
 {
     // ecint->integer_ contains the constant as an int
     // fld ...
-    if(ecint->integer_ == 0)
+    if( ecint->integer_ == 0)
     {
         // fldz
         assembler += "-- load zero\r\n";
         assembler += "fldz\r\n";
     }
-    else if(ecint->integer_ == 1)
+    else if( ecint->integer_ == 1)
     {
         // fld1
         assembler += "-- load one\r\n";
@@ -621,7 +634,7 @@ void FSParseTree::visitECInt(ECInt* ecint)
 // EVar : Variable for expressions
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEVar(EVar *evar)
+void FSParseTree::visitEVar( EVar *evar )
 {
     assembler += "-- load variable ";
     assembler += evar->ident_;
@@ -638,7 +651,7 @@ void FSParseTree::visitEVar(EVar *evar)
 // EPi : Pi constant for expressions
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEPi(EPi *epi)
+void FSParseTree::visitEPi( EPi *epi )
 {
     // fldpi
     assembler += "-- load pi\r\n";
@@ -651,7 +664,7 @@ void FSParseTree::visitEPi(EPi *epi)
 // there are no parameters
 ///////////////////////////////////////////////
 
-void FSParseTree::visitESimpleCall(ESimpleCall* esimplecall)
+void FSParseTree::visitESimpleCall( ESimpleCall* esimplecall )
 {
     // call function
     // check if its an API function
@@ -675,7 +688,7 @@ void FSParseTree::visitESimpleCall(ESimpleCall* esimplecall)
 // are setup in the function parse tree
 ///////////////////////////////////////////////
 
-void FSParseTree::visitECall(ECall* ecall)
+void FSParseTree::visitECall( ECall* ecall )
 {
     // call function
     // check if its an API function
@@ -723,7 +736,7 @@ void FSParseTree::visitECall(ECall* ecall)
 			assembler.AppendHex( reinterpret_cast< u_int > ( pxEntry->m_pIndirectCaller ) );
 			assembler += "]\r\n";
 
-			// clean stack?
+			// callee cleans stack
 			/*
 			for( u_int u = 0; u < uExpressionCount; ++u )
 			{
@@ -738,7 +751,6 @@ void FSParseTree::visitECall(ECall* ecall)
 
     FSAssert( fnInfo != 0, "Bad function info returned by the function parse tree for \"%s\"", ecall->ident_ );
 
-    // TODO: push enough stuff on the stack for the function's locals
     // this is a bit of a crappy method, would be better to init to QNaNs
     // also, it would be better to use add/sub
     for( unsigned int i = 0; i < fnInfo->GetVarCount(); ++i )
@@ -747,7 +759,7 @@ void FSParseTree::visitECall(ECall* ecall)
     }
 
     // evaluate parameters
-    // TODO: (optimisation) this should be put 
+    // TODO: ( optimisation ) this should be put 
     // off until they are referenced...
     // at the moment all it does is throw away
     // any which don't get used in the function
@@ -767,7 +779,10 @@ void FSParseTree::visitECall(ECall* ecall)
             // compile expression
             e->expression_->accept( this );
 
-            // TODO: insert stuff into the functions local variable stack
+            // insert stuff into the function's local variable stack
+            assembler += "fstp [esp+";
+            assembler.AppendInt( fnInfo->GetOffsets()[i] );
+            assembler += "]\r\n";
         }
         // ... otherwise optimise this away to nothing
 
@@ -783,12 +798,14 @@ void FSParseTree::visitECall(ECall* ecall)
     assembler += ecall->ident_;
     assembler += "\r\n";
 
+    // TODO:: restore ebp
+
     // clean stack
     // TODO: move this into function code to reduce size
     // this is a bit of a crappy method, would be better to use add/sub
     for( unsigned int i = 0; i < fnInfo->GetVarCount(); ++i )
     {
-        discardDouble();
+        discardFloat();
     }
 }
 
@@ -796,7 +813,7 @@ void FSParseTree::visitECall(ECall* ecall)
 // EPostInc : Post-increment
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEPostInc(EPostInc* epostinc)
+void FSParseTree::visitEPostInc( EPostInc* epostinc )
 {
     /*
         load variable then load 1
@@ -829,7 +846,7 @@ void FSParseTree::visitEPostInc(EPostInc* epostinc)
 // EPostDec : Post-decrement
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEPostDec(EPostDec* epostdec)
+void FSParseTree::visitEPostDec( EPostDec* epostdec )
 {
     /*
         load variable then load 1
@@ -858,10 +875,10 @@ void FSParseTree::visitEPostDec(EPostDec* epostdec)
 
 ///////////////////////////////////////////////
 // EAbs : Absolute value
-// Absolute value (makes it positive)
+// Absolute value ( makes it positive )
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEAbs(EAbs* eabs)
+void FSParseTree::visitEAbs( EAbs* eabs )
 {
     /*
         evaluate the expression
@@ -879,21 +896,21 @@ void FSParseTree::visitEAbs(EAbs* eabs)
 }
 
 ///////////////////////////////////////////////
-// EPow : Power (exponentiation)
+// EPow : Power ( exponentiation )
 // This is quite expensive and messy
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEPow(EPow* epow)
+void FSParseTree::visitEPow( EPow* epow )
 {
     /*
-        pow(x,y) = 2^(y*lg(x))
+        pow( x,y ) = 2^( y*lg( x ))
         since:
-        z = pow(x,y)
-        lg z = y*lg(x)
-        z = 2^(y*lg(x))
+        z = pow( x,y )
+        lg z = y*lg( x )
+        z = 2^( y*lg( x ))
 
-        fyl2x does st(0) = st(1) * lg(st(0))
-        f2xm1 does st(0) = 2^(st(0) - 1.0
+        fyl2x does st(0) = st(1) * lg( st(0))
+        f2xm1 does st(0) = 2^( st(0) - 1.0
     */
 
     assembler += "-- power function\r\n";
@@ -914,22 +931,22 @@ void FSParseTree::visitEPow(EPow* epow)
     epow->expression_2->accept( this );
     assembler += "-- end expression 2\r\n";
     popFloat();
-    // from pow(x,y)...
+    // from pow( x,y )...
     // st(1) = y
     // st(0) = x
     assembler += "-- do the powering\r\n";
     assembler += "fyl2x\r\n";
-    // st(0) = y*lg(x)
+    // st(0) = y*lg( x )
 
     // split the result into integer and fraction
     assembler += "fld st(0)\r\n";
     assembler += "frndint\r\n";
-    // st(1) = y*lg(x)
-    // st(0) = round(y*lg(x))
+    // st(1) = y*lg( x )
+    // st(0) = round( y*lg( x ))
     
     assembler += "fsub\r\n";
-    // st(1) = remainder(y*lg(x))
-    // st(0) = round(y*lg(x))
+    // st(1) = remainder( y*lg( x ))
+    // st(0) = round( y*lg( x ))
     
     // work out power of integer and fractional part
     assembler += "fld1\r\n";
@@ -938,8 +955,8 @@ void FSParseTree::visitEPow(EPow* epow)
     assembler += "fstp st(0)\r\n";
     assembler += "fxch\r\n";
     assembler += "f2xm1\r\n";
-    // st(1) = pow(x,round(y))
-    // st(0) = pow(x,remainder(y)) - 1
+    // st(1) = pow( x,round( y ))
+    // st(0) = pow( x,remainder( y )) - 1
     
     // add one to finish integral power then multiply by fractional part
     assembler += "fld1\r\n";
@@ -956,7 +973,7 @@ void FSParseTree::visitEPow(EPow* epow)
 // * magic number hack
 ///////////////////////////////////////////////
 
-void FSParseTree::visitESqrt(ESqrt* esqrt)
+void FSParseTree::visitESqrt( ESqrt* esqrt )
 {
     assembler += "-- expression for sqrt\r\n";
 
@@ -978,17 +995,17 @@ void FSParseTree::visitESqrt(ESqrt* esqrt)
 // This is messy like EPow but uses e for x
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEExp(EExp* eexp)
+void FSParseTree::visitEExp( EExp* eexp )
 {
     /*
-        pow(x,y) = 2^(y*lg(x))
+        pow( x,y ) = 2^( y*lg( x ))
         since:
-        z = pow(x,y)
-        lg z = y*lg(x)
-        z = 2^(y*lg(x))
+        z = pow( x,y )
+        lg z = y*lg( x )
+        z = 2^( y*lg( x ))
 
-        fyl2x does st(0) = st(1) * lg(st(0))
-        f2xm1 does st(0) = 2^(st(0) - 1.0
+        fyl2x does st(0) = st(1) * lg( st(0))
+        f2xm1 does st(0) = 2^( st(0) - 1.0
     */
 
     assembler += "-- exponential function expression\r\n";
@@ -1004,22 +1021,22 @@ void FSParseTree::visitEExp(EExp* eexp)
     assembler += "fld [";
     assembler.AppendHex( reinterpret_cast<unsigned int>( context->GetConstant( 2.7182818284590452353602874713527f ) ) );
     assembler += "]\r\n";    
-    // from pow(x,y)...
+    // from pow( x,y )...
     // st(1) = y
     // st(0) = x
     
     assembler += "-- do power function\r\n";
     assembler += "fyl2x\r\n";
-    // st(0) = y*lg(x)
+    // st(0) = y*lg( x )
     
     assembler += "fld st(0)\r\n";
     assembler += "frndint\r\n";
-    // st(1) = y*lg(x)
-    // st(0) = round(y*lg(x))
+    // st(1) = y*lg( x )
+    // st(0) = round( y*lg( x ))
     
     assembler += "fsub\r\n";
-    // st(1) = remainder(y*lg(x))
-    // st(0) = round(y*lg(x))
+    // st(1) = remainder( y*lg( x ))
+    // st(0) = round( y*lg( x ))
     
     // work out power of integer and fractional part
     assembler += "fld1\r\n";
@@ -1028,8 +1045,8 @@ void FSParseTree::visitEExp(EExp* eexp)
     assembler += "fstp st(0)\r\n";
     assembler += "fxch\r\n";
     assembler += "f2xm1\r\n";
-    // st(1) = pow(x,round(y))
-    // st(0) = pow(x,remainder(y)) - 1
+    // st(1) = pow( x,round( y ))
+    // st(0) = pow( x,remainder( y )) - 1
     
     // add one to finish integral power then multiply by fractional part
     assembler += "fld1\r\n";
@@ -1043,10 +1060,10 @@ void FSParseTree::visitEExp(EExp* eexp)
 // ELog : Natural logarithm
 ///////////////////////////////////////////////
 
-void FSParseTree::visitELog(ELog* elog)
+void FSParseTree::visitELog( ELog* elog )
 {
     /*
-        log 2^(lg x) = log x = lg x * log 2
+        log 2^( lg x ) = log x = lg x * log 2
     */
     assembler += "-- expression for natural logarithm\r\n";
 
@@ -1067,10 +1084,10 @@ void FSParseTree::visitELog(ELog* elog)
 // ELogD : Base 10 logarithm
 ///////////////////////////////////////////////
 
-void FSParseTree::visitELogD(ELogD* elogd)
+void FSParseTree::visitELogD( ELogD* elogd )
 {
     /*
-        log10 2^(lg x) = log10 x = lg x * log10 2
+        log10 2^( lg x ) = log10 x = lg x * log10 2
     */
     
     assembler += "-- expression for log 10\r\n";
@@ -1092,7 +1109,7 @@ void FSParseTree::visitELogD(ELogD* elogd)
 // ESin : Sine
 ///////////////////////////////////////////////
 
-void FSParseTree::visitESin(ESin* esin)
+void FSParseTree::visitESin( ESin* esin )
 {
     /*
         evaluate the expression
@@ -1113,7 +1130,7 @@ void FSParseTree::visitESin(ESin* esin)
 // ECos : Cosine
 ///////////////////////////////////////////////
 
-void FSParseTree::visitECos(ECos* ecos)
+void FSParseTree::visitECos( ECos* ecos )
 {
     /*
         evaluate the expression
@@ -1135,7 +1152,7 @@ void FSParseTree::visitECos(ECos* ecos)
 // ETan : Tangent
 ///////////////////////////////////////////////
 
-void FSParseTree::visitETan(ETan* etan)
+void FSParseTree::visitETan( ETan* etan )
 {
     /*
         evaluate the expression
@@ -1159,7 +1176,7 @@ void FSParseTree::visitETan(ETan* etan)
 // EAtan : Inverse tangent
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEAtan(EAtan* eatan)
+void FSParseTree::visitEAtan( EAtan* eatan )
 {
     /*
         evaluate the expression
@@ -1181,10 +1198,10 @@ void FSParseTree::visitEAtan(EAtan* eatan)
 
 ///////////////////////////////////////////////
 // EAtanT : Inverse tangent with 2 parameters
-// e.g. atan2(y, x);
+// e.g. atan2( y, x );
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEAtanT(EAtanT* eatant)
+void FSParseTree::visitEAtanT( EAtanT* eatant )
 {
     /*
         evaluate first expression and push
@@ -1206,7 +1223,7 @@ void FSParseTree::visitEAtanT(EAtanT* eatant)
     popFloat();
 
     /*
-        fpatan does st(0) = atan(st(1)/st(0)) and pops
+        fpatan does st(0) = atan( st(1)/st(0)) and pops
         leaving the result in st(0) ready for the next expression
     */
 
@@ -1224,10 +1241,10 @@ void FSParseTree::visitEAtanT(EAtanT* eatant)
 // 2 * atan( x / ( 1 + sqrt ( 1 - x * x ) ) )
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEAsin(EAsin* easin)
+void FSParseTree::visitEAsin( EAsin* easin )
 {
     /*
-        asin(x) = 2*atan(x/(1 + sqrt(1 - x*x)))
+        asin( x ) = 2*atan( x/(1 + sqrt(1 - x*x )))
     */
 
     assembler += "-- expression for asin\r\n";
@@ -1257,19 +1274,19 @@ void FSParseTree::visitEAsin(EAsin* easin)
     
     assembler += "fsqrt\r\n";
     // st(1) = x
-    // st(0) = sqrt(1-x*x)
+    // st(0) = sqrt(1-x*x )
     
     assembler += "fld1\r\n";
     // st(2) = x
-    // st(1) = sqrt(1-x*x)
+    // st(1) = sqrt(1-x*x )
     // st(0) = 1
     
     assembler += "faddp\r\n";
     // st(1) = x
-    // st(0) = 1+sqrt(1-x*x)
+    // st(0) = 1+sqrt(1-x*x )
     
     assembler += "fpatan\r\n";
-    // st(0) = atan(x/(1 + sqrt (1-x*x))
+    // st(0) = atan( x/(1 + sqrt (1-x*x ))
     
     // multiply by 2 by adding to itself
     assembler += "fld st(0)\r\n";
@@ -1286,10 +1303,10 @@ void FSParseTree::visitEAsin(EAsin* easin)
 // 2 * atan( sqrt ( 1 - x * x ) / ( 1 + x ) )
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEAcos(EAcos* eacos)
+void FSParseTree::visitEAcos( EAcos* eacos )
 {
     /*
-        acos(x) = 2*atan(sqrt(1 - x*x)/(1 + x))
+        acos( x ) = 2*atan( sqrt(1 - x*x )/(1 + x ))
     */
 
     assembler += "-- expression for acos\r\n";
@@ -1299,7 +1316,7 @@ void FSParseTree::visitEAcos(EAcos* eacos)
     
     assembler += "-- acos\r\n";
 
-    // we want st(1) = sqrt(1 - x*x) and st(0) = (1 + x)
+    // we want st(1) = sqrt(1 - x*x ) and st(0) = (1 + x )
     assembler += "fld1\r\n";
     assembler += "fld st(1)\r\n";
     assembler += "fld st(0)\r\n";
@@ -1319,23 +1336,23 @@ void FSParseTree::visitEAcos(EAcos* eacos)
     
     assembler += "fsqrt\r\n";
     // st(1) = x
-    // st(0) = sqrt(1-x*x)
+    // st(0) = sqrt(1-x*x )
     
     assembler += "fxch\r\n";
-    // st(1) = sqrt(1-x*x)
+    // st(1) = sqrt(1-x*x )
     // st(0) = x
     
     assembler += "fld1\r\n";
-    // st(2) = sqrt(1-x*x)
+    // st(2) = sqrt(1-x*x )
     // st(1) = x
     // st(0) = 1
     
     assembler += "faddp\r\n";
-    // st(1) = sqrt(1-x*x)
+    // st(1) = sqrt(1-x*x )
     // st(0) = 1+x
     
     assembler += "fpatan\r\n";
-    // st(0) = atan((1+x)/sqrt(1-x*x))
+    // st(0) = atan((1+x )/sqrt(1-x*x ))
     
     // multiply by 2 by adding to itself
     assembler += "fld st(0)\r\n";
@@ -1348,7 +1365,7 @@ void FSParseTree::visitEAcos(EAcos* eacos)
 // ELnot : Logical not
 ///////////////////////////////////////////////
 
-void FSParseTree::visitELnot(ELnot* elnot)
+void FSParseTree::visitELnot( ELnot* elnot )
 {
     /*
         test if expression is equal to 0 and return 1 if it is, otherwise 0
@@ -1385,7 +1402,7 @@ void FSParseTree::visitELnot(ELnot* elnot)
 // EPreInc : Pre-increment
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEPreInc(EPreInc* epreinc)
+void FSParseTree::visitEPreInc( EPreInc* epreinc )
 {
     /*
         load variable then load 1
@@ -1399,14 +1416,14 @@ void FSParseTree::visitEPreInc(EPreInc* epreinc)
     assembler += "\r\n";
 
     assembler += "fld [ebp+";
-    assembler.AppendInt(GetVariableOffset(epreinc->ident_));
+    assembler.AppendInt( GetVariableOffset( epreinc->ident_));
     assembler += "]\r\n";
 
     assembler += "fld1\r\n";
     assembler += "faddp\r\n";
 
     assembler += "fst [ebp+";
-    assembler.AppendInt(GetVariableOffset(epreinc->ident_));
+    assembler.AppendInt( GetVariableOffset( epreinc->ident_));
     assembler += "]\r\n";
 }
 
@@ -1414,7 +1431,7 @@ void FSParseTree::visitEPreInc(EPreInc* epreinc)
 // EPreDec : Pre-decrement
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEPreDec(EPreDec* epredec)
+void FSParseTree::visitEPreDec( EPreDec* epredec )
 {
     /*
         load variable then load 1
@@ -1428,14 +1445,14 @@ void FSParseTree::visitEPreDec(EPreDec* epredec)
     assembler += "\r\n";
     
     assembler += "fld [ebp+";
-    assembler.AppendInt(GetVariableOffset(epredec->ident_));
+    assembler.AppendInt( GetVariableOffset( epredec->ident_));
     assembler += "]\r\n";
 
     assembler += "fld1\r\n";
     assembler += "fsubp\r\n";
     
     assembler += "fst [ebp+";
-    assembler.AppendInt(GetVariableOffset(epredec->ident_));
+    assembler.AppendInt( GetVariableOffset( epredec->ident_));
     assembler += "]\r\n";
 }
 
@@ -1443,7 +1460,7 @@ void FSParseTree::visitEPreDec(EPreDec* epredec)
 // ENeg : Unary minus operator
 ///////////////////////////////////////////////
 
-void FSParseTree::visitENeg(ENeg* eneg)
+void FSParseTree::visitENeg( ENeg* eneg )
 {
     /*
         evaluate the expression
@@ -1467,15 +1484,16 @@ void FSParseTree::visitENeg(ENeg* eneg)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEBnot(EBnot* ebnot)
+void FSParseTree::visitEBnot( EBnot* ebnot )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
 // EPos : Unary plus operator
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEPos(EPos* epos)
+void FSParseTree::visitEPos( EPos* epos )
 {
     // no need to do anything here... unary plus is a bit of a waste. :)
 }
@@ -1484,7 +1502,7 @@ void FSParseTree::visitEPos(EPos* epos)
 // EMul : Multiplication operator
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEMul(EMul* emul)
+void FSParseTree::visitEMul( EMul* emul )
 {
     /*
         evaluate first expression and push
@@ -1521,7 +1539,7 @@ void FSParseTree::visitEMul(EMul* emul)
 // EDiv : Division operator
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEDiv(EDiv* ediv)
+void FSParseTree::visitEDiv( EDiv* ediv )
 {
     /*
         evaluate first expression and push
@@ -1558,7 +1576,7 @@ void FSParseTree::visitEDiv(EDiv* ediv)
 // EMod : Remainder from division operator
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEMod(EMod* emod)
+void FSParseTree::visitEMod( EMod* emod )
 {
     /*
         evaluate second expression and push
@@ -1591,7 +1609,7 @@ void FSParseTree::visitEMod(EMod* emod)
     assembler += "-- end remainder\r\n";
 }
 
-void FSParseTree::visitEAdd(EAdd* eadd)
+void FSParseTree::visitEAdd( EAdd* eadd )
 {
     /*
         evaluate first expression and push
@@ -1624,7 +1642,7 @@ void FSParseTree::visitEAdd(EAdd* eadd)
     assembler += "-- end addition\r\n";
 }
 
-void FSParseTree::visitESub(ESub* esub)
+void FSParseTree::visitESub( ESub* esub )
 {
     /*
         evaluate first expression and push
@@ -1657,7 +1675,7 @@ void FSParseTree::visitESub(ESub* esub)
     assembler += "-- end subtraction\r\n";
 }
 
-void FSParseTree::visitELSh(ELSh* elsh)
+void FSParseTree::visitELSh( ELSh* elsh )
 {
     /*
         evaluate first expression and push
@@ -1677,7 +1695,7 @@ void FSParseTree::visitELSh(ELSh* elsh)
     assembler += "fscale\r\n";
 }
 
-void FSParseTree::visitERSh(ERSh* ersh)
+void FSParseTree::visitERSh( ERSh* ersh )
 {
     /*
         evaluate first expression and push
@@ -1698,7 +1716,7 @@ void FSParseTree::visitERSh(ERSh* ersh)
     assembler += "fscale\r\n";
 }
 
-void FSParseTree::visitELT(ELT* elt)
+void FSParseTree::visitELT( ELT* elt )
 {
     /*
         evaluate first expression and push
@@ -1724,7 +1742,7 @@ void FSParseTree::visitELT(ELT* elt)
     assembler += "ffree st(3)\r\n";
 }
 
-void FSParseTree::visitEGT(EGT* egt)
+void FSParseTree::visitEGT( EGT* egt )
 {
     /*
         evaluate first expression and push
@@ -1750,7 +1768,7 @@ void FSParseTree::visitEGT(EGT* egt)
     assembler += "ffree st(3)\r\n";
 }
 
-void FSParseTree::visitELE(ELE* ele)
+void FSParseTree::visitELE( ELE* ele )
 {
     /*
         evaluate first expression and push
@@ -1776,7 +1794,7 @@ void FSParseTree::visitELE(ELE* ele)
     assembler += "ffree st(3)\r\n";
 }
 
-void FSParseTree::visitEGE(EGE* ege)
+void FSParseTree::visitEGE( EGE* ege )
 {
     /*
         evaluate first expression and push
@@ -1806,7 +1824,7 @@ void FSParseTree::visitEGE(EGE* ege)
 // EE : Equality operator
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEE(EE* ee)
+void FSParseTree::visitEE( EE* ee )
 {
     /*
         evaluate first expression and push
@@ -1847,7 +1865,7 @@ void FSParseTree::visitEE(EE* ee)
 // ENE : Not-equal operator
 ///////////////////////////////////////////////
 
-void FSParseTree::visitENE(ENE* ene)
+void FSParseTree::visitENE( ENE* ene )
 {
     /*
         evaluate first expression and push
@@ -1890,8 +1908,9 @@ void FSParseTree::visitENE(ENE* ene)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEBand(EBand* eband)
+void FSParseTree::visitEBand( EBand* eband )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
@@ -1900,8 +1919,9 @@ void FSParseTree::visitEBand(EBand* eband)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEBor(EBor* ebor)
+void FSParseTree::visitEBor( EBor* ebor )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
@@ -1910,15 +1930,16 @@ void FSParseTree::visitEBor(EBor* ebor)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEBxor(EBxor* ebxor)
+void FSParseTree::visitEBxor( EBxor* ebxor )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
 // ELand : Logical and operator
 ///////////////////////////////////////////////
 
-void FSParseTree::visitELand(ELand* eland)
+void FSParseTree::visitELand( ELand* eland )
 {
     /*
         expression2 && expression1
@@ -1953,7 +1974,7 @@ void FSParseTree::visitELand(ELand* eland)
 // ELor : Logical inclusive or operator
 ///////////////////////////////////////////////
 
-void FSParseTree::visitELor(ELor* elor)
+void FSParseTree::visitELor( ELor* elor )
 {
     /*
         expression1 && expression2
@@ -1985,8 +2006,9 @@ void FSParseTree::visitELor(ELor* elor)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitELxor(ELxor* elxor)
+void FSParseTree::visitELxor( ELxor* elxor )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
@@ -1998,15 +2020,16 @@ void FSParseTree::visitELxor(ELxor* elxor)
 // but should we have it at all?
 ///////////////////////////////////////////////
 
-void FSParseTree::visitECon(ECon* econ)
+void FSParseTree::visitECon( ECon* econ )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
 // EAss : Assignment
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEAss(EAss* eass)
+void FSParseTree::visitEAss( EAss* eass )
 {
     /*
         evaluate the expression
@@ -2014,8 +2037,8 @@ void FSParseTree::visitEAss(EAss* eass)
     */
     eass->expression_->accept( this );
     assembler += "fst [ebp+";
-    assembler.AppendInt(GetVariableOffset(eass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(eass->ident_, 0)));
+    assembler.AppendInt( GetVariableOffset( eass->ident_));
+    //assembler.AppendHex( reinterpret_cast<unsigned int>( context->RegisterVariable( eass->ident_, 0)));
     assembler += "]\r\n";
 }
 
@@ -2023,7 +2046,7 @@ void FSParseTree::visitEAss(EAss* eass)
 // EAddAss : Addition and assignment
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEAddAss(EAddAss* eaddass)
+void FSParseTree::visitEAddAss( EAddAss* eaddass )
 {
     /*
         evaluate the expression, load the var then add it and store it back
@@ -2031,13 +2054,13 @@ void FSParseTree::visitEAddAss(EAddAss* eaddass)
     */
     eaddass->expression_->accept( this );
     assembler += "fld [ebp+";
-    assembler.AppendInt(GetVariableOffset(eaddass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(eaddass->ident_, 0)));
+    assembler.AppendInt( GetVariableOffset( eaddass->ident_));
+    //assembler.AppendHex( reinterpret_cast<unsigned int>( context->RegisterVariable( eaddass->ident_, 0)));
     assembler += "]\r\n";
     assembler += "faddp\r\n";
     assembler += "fst [ebp+";
-    assembler.AppendInt(GetVariableOffset(eaddass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(eaddass->ident_, 0)));
+    assembler.AppendInt( GetVariableOffset( eaddass->ident_));
+    //assembler.AppendHex( reinterpret_cast<unsigned int>( context->RegisterVariable( eaddass->ident_, 0)));
     assembler += "]\r\n";
 }
 
@@ -2045,7 +2068,7 @@ void FSParseTree::visitEAddAss(EAddAss* eaddass)
 // ESubAss : Subtraction and assignment
 ///////////////////////////////////////////////
 
-void FSParseTree::visitESubAss(ESubAss* esubass)
+void FSParseTree::visitESubAss( ESubAss* esubass )
 {
     /*
         evaluate the expression, load the var then subtract it and store it back
@@ -2053,13 +2076,13 @@ void FSParseTree::visitESubAss(ESubAss* esubass)
     */
     esubass->expression_->accept( this );
     assembler += "fld [ebp+";
-    assembler.AppendInt(GetVariableOffset(esubass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(esubass->ident_, 0)));
+    assembler.AppendInt( GetVariableOffset( esubass->ident_));
+    //assembler.AppendHex( reinterpret_cast<unsigned int>( context->RegisterVariable( esubass->ident_, 0)));
     assembler += "]\r\n";
     assembler += "fsubrp\r\n";
     assembler += "fst [ebp+";
-    assembler.AppendInt(GetVariableOffset(esubass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(esubass->ident_, 0)));
+    assembler.AppendInt( GetVariableOffset( esubass->ident_));
+    //assembler.AppendHex( reinterpret_cast<unsigned int>( context->RegisterVariable( esubass->ident_, 0)));
     assembler += "]\r\n";
 }
 
@@ -2067,7 +2090,7 @@ void FSParseTree::visitESubAss(ESubAss* esubass)
 // EMulAss : Multiplication and assignment
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEMulAss(EMulAss* emulass)
+void FSParseTree::visitEMulAss( EMulAss* emulass )
 {
     /*
         evaluate the expression, load the var then multiply it and store it back
@@ -2075,13 +2098,13 @@ void FSParseTree::visitEMulAss(EMulAss* emulass)
     */
     emulass->expression_->accept( this );
     assembler += "fld [ebp+";
-    assembler.AppendInt(GetVariableOffset(emulass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(emulass->ident_, 0)));
+    assembler.AppendInt( GetVariableOffset( emulass->ident_));
+    //assembler.AppendHex( reinterpret_cast<unsigned int>( context->RegisterVariable( emulass->ident_, 0)));
     assembler += "]\r\n";
     assembler += "fmulp\r\n";
     assembler += "fst [ebp+";
-    assembler.AppendInt(GetVariableOffset(emulass->ident_));
-    //assembler.AppendHex(reinterpret_cast<unsigned int>(context->RegisterVariable(emulass->ident_, 0)));
+    assembler.AppendInt( GetVariableOffset( emulass->ident_));
+    //assembler.AppendHex( reinterpret_cast<unsigned int>( context->RegisterVariable( emulass->ident_, 0)));
     assembler += "]\r\n";
 }
 
@@ -2089,7 +2112,7 @@ void FSParseTree::visitEMulAss(EMulAss* emulass)
 // EDivAss : Division and assignment
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEDivAss(EDivAss* edivass)
+void FSParseTree::visitEDivAss( EDivAss* edivass )
 {
     /*
         evaluate the expression, load the var then divide it and store it back
@@ -2097,11 +2120,11 @@ void FSParseTree::visitEDivAss(EDivAss* edivass)
     */
     edivass->expression_->accept( this );
     assembler += "fld [ebp+";
-    assembler.AppendInt(GetVariableOffset(edivass->ident_));
+    assembler.AppendInt( GetVariableOffset( edivass->ident_));
     assembler += "]\r\n";
     assembler += "fdivrp\r\n";
     assembler += "fst [ebp+";
-    assembler.AppendInt(GetVariableOffset(edivass->ident_));
+    assembler.AppendInt( GetVariableOffset( edivass->ident_));
     assembler += "]\r\n";
 }
 
@@ -2109,7 +2132,7 @@ void FSParseTree::visitEDivAss(EDivAss* edivass)
 // EModAss : Division remainder and assignment
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEModAss(EModAss* emodass)
+void FSParseTree::visitEModAss( EModAss* emodass )
 {
     /*
         evaluate the expression, load the var then mod it and store it back
@@ -2117,11 +2140,11 @@ void FSParseTree::visitEModAss(EModAss* emodass)
     */
     emodass->expression_->accept( this );
     assembler += "fld [ebp+";
-    assembler.AppendInt(GetVariableOffset(emodass->ident_));
+    assembler.AppendInt( GetVariableOffset( emodass->ident_));
     assembler += "]\r\n";
     assembler += "fprem\r\n";
     assembler += "fst [ebp+";
-    assembler.AppendInt(GetVariableOffset(emodass->ident_));
+    assembler.AppendInt( GetVariableOffset( emodass->ident_));
     assembler += "]\r\n";
 }
 
@@ -2131,8 +2154,9 @@ void FSParseTree::visitEModAss(EModAss* emodass)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEAndAss(EAndAss* eandass)
+void FSParseTree::visitEAndAss( EAndAss* eandass )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
@@ -2141,8 +2165,9 @@ void FSParseTree::visitEAndAss(EAndAss* eandass)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEOrAss(EOrAss* eorass)
+void FSParseTree::visitEOrAss( EOrAss* eorass )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
@@ -2151,8 +2176,9 @@ void FSParseTree::visitEOrAss(EOrAss* eorass)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitEXorAss(EXorAss* exorass)
+void FSParseTree::visitEXorAss( EXorAss* exorass )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
@@ -2161,8 +2187,9 @@ void FSParseTree::visitEXorAss(EXorAss* exorass)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitELShAss(ELShAss* elshass)
+void FSParseTree::visitELShAss( ELShAss* elshass )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
@@ -2171,8 +2198,9 @@ void FSParseTree::visitELShAss(ELShAss* elshass)
 // N E E D S    I M P L E M E N T A T I O N
 ///////////////////////////////////////////////
 
-void FSParseTree::visitERShAss(ERShAss* ershass)
+void FSParseTree::visitERShAss( ERShAss* ershass )
 {
+    // TODO
 }
 
 ///////////////////////////////////////////////
@@ -2185,9 +2213,9 @@ void FSParseTree::visitERShAss(ERShAss* ershass)
 // expressions in a for loop
 ///////////////////////////////////////////////
 
-void FSParseTree::visitListExpression(ListExpression* listexpression)
+void FSParseTree::visitListExpression( ListExpression* listexpression )
 {
-    while(listexpression)
+    while( listexpression )
     {
         // convert each expression to assembler and emit
         listexpression->expression_->accept( this );

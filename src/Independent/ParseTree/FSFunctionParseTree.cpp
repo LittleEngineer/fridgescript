@@ -31,7 +31,7 @@
 // H E L P E R    F U N C T I O N S
 ///////////////////////////////////////////////
 
-void FSFunction::AddParameterOffset(const unsigned int &offset)
+void FSFunction::AddParameterOffset( const unsigned int &offset )
 {
     varOffsets.Push( offset );
 }
@@ -63,7 +63,7 @@ Simple::ANSIString FSFunctionParseTree::GetAssembler() const
     return sResult;
 }
 
-FSFunction* FSFunctionParseTree::GetFunctionInfo(const char* name) const
+FSFunction* FSFunctionParseTree::GetFunctionInfo( const char* name ) const
 {
     for( unsigned int i = 0; i < fnList.GetCount(); ++i )
     {
@@ -89,7 +89,7 @@ FSFunctionParseTree::~FSFunctionParseTree()
 // Main : The whole program
 ///////////////////////////////////////////////
 
-void FSFunctionParseTree::visitMain(Main* main)
+void FSFunctionParseTree::visitMain( Main* main )
 {
     main->listblock_->accept( this );
 }
@@ -99,7 +99,7 @@ void FSFunctionParseTree::visitMain(Main* main)
 //         function definitions
 ///////////////////////////////////////////////
 
-void FSFunctionParseTree::visitBFunc(BFunc* bfunc)
+void FSFunctionParseTree::visitBFunc( BFunc* bfunc )
 {
     bfunc->listfunction_->accept( this );
 }
@@ -112,7 +112,7 @@ void FSFunctionParseTree::visitBFunc(BFunc* bfunc)
 // doesn't deal with parameters completely yet
 ///////////////////////////////////////////////
 
-void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
+void FSFunctionParseTree::visitDTFunc( DTFunc* dtfunc )
 {
     // default type function
     // create a new parse tree for the function
@@ -140,8 +140,8 @@ void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
     ListParameter* pList = dtfunc->listparameter_;
     while( pList != 0 )
     {
-        // because it is a default type function is is safe to assume this
-        unsigned int uOffset = fp->GetVariableOffset( static_cast<DTParam*>( pList->parameter_ )->ident_ );
+        // because it is a default type function is is safe to assume this cast works
+        unsigned int uOffset = fp->GetVariableOffset( static_cast< DTParam* >( pList->parameter_ )->ident_ );
 
         if( uOffset != INVALID_VARIABLE_OFFSET )
         {
@@ -165,7 +165,7 @@ void FSFunctionParseTree::visitDTFunc(DTFunc* dtfunc)
 // DTParam : Default type function parameter
 ///////////////////////////////////////////////
 
-void FSFunctionParseTree::visitDTParam(DTParam* dtparam)
+void FSFunctionParseTree::visitDTParam( DTParam* dtparam )
 {
     // do nothing, the default type function handles the parameters itself
 }
@@ -175,9 +175,9 @@ void FSFunctionParseTree::visitDTParam(DTParam* dtparam)
 // e.g. statement lists, function defines, etc.
 ///////////////////////////////////////////////
 
-void FSFunctionParseTree::visitListBlock(ListBlock* listblock)
+void FSFunctionParseTree::visitListBlock( ListBlock* listblock )
 {
-    while(listblock)
+    while( listblock )
     {
         listblock->block_->accept( this );
         listblock = listblock->listblock_;
@@ -188,7 +188,7 @@ void FSFunctionParseTree::visitListBlock(ListBlock* listblock)
 // ListFunction : A list of function defines
 ///////////////////////////////////////////////
 
-void FSFunctionParseTree::visitListFunction(ListFunction* listfunction)
+void FSFunctionParseTree::visitListFunction( ListFunction* listfunction )
 {
     while( listfunction )
     {
@@ -201,7 +201,7 @@ void FSFunctionParseTree::visitListFunction(ListFunction* listfunction)
 // ListFunction : A list of function parameters
 ///////////////////////////////////////////////
 
-void FSFunctionParseTree::visitListParameter(ListParameter* listparameter)
+void FSFunctionParseTree::visitListParameter( ListParameter* listparameter )
 {
-    // this gets handled in the function definition proper e.g. visitDTFunc(DTFunc*)
+    // this gets handled in the function definition proper e.g. visitDTFunc( DTFunc*)
 }
