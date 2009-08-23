@@ -7,7 +7,8 @@ FridgeScript provides the ability to (loop) run a piece of code repeatedly until
 
 
 = Details =
-FridgeScript provides three kinds of loop statement:
+FridgeScript provides three kinds of loop statement, and a fourth is planned:
+  * [loop Simple Loops]
   * [for For loops]
   * [while While loops]
   * [until Until loops]
