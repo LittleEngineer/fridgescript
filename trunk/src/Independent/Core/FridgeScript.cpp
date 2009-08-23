@@ -161,6 +161,42 @@ _export FSRegisterAPI2f( u_int context, char* name, float ( FRIDGE_API * pfnCall
 }
 
 ///////////////////////////////////////////////
+// FSRegisterAPI3f : Register an API function
+///////////////////////////////////////////////
+
+_export FSRegisterAPI3f( u_int context, char* name, float ( FRIDGE_API * pfnCallback3f )( float, float, float ) )
+{
+    FSAssert( ( context ^ ptrMash ) != 0, "Trying to use null context" );
+
+    FSContext* pxContext = reinterpret_cast< FSContext* >( context ^ ptrMash );
+
+    if( pxContext )
+    {
+        pxContext->RegisterFunction( name, pfnCallback3f );
+    }
+
+    return 0;
+}
+
+///////////////////////////////////////////////
+// FSRegisterAPI4f : Register an API function
+///////////////////////////////////////////////
+
+_export FSRegisterAPI4f( u_int context, char* name, float ( FRIDGE_API * pfnCallback4f )( float, float, float, float ) )
+{
+    FSAssert( ( context ^ ptrMash ) != 0, "Trying to use null context" );
+
+    FSContext* pxContext = reinterpret_cast< FSContext* >( context ^ ptrMash );
+
+    if( pxContext )
+    {
+        pxContext->RegisterFunction( name, pfnCallback4f );
+    }
+
+    return 0;
+}
+
+///////////////////////////////////////////////
 // FSCompile : Compiles code from ANSI string
 //             returning a handle that can be
 //             used to execute it later
