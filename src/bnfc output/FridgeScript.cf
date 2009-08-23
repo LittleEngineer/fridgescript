@@ -66,9 +66,10 @@ SScope. 		Statement 		::= "{" [Statement] "}" ;
 SRet. 			Statement 		::= "return" Expression ";" ;
 SIf.			Statement		::= "if" "(" Expression ")" "{" [Statement] "}" ;
 SIfElse.		Statement		::= "if" "(" Expression ")" "{" [Statement] "}" "else" "{" [Statement] "}" ;
-SWhile.			Statement		::= "while" "(" Expression ")" "{" [Statement] "}" ;
-SUntil.			Statement		::= "until" "(" Expression ")" "{" [Statement] "}" ;
-SFor.			Statement		::= "for" "(" [Expression] ";" Expression ";" [Expression] ")" "{" [Statement] "}" ;
+SLoop.			Statement		::= "loop" "(" Expression ")" "{" [Statement] "}" ;
+SWhile.			Statement		::= "loop while" "(" Expression ")" "{" [Statement] "}" ;
+SUntil.			Statement		::= "loop until" "(" Expression ")" "{" [Statement] "}" ;
+SFor.			Statement		::= "loop for" "(" [Expression] ";" Expression ";" [Expression] ")" "{" [Statement] "}" ;
 SBreak.			Statement		::= "break" ";" ;
 SContinue.		Statement		::= "continue" ";" ;
 

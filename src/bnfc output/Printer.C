@@ -318,12 +318,29 @@ void PrintAbsyn::visitSIfElse(SIfElse* p)
   _i_ = oldi;
 }
 
+void PrintAbsyn::visitSLoop(SLoop* p)
+{
+  int oldi = _i_;
+  if (oldi > 0) render(_L_PAREN);
+
+  render("loop");
+  render('(');
+  _i_ = 0; p->expression_->accept(this);
+  render(')');
+  render('{');
+  if(p->liststatement_) {_i_ = 0; p->liststatement_->accept(this);}  render('}');
+
+  if (oldi > 0) render(_R_PAREN);
+
+  _i_ = oldi;
+}
+
 void PrintAbsyn::visitSWhile(SWhile* p)
 {
   int oldi = _i_;
   if (oldi > 0) render(_L_PAREN);
 
-  render("while");
+  render("loop while");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
@@ -340,7 +357,7 @@ void PrintAbsyn::visitSUntil(SUntil* p)
   int oldi = _i_;
   if (oldi > 0) render(_L_PAREN);
 
-  render("until");
+  render("loop until");
   render('(');
   _i_ = 0; p->expression_->accept(this);
   render(')');
@@ -357,7 +374,7 @@ void PrintAbsyn::visitSFor(SFor* p)
   int oldi = _i_;
   if (oldi > 0) render(_L_PAREN);
 
-  render("for");
+  render("loop for");
   render('(');
   if(p->listexpression_1) {_i_ = 0; p->listexpression_1->accept(this);}  render(';');
   _i_ = 0; p->expression_->accept(this);
@@ -1475,6 +1492,21 @@ void ShowAbsyn::visitSIfElse(SIfElse* p)
   p->liststatement_1->accept(this);
   bufAppend(' ');
   p->liststatement_2->accept(this);
+  bufAppend(' ');
+  bufAppend(')');
+}
+void ShowAbsyn::visitSLoop(SLoop* p)
+{
+  bufAppend('(');
+  bufAppend("SLoop");
+  bufAppend(' ');
+  bufAppend('[');
+  if (p->expression_)  p->expression_->accept(this);
+  bufAppend(']');
+  bufAppend(' ');
+  bufAppend('[');
+  if (p->liststatement_)  p->liststatement_->accept(this);
+  bufAppend(']');
   bufAppend(' ');
   bufAppend(')');
 }
