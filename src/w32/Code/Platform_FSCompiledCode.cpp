@@ -46,6 +46,8 @@ void FSCompiledCode::operator ()()
     {
         mov eax, p
         mov ecx, i
+        
+        jecxz skiplbl1
 lbl1:
         // copy stuff
         push dword ptr [eax]
@@ -54,6 +56,8 @@ lbl1:
 
         // store the pointer ready for copy back
         mov p, eax
+
+skiplbl1:
         // load function address
         mov eax, f
 
@@ -67,11 +71,15 @@ lbl1:
         // load pointer, counter
         mov eax, p
         mov ecx, i
+
+        jecxz skiplbl2
 lbl2:
         // copy stuff
         sub eax, 4
         pop dword ptr [eax]
         loop lbl2
+
+skiplbl2:
     }
 
     for(i = 0; i < vars.GetCount(); ++i)
